@@ -80,7 +80,7 @@ rleMatrix_135 <- function(image){
       diag_vals <-  c(diag(image[1:i, (ncol(image) - i + 1):ncol(image)]))
       
     } else {
-      #Shave off top and right side to move up diagonal
+      #Sequentially shave off top and right side to move up diagonal
       image <- image[-1, -ncol(image)]
       if(length(image) > 1){
         diag_vals <- c(diag(image))
