@@ -8,6 +8,9 @@ Maintainer: Joel Carlson <jnkcarlson@gmail.com>
 Description: Functions to extract first, second, and third order statistics from images.
 License: MIT
 Imports:
-    reshape2;
-    spatstat
+    spatstat; 
+    reshape2
+ 
+    
+    
     

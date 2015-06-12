@@ -1,0 +1,8 @@
+##TODO
+
+GLRLM is, in general, incredibly slow.
+    particularly for 45 and 135 degrees
+    
+GLRLM and GLCM use different notation for angle (GLCM = shift, GLRLM=angle)
+
+grey level messages are annoying, add an option to remove verbosity

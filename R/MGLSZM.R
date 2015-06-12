@@ -11,14 +11,26 @@ mglszm <- function(image, truncate=TRUE){
   
   #initialize matrix at max grey level
   #such that it begins as the maximum number of possible rows
+  all_grey <- as.character(1:prod(dim(image)))
   MGLSZM <- matrix(0, nrow=256, ncol=prod(dim(image)), dimnames=list(1:256, 1:prod(dim(image))))
+  
   
   #Loop over bit values, gray levels = 2^k
   for(k in 1:8){
     n_grey = 2^k
-    KGLSZM <- glszm(image, n_grey=n_grey, all_cols=TRUE)
+    KGLSZM <- glszm(image, n_grey=n_grey)
     #Scale by weighting factor:
     KGLSZM <- weights[k] * KGLSZM 
+    
+    #Add on a new column for each connected size not represented in the glszm
+    buffer_matrix <- matrix(0, nrow = nrow(KGLSZM),
+                            ncol = sum( ! all_grey %in% colnames(KGLSZM)),
+                            dimnames = list(
+                              row.names(KGLSZM),
+                              all_grey[which(! all_grey %in% colnames(KGLSZM))] ))
+    
+    KGLSZM <- cbind(KGLSZM, buffer_matrix)  
+    KGLSZM <- KGLSZM[,order(as.numeric(colnames(KGLSZM)))]
     
     #KGLSZM must be expanded to be added to the MGLSZM
     rows <- sort(rep_len(1:nrow(KGLSZM), length.out=256))
