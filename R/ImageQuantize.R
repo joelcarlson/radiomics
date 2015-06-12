@@ -1,11 +1,11 @@
-discretizeImage <- function(image, n_grey=32){
+discretizeImage <- function(image, n_grey=32, verbose=TRUE){
   #Not a perfect solution. Makes n_grey breaks, but doesn't necessarily populate all of them
   # eg. n_gey could be 100, but only 75 of the levels are used by pixels
   #Make sure discretization is valid
   l_unique <- length(unique(c(image)))
   if(n_grey > l_unique){
-    message(sprintf("n_grey (%d) cannot be larger than the number of gray levels in the image (%d)", n_grey, l_unique))
-    message(sprintf("n_grey set to %d", l_unique))
+    if(verbose) message(sprintf("n_grey (%d) cannot be larger than the number of gray levels in the image (%d)", n_grey, l_unique))
+    if(verbose) message(sprintf("n_grey set to %d", l_unique))
     n_grey <- l_unique
   } 
   
