@@ -5,14 +5,14 @@ GLRLM is, in general, incredibly slow.
     
 GLRLM and GLCM use different notation for angle (GLCM = shift, GLRLM=angle)
 
-grey level messages are annoying, add an option to remove verbosity
+(COMPLETE) grey level messages are annoying, add an option to remove verbosity
 
 Allow discretizeImage to handle NAs
 
-Add tests
+(WIP) Add tests 
 
 implement fuzzyGLCM (http://link.springer.com/chapter/10.1007/978-3-642-39646-5_18)
 
 Don't forget to add base R first order stats into final function!
 
-Add warning to discretizeImage when creating more gray levels than occur in the image (leads to banding in the GLCM)
+(COMPLETE) Add warning to discretizeImage when creating more gray levels than occur in the image (leads to banding in the GLCM) 
