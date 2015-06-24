@@ -16,3 +16,5 @@ implement fuzzyGLCM (http://link.springer.com/chapter/10.1007/978-3-642-39646-5_
 Don't forget to add base R first order stats into final function!
 
 (COMPLETE) Add warning to discretizeImage when creating more gray levels than occur in the image (leads to banding in the GLCM) 
+
+Add documentation
