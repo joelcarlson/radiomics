@@ -1,6 +1,6 @@
 ##TODO
 
-GLRLM is, in general, incredibly slow.
+(COMPLETE? - increased speed drastically, still includes a for loop) GLRLM is, in general, incredibly slow.
     particularly for 45 and 135 degrees
     
 GLRLM and GLCM use different notation for angle (GLCM = shift, GLRLM=angle)
