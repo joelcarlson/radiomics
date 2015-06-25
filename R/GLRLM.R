@@ -2,14 +2,16 @@
 
 # Helper functions!
 
-add_to_rlm <- function(runs, rlm){
+add_to_rlm <- function(runs, rlm, max_run_length){
   #Intermediate function, not meant to be called directly
   # adds matching rows and columns from rle tables to rlm
   
-  
   mrow <- match(rownames(runs), rownames(rlm))
+  mrow <- mrow[which(!is.na(mrow))] 
   mcol <-  match(colnames(runs), colnames(rlm))
-  rlm[mrow,mcol] <- rlm[mrow,mcol] + runs
+  mcol <- mcol[which(!is.na(mcol))] 
+  
+  rlm[mrow,mcol] <- rlm[mrow,mcol] + runs[,which(as.numeric(colnames(runs)) <= max_run_length)]
   return(rlm)
 }
 
@@ -36,7 +38,7 @@ glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)))
     for(i in bottom:top){
       
       runs <- t(table(rle(image[row(image)==(col(image) + i)])))
-      rlm <- add_to_rlm(runs, rlm)
+      rlm <- add_to_rlm(runs, rlm, max_run_length)
       
     }
     
@@ -46,7 +48,7 @@ glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)))
     for(i in 1:nrow(image)){
       
       runs <- t(table(rle(image[i,])))
-      rlm <- add_to_rlm(runs, rlm)
+      rlm <- add_to_rlm(runs, rlm, max_run_length)
       
     }
     
@@ -54,6 +56,6 @@ glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)))
     stop("Shift must be one of '0', '45', '90', '135'.")
   }
   
-  return(rlm[,which(as.numeric(colnames(rlm)) <= max_run_length)])
+  return(rlm)
   
 }
