@@ -14,21 +14,21 @@ buildEmptyCountMatrix <- function(image){
 
 
 
-glcm <- function(image, shift="0", d=1, n_grey=length(unique(c(image))), normalize=TRUE){
+glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normalize=TRUE){
   #
-  #Given an image matrix and shift, calculate glcm
-  #allows shifts of 0 (0,1), 45 (-1,1), 90 (-1,0), 135 (-1,-1)
+  #Given an image matrix and angle, calculate glcm
+  #allows angles of 0 (0,1), 45 (-1,1), 90 (-1,0), 135 (-1,-1)
   # d is distance
-  if(identical(shift, "0")){
-    shift <- c(0,1)*d
-  } else if (identical(shift, "45")){
-    shift <- c(-1,1)*d
-  } else if (identical(shift, "90")){
-    shift <- c(-1,0)*d
-  } else if (identical(shift, "135")){
-    shift <- c(-1,-1)*d
+  if(identical(angle, "0")){
+    angle <- c(0,1)*d
+  } else if (identical(angle, "45")){
+    angle <- c(-1,1)*d
+  } else if (identical(angle, "90")){
+    angle <- c(-1,0)*d
+  } else if (identical(angle, "135")){
+    angle <- c(-1,-1)*d
   } else {
-    stop("Shift must be one of '0', '45', '90', '135'.")
+    stop("angle must be one of '0', '45', '90', '135'.")
   }
   
   
@@ -57,7 +57,7 @@ glcm <- function(image, shift="0", d=1, n_grey=length(unique(c(image))), normali
     #last col is also NA, so don't loop over it
     for( j in (d+1):(ncol(image) - d)){
       ref_val <- as.character(image[i,j])
-      neighbor_val <- as.character(image[i + shift[1], j + shift[2]])
+      neighbor_val <- as.character(image[i + angle[1], j + angle[2]])
       
       if(is.na(ref_val) | is.na(neighbor_val)) next
       
