@@ -23,6 +23,8 @@ mglszm <- function(image, truncate=TRUE){
     KGLSZM <- weights[k] * KGLSZM 
     
     #Add on a new column for each connected size not represented in the glszm
+    # TODO: This can probably be largely replaced using match()
+    # See glrlm definition
     buffer_matrix <- matrix(0, nrow = nrow(KGLSZM),
                             ncol = sum( ! all_grey %in% colnames(KGLSZM)),
                             dimnames = list(
