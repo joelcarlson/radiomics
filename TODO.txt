@@ -18,3 +18,5 @@ Don't forget to add base R first order stats into final function!
 (COMPLETE) Add warning to discretizeImage when creating more gray levels than occur in the image (leads to banding in the GLCM) 
 
 Add documentation
+
+Optimize MGLSZM definition
