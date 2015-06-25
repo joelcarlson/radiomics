@@ -19,8 +19,8 @@ add_to_rlm <- function(runs, rlm, max_run_length){
 # Further optimized using table for the run length encoding output,
 # rather than looping over them
 
-glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image))){
-  image <- discretizeImage(image, n_grey=n_grey)
+glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)), ...){
+  image <- discretizeImage(image, n_grey=n_grey, ...)
   
   #initialize rlm
   unique_vals <- sort(unique(c(image)))

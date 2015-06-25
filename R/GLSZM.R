@@ -5,8 +5,8 @@
 
 #Needs access to reshape2 and spatstat and imageQauntize
 
-glszm <- function(image, n_grey=32){
-  image <- discretizeImage(image, n_grey=n_grey)
+glszm <- function(image, n_grey=32, ...){
+  image <- discretizeImage(image, n_grey=n_grey, ...)
   grey_lvls <- unique(c(image))
   #convert to image for use with spatstats functions
   image <- spatstat::as.im(image)

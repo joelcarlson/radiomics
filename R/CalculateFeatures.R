@@ -1,11 +1,7 @@
-#first_order_features <- list(calc_energy, calc_entropy, calc_kurtosisOptimized, calc_meanDeviation, calc_skewness, calc_uniformity, mean, median, max, min, diff, RMS, sd, var)
 
-#glcm_features <- list(glcm_mean, glcm_variance, glcm_autoCorrelation, glcm_cProminence, glcm_cShade, glcm_cTendency, glcm_contrast, glcm_correlation, glcm_differenceEntropy, glcm_dissimilarity, glcm_energy, glcm_entropy, glcm_homogeneity1, glcm_homogeneity2, glcm_IDMN, glcm_IDN, glcm_inverseVariance, glcm_maxProb, glcm_sumAverage, glcm_sumEntropy, glcm_sumVariance)
 
-#glrlm_features <- list(glrlm_GLN, glrlm_HGLRE, glrlm_LRE, glrlm_LRHGLE, glrlm_LRLGLE, glrlm_LGLRE, glrlm_RLN, glrlm_RP, glrlm_SRE, glrlm_SRHGLE, glrlm_SRLGLE)
-
-#glszm_features <- list(glszm_SAE, glszm_LAE, glszm_IV, glszm_SZV, glszm_ZP, glszm_LIE, glszm_HIE, glszm_LISAE, glszm_HISAE, glszm_LILAE, glszm_HILAE)
-calc_features <- function(image, features = c("first order", "glcm", "glrlm", "glszm"), n_grey=32, verbose=FALSE, ...){
+calc_features <- function(image, features = c("first order", "glcm", "glrlm", "glszm"),
+                          n_grey=32, angle="0", verbose=FALSE, max_run_length=min(dim(image)), ...){
   # Lists of features for calculation:
   
   # First order ----------------------------
@@ -83,28 +79,30 @@ calc_features <- function(image, features = c("first order", "glcm", "glrlm", "g
   # ----------------------------------------
   
   # Calculate requested features
-
+  feature_list <- list()
+  #df <- data.frame()
+  if("first order" %in% features){
+    fo_df <- data.frame(lapply(first_order_features, function(f) f(image)))
+    #feature_list$"First order features" <- lapply(first_order_features, function(f) f(image))
+  }
   
+  if("glcm" %in% features){
+    glcm_df <- data.frame(lapply(glcm_features, function(f) f(glcm(image, n_grey=n_grey, angle=angle, verbose=verbose))))
+  }
   
+  if("glrlm" %in% features){
+    glrlm_df <- data.frame(lapply(glrlm_features, function(f) f(glrlm(image, n_grey=n_grey, angle=angle, verbose=verbose, max_run_length=max_run_length))))
+  }
+  
+  if("glszm" %in% features){
+    glszm_df <- data.frame(lapply(glszm_features, function(f) f(glszm(image, n_grey=n_grey, verbose=verbose))))
+  }
+  
+  df <- cbind(fo_df, glcm_df, glrlm_df, glszm_df)
+  df
 } 
 
 
-
-#unlist(lapply(first_order_features, function(f) f(im)))
-
-
-
-#unlist(lapply(glcm_features, function(f) f(im)))
-
-
-
-
-
-
-#unlist(lapply(glrlm_features, function(f) f(glrlm(im))))
-
-
-#unlist(lapply(glszm_features, function(f) f(glszm(im))))
 
 
 

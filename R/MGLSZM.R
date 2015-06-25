@@ -1,4 +1,4 @@
-mglszm <- function(image, truncate=TRUE){
+mglszm <- function(image, truncate=TRUE, ...){
   #TODO: Make weights a function argument
   #TODO: Make number of bits a function argument
   
@@ -18,7 +18,7 @@ mglszm <- function(image, truncate=TRUE){
   #Loop over bit values, gray levels = 2^k
   for(k in 1:8){
     n_grey = 2^k
-    KGLSZM <- glszm(image, n_grey=n_grey)
+    KGLSZM <- glszm(image, n_grey=n_grey, ...)
     #Scale by weighting factor:
     KGLSZM <- weights[k] * KGLSZM 
     
