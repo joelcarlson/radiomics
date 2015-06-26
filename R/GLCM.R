@@ -12,7 +12,30 @@ buildEmptyCountMatrix <- function(image){
   return(count_matrix)
 }
 
-
+#' Gray level co-occurrence matrix.
+#'
+#' \code{glcm} returns a gray level co-occurrence matrix for a given matrix.
+#'
+#' This function can be used alone, or can be executed and it's textural
+#' features automatically calculated using \code{calc_features}
+#' 
+#'
+#' @param angle One of "0", "45", "90" or "135", the pixel to which the 
+#'   current pixel is compared.
+#' @param d an integer value, the distance between the current pixel, and the
+#'   pixel to which it is compared.
+#' @param n_grey an integer value, the number of grey levels the image should
+#'   be quantized into.
+#' @param normalize Logical value, if TRUE the matrix will be normalized such that 
+#'   the sum of it's components is 1.
+#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
+#' @return a matrix of dimension n_grey by n_grey, the GLCM.
+#'   See \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm} for details.
+#'
+#' @examples
+#' hallbey
+#' glcm(hallbey)
+#' glcm(hallbey, angle="90") #vertical GLCM
 
 glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normalize=TRUE, ...){
   #
