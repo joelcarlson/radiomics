@@ -1,3 +1,30 @@
+
+#' Multiple gray level size zone matrix.
+#'
+#' \code{mglszm} returns a multiple gray level size zone matrix for a given matrix.
+#'
+#' This function can be used alone, or can be executed and it's textural
+#' features automatically calculated using \code{calc_features}. The function creates
+#' a GLSZM using grey levels: 2, 4, 8, 16, 32, 64, 128, and 256. The values of these
+#' GLSZM's are then weighted and combined using a gaussian distribution with mean 
+#' of 0 and sd of 1.
+#' 
+#' @param image A numeric image matrix.
+#' @param truncate Logical, removes any sizes or gray levels that have no entries.
+#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
+#' @return a matrix of dimension n_grey by region size, the MGLSZM. The column 
+#'   names represent the region size, row names represent grey level, and 
+#'   the entries represent the count of how many times a given size of given grey level
+#'   occur.
+#' @references \url{http://thibault.biz/Research/ThibaultMatrices/MGLSZM/MGLSZM.html}   
+#'
+#' @examples
+#' image(psf)
+#' mglszm(psf)
+#' 
+#' image(discretizeImage(psf, n_grey=5, verbose=F))
+#' mglszm(psf, n_grey=5, verbose=F) 
+
 mglszm <- function(image, truncate=TRUE, ...){
   #TODO: Make weights a function argument
   #TODO: Make number of bits a function argument

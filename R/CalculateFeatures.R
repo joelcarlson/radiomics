@@ -2,8 +2,38 @@
 # Function to combine all of the texture analysis and first order features to give a nice full feature set
 # for image processing
 
+#' Calculate texture and first order statistics.
+#'
+#' \code{calc_features} calculates the first order and textural features for a given matrix
+#'
+#' @param image A numeric image matrix.
+#' @param features A vector containing any of "first order", "glcm", "glrlm", 
+#'   "glszm", and "mglszm". Inclusion of these strings in the vector will lead
+#'   to the calculation of the related image features.
+#' @param n_grey an integer value, the number of grey levels the image should
+#'   be quantized into.
+#' @param d an integer value, the distance between the current pixel, and the
+#'   pixel to which it is compared. To be passed to \code{glcm}.   
+#' @param verbose Logical, a warning is given when the user 
+#'  supplies more grey values than exist in the image. Setting this value to FALSE
+#'  will suppress this warning.     
+#' @param max_run_length An integer value, the default is the maximum possible
+#'   run length. Setting it to a smaller value truncates the output. Desirable
+#'   in cases where the matrix is extremely sparse, for example when
+#'   there are few long runs. To be passed to \code{glrlm}.  
+#' @return A data frame with a single observation. The columns of the dataframe 
+#'   correspond to the calculated features.
+#'
+#' @examples
+#' calc_features(hallbey)
+#' calc_features(psf, n_grey=10)
+#' @seealso \code{\link{glcm}}
+#'   \code{\link{glrlm}}
+#'   \code{\link{glszm}}
+#'   \code{\link{mglszm}}
+
 calc_features <- function(image, features = c("first order", "glcm", "glrlm", "glszm", "mglszm"),
-                          n_grey=32, d=1, verbose=FALSE, max_run_length=min(dim(image)), ...){
+                          n_grey=32, d=1, verbose=FALSE, max_run_length=min(dim(image))){
   # Lists of features for calculation:
   
   # First order ----------------------------

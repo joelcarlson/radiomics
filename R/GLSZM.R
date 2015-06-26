@@ -7,7 +7,7 @@
 
 #' Gray level size zone matrix.
 #'
-#' \code{glrlm} returns a gray level size zone matrix for a given matrix.
+#' \code{glszm} returns a gray level size zone matrix for a given matrix.
 #'
 #' This function can be used alone, or can be executed and it's textural
 #' features automatically calculated using \code{calc_features}.

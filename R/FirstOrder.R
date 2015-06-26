@@ -1,9 +1,19 @@
-##First order statistics
+#' First order features
+#'
+#' @param image Numeric image matrix.
+#' @references \url{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5} 
+#' @name first_order_features
+NULL
+#> NULL
 
+#' @describeIn first_order_features Energy (ASM)
+#' 
 calc_energy <- function(image, dims=NULL){
   #TODO: Add dim check for 2D vs 3D
   return(sum(image*image))
 }
+
+#' @describeIn first_order_features Entropy
 
 calc_entropy <- function(image, base=2, nbins=length(image)){
   # Break image into a hist
@@ -24,6 +34,8 @@ calc_kurtosis <- function(image){
   return(scale * sum(function_val) - 3)
 }
 
+#' @describeIn first_order_features Energy (ASM)
+#' 
 calc_kurtosisOptimized <- function(image){
   n <- length(image)
   image <- image - mean(image)
@@ -31,12 +43,16 @@ calc_kurtosisOptimized <- function(image){
   return(r * (1 - 1/n)^2 - 3)
 }
 
+#' @describeIn first_order_features Mean Deviation
+#' 
 calc_meanDeviation <- function(image){
   scale <- 1/prod(dim(image))
   mu <- mean(image)
   return(scale * sum(abs(image - mu)))
 }
 
+#' @describeIn first_order_features Skewness
+#' 
 calc_skewness <- function (image, na.rm = FALSE){
   
   if (na.rm){
@@ -46,6 +62,8 @@ calc_skewness <- function (image, na.rm = FALSE){
   return(sum((image - mean(image))^3)/(length(image) * sd(image)^3))
 }
 
+#' @describeIn first_order_features Uniformity
+#'
 calc_uniformity <- function(image, nbins=length(image)){
   # Break image into a hist
   im_range <- range(image)

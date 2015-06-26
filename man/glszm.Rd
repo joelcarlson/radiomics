@@ -22,7 +22,7 @@ a matrix of dimension n_grey by region size, the GLSZM. The column
   See (\url{http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html}) for details.
 }
 \description{
-\code{glrlm} returns a gray level size zone matrix for a given matrix.
+\code{glszm} returns a gray level size zone matrix for a given matrix.
 }
 \details{
 This function can be used alone, or can be executed and it's textural

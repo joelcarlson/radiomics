@@ -1,4 +1,11 @@
-## GLCM Texture Features
+#' GLCM Features
+#'
+#' @param glcm A GLCM produced by \code{glcm}.
+#' @references \url{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5} 
+#' @name glcm_features
+NULL
+#> NULL
+
 
 glcm_xplusy <- function(glcm, k){
   sum <- 0
@@ -21,11 +28,15 @@ glcm_xminusy <- function(glcm, k){
   return(sum)
 }
 
+#' @describeIn glcm_features Mean
+#' 
 glcm_mean <- function(glcm){
   #see http://www.fp.ucalgary.ca/mhallbey/ans_ex_12.htm
   return(sum(as.numeric(colnames(glcm)) * colSums(glcm)))
 }
 
+#' @describeIn glcm_features Variance
+#' 
 glcm_variance <- function(glcm){
   sum <- 0
   mean <- glcm_mean(glcm)
@@ -37,6 +48,8 @@ glcm_variance <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Autocorrelation
+#' 
 glcm_autoCorrelation <- function(glcm){
   #there has to be a more elegant way to do this without a for loop
   #Method: Create matrix where the elements are the product of the row and column index
@@ -48,6 +61,8 @@ glcm_autoCorrelation <- function(glcm){
   return(sum(glcm*scale_matrix))
 }
 
+#' @describeIn glcm_features Cluster Prominence
+#' 
 glcm_cProminence <- function(glcm){
   #Vectorizing is out the window! 
   #Hopefully any glcm thrown at the algo will be small enough that this is okay!
@@ -61,6 +76,8 @@ glcm_cProminence <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Cluster Shade
+#' 
 glcm_cShade <- function(glcm){
   sum <- 0
   mean <- glcm_mean(glcm)
@@ -72,7 +89,8 @@ glcm_cShade <- function(glcm){
   return(sum)
 }
 
-
+#' @describeIn glcm_features Cluster Tendency
+#' 
 glcm_cTendency <- function(glcm){
   sum <- 0
   mean <- glcm_mean(glcm)
@@ -84,6 +102,8 @@ glcm_cTendency <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Constrast
+#' 
 glcm_contrast <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -94,7 +114,8 @@ glcm_contrast <- function(glcm){
   return(sum)
 }
 
-
+#' @describeIn glcm_features Correlation
+#' 
 glcm_correlation <- function(glcm){
   sum <- 0
   mean <- glcm_mean(glcm)
@@ -107,7 +128,8 @@ glcm_correlation <- function(glcm){
   return(sum)
 }
 
-
+#' @describeIn glcm_features Difference Entropy
+#' 
 glcm_differenceEntropy <- function(glcm, base=2){
   sum <- 0
   for(i in 1:(nrow(glcm)-1)){
@@ -117,6 +139,8 @@ glcm_differenceEntropy <- function(glcm, base=2){
   return(-1*sum)
 }
 
+#' @describeIn glcm_features Dissimilarity
+#' 
 glcm_dissimilarity <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -127,16 +151,21 @@ glcm_dissimilarity <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Energy
+#' 
 glcm_energy <- function(glcm){
   return(sum(glcm * glcm))
 }
 
-
+#' @describeIn glcm_features Entropy
+#' 
 glcm_entropy <- function(glcm, base=2){
   
   return(-1*sum(glcm*ifelse(glcm > 0, logb(glcm, base=base), 0)))
 }
 
+#' @describeIn glcm_features Homogeneity
+#' 
 glcm_homogeneity1 <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -147,6 +176,8 @@ glcm_homogeneity1 <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Homogeneity 2
+#' 
 glcm_homogeneity2 <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -157,6 +188,8 @@ glcm_homogeneity2 <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Inverse Difference Moment (Normalized)
+#' 
 glcm_IDMN <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -167,6 +200,8 @@ glcm_IDMN <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Inverse Difference (Normalized)
+#' 
 glcm_IDN <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -177,6 +212,8 @@ glcm_IDN <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Inverse Variance
+#' 
 glcm_inverseVariance <- function(glcm){
   sum <- 0
   for(i in 1:nrow(glcm)){
@@ -187,11 +224,14 @@ glcm_inverseVariance <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Maximum Probability
+#' 
 glcm_maxProb <- function(glcm){
   return(max(glcm))
 }
 
-
+#' @describeIn glcm_features Sum Average
+#' 
 glcm_sumAverage <- function(glcm){
   sum <- 0
   for(i in 1:(2*nrow(glcm))){
@@ -201,6 +241,8 @@ glcm_sumAverage <- function(glcm){
   return(sum)
 }
 
+#' @describeIn glcm_features Sum Entropy
+#' 
 glcm_sumEntropy <- function(glcm, base=2){
   sum <- 0
   for(i in 1:(2*nrow(glcm))){
@@ -210,6 +252,8 @@ glcm_sumEntropy <- function(glcm, base=2){
   return(-sum)
 }
 
+#' @describeIn glcm_features Sum Variance
+#' 
 glcm_sumVariance <- function(glcm){
   sum <- 0
   sumEntropy <- glcm_sumEntropy(glcm, base=exp(1))
