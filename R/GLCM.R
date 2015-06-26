@@ -37,8 +37,10 @@ glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normali
   
   
   #discretize image and initialize GLCM based on discretized image
-
-  image <- discretizeImage(image, n_grey=n_grey, ...)
+  if( ! identical( n_grey, length( unique( c(image) ) ) )){ 
+    image <- discretizeImage(image, n_grey=n_grey, ...)
+  }
+  
     
   counts <- buildEmptyCountMatrix(image)
   

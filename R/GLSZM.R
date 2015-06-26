@@ -6,7 +6,10 @@
 #Needs access to reshape2 and spatstat and imageQauntize
 
 glszm <- function(image, n_grey=32, ...){
-  image <- discretizeImage(image, n_grey=n_grey, ...)
+  #discretize image only if n_grey is different from unique grey values in img
+  if( ! identical( n_grey, length( unique( c(image) ) ) )){ 
+    image <- discretizeImage(image, n_grey=n_grey, ...)
+  }
   grey_lvls <- unique(c(image))
   #convert to image for use with spatstats functions
   image <- spatstat::as.im(image)

@@ -1,7 +1,9 @@
 
+# Function to combine all of the texture analysis and first order features to give a nice full feature set
+# for image processing
 
-calc_features <- function(image, features = c("first order", "glcm", "glrlm", "glszm"),
-                          n_grey=32, angle="0", verbose=FALSE, max_run_length=min(dim(image)), ...){
+calc_features <- function(image, features = c("first order", "glcm", "glrlm", "glszm", "mglszm"),
+                          n_grey=32, d=1, verbose=FALSE, max_run_length=min(dim(image)), ...){
   # Lists of features for calculation:
   
   # First order ----------------------------
@@ -79,26 +81,58 @@ calc_features <- function(image, features = c("first order", "glcm", "glrlm", "g
   # ----------------------------------------
   
   # Calculate requested features
-  feature_list <- list()
-  #df <- data.frame()
+  
+  df <- data.frame(image_name = deparse(substitute(image)), n_grey=n_grey, glcm_d=d)
+  
+  
+  if("mglszm" %in% features){
+    mglszm_im <- mglszm(image, verbose=verbose)
+    
+    mglszm_df <- data.frame(lapply(glszm_features, function(f) f(mglszm_im)))
+    df <- cbind(df, mglszm_df)
+  }
+  
+  # Discretize image now to save all other functions from doing so
+  image <- discretizeImage(image, n_grey=n_grey, verbose=verbose)
+  
   if("first order" %in% features){
     fo_df <- data.frame(lapply(first_order_features, function(f) f(image)))
-    #feature_list$"First order features" <- lapply(first_order_features, function(f) f(image))
+    df <- cbind(df, fo_df)
   }
   
   if("glcm" %in% features){
-    glcm_df <- data.frame(lapply(glcm_features, function(f) f(glcm(image, n_grey=n_grey, angle=angle, verbose=verbose))))
+    # Average all 4 angles for rotation invariance
+    glcm_0 <- glcm(image, angle="0", n_grey=n_grey, d=d, verbose=F)
+    glcm_45 <- glcm(image, angle="45", n_grey=n_grey, d=d, verbose=F)
+    glcm_90 <- glcm(image, angle="90", n_grey=n_grey, d=d, verbose=F)
+    glcm_135 <- glcm(image, angle="135", n_grey=n_grey, d=d, verbose=F)
+    glcm_im <- (glcm_0 + glcm_45 + glcm_90 + glcm_135) / 4
+    
+    glcm_df <- data.frame(lapply(glcm_features, function(f) f(glcm_im)))
+    df <- cbind(df, glcm_df)
   }
   
   if("glrlm" %in% features){
-    glrlm_df <- data.frame(lapply(glrlm_features, function(f) f(glrlm(image, n_grey=n_grey, angle=angle, verbose=verbose, max_run_length=max_run_length))))
+    #average all angles for rotation invariance
+    glrlm_0 <- glrlm(image, angle="0", max_run_length=max_run_length, verbose=F)
+    glrlm_45 <- glrlm(image, angle="45", max_run_length=max_run_length, verbose=F)
+    glrlm_90 <- glrlm(image, angle="90", max_run_length=max_run_length, verbose=F)
+    glrlm_135 <- glrlm(image, angle="135", max_run_length=max_run_length, verbose=F)
+    glrlm_im <- (glrlm_0 + glrlm_45 + glrlm_90 + glrlm_135) / 4
+    
+    glrlm_df <- data.frame(lapply(glrlm_features, function(f) f(glrlm_im)))
+    df <- cbind(df, glrlm_df)  
   }
   
   if("glszm" %in% features){
-    glszm_df <- data.frame(lapply(glszm_features, function(f) f(glszm(image, n_grey=n_grey, verbose=verbose))))
+    glszm_im <- glszm(image, n_grey=n_grey, verbose=verbose)
+    
+    glszm_df <- data.frame(lapply(glszm_features, function(f) f(glszm_im)))
+    df <- cbind(df, glszm_df)
   }
   
-  df <- cbind(fo_df, glcm_df, glrlm_df, glszm_df)
+
+  
   df
 } 
 
