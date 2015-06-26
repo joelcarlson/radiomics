@@ -4,7 +4,10 @@
 
 #' Calculate texture and first order statistics.
 #'
-#' \code{calc_features} calculates the first order and textural features for a given matrix
+#' \code{calc_features} calculates the first order and textural features for a given matrix.
+#' Warning: This function can be slow (around ~100s for a 512x512 image), it is better to use
+#' on small images. If performance is an issue consider dropping \code{mglszm} or
+#' \code{glrlm} from features.
 #'
 #' @param image A numeric image matrix.
 #' @param features A vector containing any of "first order", "glcm", "glrlm", 

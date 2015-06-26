@@ -35,7 +35,10 @@ A data frame with a single observation. The columns of the dataframe
   correspond to the calculated features.
 }
 \description{
-\code{calc_features} calculates the first order and textural features for a given matrix
+\code{calc_features} calculates the first order and textural features for a given matrix.
+Warning: This function can be slow (around ~100s for a 512x512 image), it is better to use
+on small images. If performance is an issue consider dropping \code{mglszm} or
+\code{glrlm} from features.
 }
 \examples{
 calc_features(hallbey)
