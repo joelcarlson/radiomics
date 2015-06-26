@@ -25,10 +25,14 @@ glszm <- function(image, n_grey=32, ...){
     count_data <- rbind(count_data, data.frame(i, counts))
   }
   
-  #Clean up and cast into a matrix 
+  #Clean up names 
   colnames(count_data) <- c("greylvl", "size", "counts")
+  #cast to matrix
   count_data <- reshape2::acast(count_data, greylvl~size, value.var="counts")
-  count_data <- count_data[,order(as.numeric(as.character(colnames(count_data))))]
+  #sort columns, if there is only a single size a vector is returned, hence the if
+  if(length(colnames(count_data)) > 1){
+    count_data <- count_data[,order(as.numeric(as.character(colnames(count_data))))]
+  }
   count_data[is.na(count_data)] <- 0
   
 
