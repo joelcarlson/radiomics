@@ -1,6 +1,3 @@
-#GLRLM
-
-# Helper functions!
 
 add_to_rlm <- function(runs, rlm, max_run_length){
   #Intermediate function, not meant to be called directly
@@ -16,8 +13,32 @@ add_to_rlm <- function(runs, rlm, max_run_length){
 }
 
 
-# Further optimized using table for the run length encoding output,
-# rather than looping over them
+#' Gray level run length matrix.
+#'
+#' \code{glrlm} returns a gray level run length matrix for a given matrix.
+#'
+#' This function can be used alone, or can be executed and it's textural
+#' features automatically calculated using \code{calc_features}.
+#' 
+#' @param image A numeric image matrix.
+#' @param angle One of "0", "45", "90" or "135", the direction the run is calculated.
+#' @param n_grey an integer value, the number of grey levels the image should
+#'   be quantized into.
+#' @param max_run_length An integer value, the default is the maximum possible
+#'   run length. Setting it to a smaller value truncates the output. Desirable
+#'   in cases where the matrix is extremely sparse, for example when
+#'   there are few long runs.
+#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
+#' @return a matrix of dimension n_grey by run length, the GLRLM. The column 
+#'   names represent the length of the run, and row names represent 
+#'   grey values in the image.
+#'   See Galloway 1974
+#'   (\url{http://www.sciencedirect.com/science/article/pii/S0146664X75800086}) for details.   
+#'
+#' @examples
+#' hallbey
+#' glrlm(hallbey)
+#' glrlm(hallbey, angle="90") 
 
 glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)), ...){
   #discretize image only if n_grey is different from unique grey values in img

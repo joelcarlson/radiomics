@@ -1,3 +1,29 @@
+#' Image Discretization.
+#'
+#' \code{discretizeImage} Scales the grey values of an image into a specified number of values.
+#'
+#' This function is called in \code{glcm}, \code{glrlm}, \code{glszm}, and \code{mglszm}.
+#' 
+#' @param image A numeric image matrix.
+#' @param n_grey an integer value, the number of grey levels the image should
+#'   be quantized into.
+#' @param verbose Logical, a warning is given when the user 
+#'  supplies more grey values than exist in the image. Setting this value to FALSE
+#'  will suppress this warning.       
+#' @return A matrix of the same dimensions as the input matrix. The entries of the matrix
+#'  will be set to begin at 1, and go up to the specified value. There is no guarantee
+#'  that each gray level between 1 and n_grey will have pixels of that value (for example, 
+#'  although n_grey = 32 may be specified, certain images may contain fewer than 32 grey levels).
+#'     
+#'
+#' @examples
+#' image(psf)
+#' image(discretizeImage(psf, n_grey=5, verbose=F))
+#' 
+#' image(tumor)
+#' image(discretizeImage(tumor, n_grey=8, verbose=F))
+#' 
+ 
 discretizeImage <- function(image, n_grey=32, verbose=TRUE){
   #Not a perfect solution. Makes n_grey breaks, but doesn't necessarily populate all of them
   # eg. n_gey could be 100, but only 75 of the levels are used by pixels

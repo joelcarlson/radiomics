@@ -3,7 +3,32 @@
 #Quantifies size zone matrices in an image
 # See here: http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html
 
-#Needs access to reshape2 and spatstat and imageQauntize
+#Needs access to reshape2 and spatstat 
+
+#' Gray level size zone matrix.
+#'
+#' \code{glrlm} returns a gray level size zone matrix for a given matrix.
+#'
+#' This function can be used alone, or can be executed and it's textural
+#' features automatically calculated using \code{calc_features}.
+#' 
+#' @param image A numeric image matrix.
+#' @param n_grey an integer value, the number of grey levels the image should
+#'   be quantized into.
+#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
+#' @return a matrix of dimension n_grey by region size, the GLSZM. The column 
+#'   names represent the region size, row names represent grey level, and 
+#'   the entries represent the count of how many times a given size of given grey level
+#'   occur.
+
+#'   See (\url{http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html}) for details.   
+#'
+#' @examples
+#' image(psf)
+#' glszm(psf)
+#' 
+#' image(discretizeImage(psf, n_grey=5, verbose=F))
+#' glszm(psf, n_grey=5, verbose=F) 
 
 glszm <- function(image, n_grey=32, ...){
   #discretize image only if n_grey is different from unique grey values in img

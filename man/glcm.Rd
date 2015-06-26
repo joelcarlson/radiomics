@@ -8,6 +8,8 @@ glcm(image, angle = "0", d = 1, n_grey = length(unique(c(image))),
   normalize = TRUE, ...)
 }
 \arguments{
+\item{image}{A numeric image matrix.}
+
 \item{angle}{One of "0", "45", "90" or "135", the pixel to which the
 current pixel is compared.}
 
@@ -23,7 +25,9 @@ the sum of it's components is 1.}
 \item{...}{Can be given verbose=FALSE to suppress output from the n_grey conversion.}
 }
 \value{
-a matrix of dimension n_grey by n_grey, the GLCM.
+a matrix of dimension n_grey by n_grey, the GLCM. The column and row names represent
+  grey values in the image.
+
   See \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm} for details.
 }
 \description{
@@ -31,7 +35,7 @@ a matrix of dimension n_grey by n_grey, the GLCM.
 }
 \details{
 This function can be used alone, or can be executed and it's textural
-features automatically calculated using \code{calc_features}
+features automatically calculated using \code{calc_features}.
 }
 \examples{
 hallbey
