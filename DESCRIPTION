@@ -10,5 +10,7 @@ License: MIT
 Imports: 
     spatstat, 
     reshape2
-Suggests: testthat
+Suggests: testthat,
+    knitr
 LazyData: true
+VignetteBuilder: knitr
