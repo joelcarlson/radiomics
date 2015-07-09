@@ -1,17 +1,5 @@
 # GLCM 
 
-buildEmptyCountMatrix <- function(image){
-  ###
-  # build a matrix such that the column and rownames 
-  # represent pairs of pixel values present in sample
-  ###
-  unique_vals <- sort(unique(c(image)))
-  count_matrix <- matrix(rep(0, length(unique_vals)^2), nrow=length(unique_vals))
-  rownames(count_matrix) <- unique_vals 
-  colnames(count_matrix) <- unique_vals
-  return(count_matrix)
-}
-
 #' Gray level co-occurrence matrix.
 #'
 #' \code{glcm} returns a gray level co-occurrence matrix for a given matrix.
@@ -62,13 +50,17 @@ glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normali
   
   
   #discretize image and initialize GLCM based on discretized image
-  if( ! identical( n_grey, length( unique( c(image) ) ) )){ 
+  if( ! identical( n_grey, length(unique(c(image))) ) ){ 
     image <- discretizeImage(image, n_grey=n_grey, ...)
   }
   
-    
-  counts <- buildEmptyCountMatrix(image)
+  #Add an extra row to allow zeroes in the grey levels.
+  #R indexing from 1 makes this necessary
+  max_val <- max(image, na.rm=T)
+  counts <- matrix(0, nrow=(max_val + 1), ncol=(max_val + 1))
   
+  rownames(counts) <- c(0:max_val)
+  colnames(counts) <- c(0:max_val)
   
   #Add columns of NAs to left, top, and right side to mitigate edge
   NA_cols <- matrix(rep(NA, d*nrow(image)), ncol=d)
@@ -81,17 +73,22 @@ glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normali
   for( i in (d+1):nrow(image)){
     #last col is also NA, so don't loop over it
     for( j in (d+1):(ncol(image) - d)){
-      ref_val <- as.character(image[i,j])
-      neighbor_val <- as.character(image[i + angle[1], j + angle[2]])
+      ref_val <- image[i,j]
+      neighbor_val <- image[i + angle[1], j + angle[2]]
       
       if(is.na(ref_val) | is.na(neighbor_val)) next
       
-      counts[ref_val, neighbor_val] <- counts[ref_val, neighbor_val] + 1
+      #Add 1 so that zeroes in the grey levels can be indexed
+      counts[ref_val + 1, neighbor_val + 1] <- counts[ref_val + 1, neighbor_val + 1] + 1
     }
   }
   
   #GLCMs should be symmetrical, so the transpose is added
   counts <- counts + t(counts)
+
+  
+  #Remove columns and rows with no values to counter sparsity
+  counts <- counts[!rowSums(counts)==0, !colSums(counts)==0]
   
   #Normalize
   ifelse(normalize, return(counts/sum(counts)), return(counts) )
