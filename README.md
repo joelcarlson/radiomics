@@ -1,19 +1,15 @@
 ---
 title: "Radiomic Texture Analysis"
-author: "Joel Carlson"
-date: "Thursday, July 09, 2015"
-output:
-  html_document:
-    keep_md: yes
 ---
 
 The `radiomics` package is a set of tools for computing texture matrices from images, and features derived from the matrices. 
 
 You can install the package using:
 
-```{r, eval=FALSE}
+
+{% highlight r %}
 devtools::install_github("joelcarlson/radiomics")
-```
+{% endhighlight %}
 
 #Texture Matrices
 
@@ -25,11 +21,7 @@ The first matrix type is the gray level co-occurence matrix, or GLCM for short. 
 
 A visual example shows this process. Pixels in the image are colored and labeled by grey value. The GLCM is set up such that each pixel value is represented on each axis.
 
-```{r,eval=FALSE, echo=FALSE}
-![grey level image1](http://i.imgur.com/m9MKq1I.png) 
-![grey level image2](http://i.imgur.com/CJVRsjo.png) 
-![grey level image3](http://i.imgur.com/uK4hh5Z.png) 
-```
+
 
 <img src="http://i.imgur.com/m9MKq1I.png" height="227px" width="500px" />
 
@@ -49,11 +41,22 @@ By convention, we sum the GLCM with it's transpose, to obtain the final GLCM:
 
 This can be accomplished using the `radiomics` package as follows:
 
-```{r}
+
+{% highlight r %}
 library(radiomics)
 image <- matrix(c(1,2,3,4,1,1,2,4,3,3,3,2,4,1,4,1), nrow=4)
 glcm(image, normalize=FALSE)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   1 2 3 4
+## 1 2 2 3 0
+## 2 2 0 2 1
+## 3 3 2 0 2
+## 4 0 1 2 2
+{% endhighlight %}
 
 Normally, GLCMs are normalized before features are calculated, this is the default situation for the `glcm()` function.
 
@@ -77,16 +80,38 @@ We complete this for all pixels in the image to obtain the final GLRLM:
 
 This can be accomplished using the radiomics package with the command:
 
-```{r, message=F}
+
+{% highlight r %}
 image <- matrix(c(1,2,4,2,1,3,4,4,2,2,3,4,2,3,3,4), nrow=4)
 glrlm(image)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   1 2 3 4
+## 1 0 1 0 0
+## 2 3 1 0 0
+## 3 2 1 0 0
+## 4 0 1 1 0
+{% endhighlight %}
 
 Note the extra run length column, the number of run length columns is a function of the dimensions of the image. If the run length is possible (in this case, if there were 4 pixels in a row), there will be a column for it in the output. This output can be truncated by specifying the maximum run length you wish to search for:
 
-```{r, message=F}
+
+{% highlight r %}
 glrlm(image, max_run_length=3)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   1 2 3
+## 1 0 1 0
+## 2 3 1 0
+## 3 2 1 0
+## 4 0 1 1
+{% endhighlight %}
 
 
 ##Gray Level Size Zone Matrix
@@ -103,10 +128,21 @@ For each color we count the number of zones of a given size, here for example, t
 
 GLSZMs can be calculated using the `glszm` function:
 
-```{r, message=F}
+
+{% highlight r %}
 image <- matrix(c(1,2,3,4,1,1,2,4,3,3,3,2,4,1,4,1), nrow=4)
 glszm(image)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##   1 2 3
+## 1 2 0 1
+## 2 0 0 1
+## 3 1 0 1
+## 4 2 1 0
+{% endhighlight %}
 
 For more information on the GLSZM see [here.](http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html)
 
@@ -115,89 +151,80 @@ For more information on the GLSZM see [here.](http://thibault.biz/Research/Thiba
 
 From the texture matrices it is possible to calculate many different features. These are summarized in the following table:
 
-```{r, echo=F}
-library(knitr)
-df <- data.frame("First Order"=c("energy",
-                               "entropy",
-                               "kurtosis",
-                               "meanDeviation",
-                               "skewness",
-                               "uniformity",
-                               "mean",
-                               "median",
-                               "max",
-                               "min",
-                               "diff",
-                               "var",
-                               "RMS",
-                               "sd" ,"-","-","-","-","-","-","-"),
-                 "GLCM"=c("mean",
-                        "variance",
-                        "autoCorrelation",
-                        "cProminence",
-                        "cShade",
-                        "cTendency",
-                        "contrast",
-                        "correlation",
-                        "differenceEntropy",  
-                        "dissimilarity",
-                        "energy",
-                        "entropy", 
-                        "homogeneity1",
-                        "homogeneity2", 
-                        "IDMN",
-                        "IDN",
-                        "inverseVariance",
-                        "maxProb",
-                        "sumAverage", 
-                        "sumEntropy",
-                        "sumVariance"),
-                 "GLRLM"=c("GLN",
-                         "HGLRE",
-                         "LRE", 
-                         "LRHGLE",
-                         "LRLGLE",
-                         "LGLRE",
-                         "RLN", 
-                         "RP",
-                         "SRE",
-                         "SRHGLE",
-                         "SRLGLE","-","-","-","-","-","-","-","-","-","-"),
-                 "GLSZM"=c("SAE",
-                         "LAE",
-                         "IV", 
-                         "SZV",
-                         "ZP",
-                         "LIE",
-                         "HIE",
-                         "LISAE", 
-                         "HISAE", 
-                         "LILAE", 
-                         "HILAE","-","-","-","-","-","-","-","-","-","-"))
-kable(df)
-```
+
+|First.Order   |GLCM              |GLRLM  |GLSZM |
+|:-------------|:-----------------|:------|:-----|
+|energy        |mean              |GLN    |SAE   |
+|entropy       |variance          |HGLRE  |LAE   |
+|kurtosis      |autoCorrelation   |LRE    |IV    |
+|meanDeviation |cProminence       |LRHGLE |SZV   |
+|skewness      |cShade            |LRLGLE |ZP    |
+|uniformity    |cTendency         |LGLRE  |LIE   |
+|mean          |contrast          |RLN    |HIE   |
+|median        |correlation       |RP     |LISAE |
+|max           |differenceEntropy |SRE    |HISAE |
+|min           |dissimilarity     |SRHGLE |LILAE |
+|diff          |energy            |SRLGLE |HILAE |
+|var           |entropy           |-      |-     |
+|RMS           |homogeneity1      |-      |-     |
+|sd            |homogeneity2      |-      |-     |
+|-             |IDMN              |-      |-     |
+|-             |IDN               |-      |-     |
+|-             |inverseVariance   |-      |-     |
+|-             |maxProb           |-      |-     |
+|-             |sumAverage        |-      |-     |
+|-             |sumEntropy        |-      |-     |
+|-             |sumVariance       |-      |-     |
 
 In the `radiomics` package, each feature associated with a given matrix can be calculated by appending the matrix name with the feature name, separated by an underscore. For example:
 
-```{r, message=F}
+
+{% highlight r %}
 # First order features are calculated on the image,
 # and are prefixed with 'calc'
 calc_energy(hallbey)
-```
-```{r, message=F}
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 42
+{% endhighlight %}
+
+{% highlight r %}
 # GLCM features on a glcm:
 hbGLCM <- glcm(hallbey)
 glcm_contrast(hbGLCM)
-```
-```{r, message=F}
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 0.5833333
+{% endhighlight %}
+
+{% highlight r %}
 # GLRLM features on a glrlm:
 hbGLRLM <- glrlm(hallbey)
 glrlm_GLN(hbGLRLM)
-```
-```{r, message=F}
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 2.25
+{% endhighlight %}
+
+{% highlight r %}
 # GLSZM features on a glszm:
 hbGLSZM <- glszm(hallbey)
 glszm_LILAE(hbGLSZM)
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 8.006944
+{% endhighlight %}
 
 
