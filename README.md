@@ -166,10 +166,8 @@ Further information and mathematical definitions of these quantities can be foun
 
 In the `radiomics` package, each feature associated with a given matrix can be calculated by appending the matrix name with the feature name, separated by an underscore. For example:
 
-
+First order features are calculated on the image, and are prefixed with 'calc':
 ```r
-# First order features are calculated on the image,
-# and are prefixed with 'calc'
 calc_energy(hallbey)
 ```
 
@@ -177,8 +175,8 @@ calc_energy(hallbey)
 ## [1] 42
 ```
 
+GLCM features are calculated on a glcm, and take 'glcm' as a prefix:
 ```r
-# GLCM features on a glcm:
 hbGLCM <- glcm(hallbey)
 glcm_contrast(hbGLCM)
 ```
@@ -187,8 +185,8 @@ glcm_contrast(hbGLCM)
 ## [1] 0.5833333
 ```
 
+GLRLM features are calculated on a glrlm, and take 'glrlm' as a prefix:
 ```r
-# GLRLM features on a glrlm:
 hbGLRLM <- glrlm(hallbey)
 glrlm_GLN(hbGLRLM)
 ```
@@ -197,8 +195,8 @@ glrlm_GLN(hbGLRLM)
 ## [1] 2.25
 ```
 
+GLSZM features are calculated on a glszm, and take 'glszm' as a prefix:
 ```r
-# GLSZM features on a glszm:
 hbGLSZM <- glszm(hallbey)
 glszm_LILAE(hbGLSZM)
 ```
@@ -218,7 +216,7 @@ calc_features(hallbey)
 ```
 
 ```r
-#  image_name n_grey glcm_d  glszm_SAE   glszm_LAE  glszm_IV   glszm_SZV  glszm_ZP   glszm_LIE     glszm_HIE  ...
-#  hallbey     32      1     0.09805366  17.54145   0.9999678  95.82953   0.249782   0.006410295   21973.5 ...
+#  image_name n_grey glcm_d  glszm_SAE   glszm_LAE  glszm_IV   glszm_SZV  glszm_ZP   glszm_LIE   ...
+#  hallbey     32      1     0.09805366  17.54145   0.9999678  95.82953   0.249782   0.006410295 ...
 ```
 
