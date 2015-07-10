@@ -17,7 +17,7 @@ In the package are functions for calculating several different types of matrices
 
 The first matrix type is the gray level co-occurence matrix, or GLCM for short. GLCMs take an image (as a matrix), an angle ("0", "45", "90", or "135"), and an integer distance. The axes of the GLCM are defined by the grey levels present in the image. Each pixel of the image is scanned and stored as a "reference pixel". The reference pixel is then compared to the pixel that is distance d at angle theta (where "0" degrees is the pixel to the right, "90" is the pixel above) away from the reference pixel, known as the neighbor pixel. Each time a reference value and neighbor value pair is found, the corresponding row and column of the GLCM is incremented by 1. 
 
-A visual example shows this process. Pixels in the image are colored and labeled by grey value. The GLCM is set up such that each pixel value is represented on each axis.
+A visual example shows this process. Pixels in the image are colored and labelled by grey value. The GLCM is set up such that each pixel value is represented on each axis.
 
 <img src="http://i.imgur.com/m9MKq1I.png" height="227px" width="500px" />
 
@@ -205,7 +205,7 @@ glszm_LILAE(hbGLSZM)
 ## [1] 8.006944
 ```
 
-##Calculating featues en-masse
+##Calculating features en-masse
 
 It is not practical to type out the exact features you wish to calculate for each image matrix you create. To remedy this situation, there is a `calc_features()` function. This function, given an image matrix and the types of features you wish to calculate (any or all of "first order", "glcm", "glrlm", "glszm", "mglszm") will create the appropriate texture matrices and calculate all the features relevent to the matrix type, outputting all of the features as an observation of a data frame. 
 
