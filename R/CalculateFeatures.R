@@ -122,6 +122,7 @@ calc_features <- function(image, features = c("first order", "glcm", "glrlm", "g
     mglszm_im <- mglszm(image, verbose=verbose)
     
     mglszm_df <- data.frame(lapply(glszm_features, function(f) f(mglszm_im)))
+    colnames(mglszm_df) <- paste0("m", colnames(mglszm_df))
     df <- cbind(df, mglszm_df)
   }
   
