@@ -15,7 +15,7 @@ In the package are functions for calculating several different types of matrices
 
 ##Gray Level Co-occurrence Matrix
 
-The first matrix type is the gray level co-occurence matrix, or GLCM for short. GLCMs take an image (as a matrix), an angle ("0", "45", "90", or "135"), and an integer distance. The axes of the GLCM are defined by the grey levels present in the image. Each pixel of the image is scanned and stored as a "reference pixel". The reference pixel is then compared to the pixel that is distance d at angle theta (where "0" degrees is the pixel to the right, "90" is the pixel above) away from the reference pixel, known as the neighbor pixel. Each time a reference value and neighbor value pair is found, the corresponding row and column of the GLCM is incremented by 1. 
+The first matrix type is the gray level co-occurence matrix (GLCM). GLCMs take an image (as a matrix), an angle ("0", "45", "90", or "135"), and an integer distance, d. The axes of the GLCM are defined by the grey levels present in the image. Each pixel of the image is scanned and stored as a "reference pixel". The reference pixel is then compared to the pixel that is distance d at angle theta (where "0" degrees is the pixel to the right, "90" is the pixel above) away from the reference pixel, known as the neighbor pixel. Each time a reference value and neighbor value pair is found, the corresponding row and column of the GLCM is incremented by 1. 
 
 A visual example shows this process. Pixels in the image are colored and labelled by grey value. The GLCM is set up such that each pixel value is represented on each axis.
 
@@ -31,7 +31,7 @@ While there are two 1:3 pairs:
 
 Continuing in this fashion for each grey level, we end up with a GLCM filled with counts.
 
-By convention, we sum the GLCM with it's transpose, to obtain the final GLCM:
+By convention, we sum the GLCM and the GLCMs transpose to obtain a symmetric matrix:
 
 <img src="http://i.imgur.com/GdVzVxN.png" height="227px" width="829px" />
 
@@ -58,7 +58,7 @@ More information about the GLCM can be found [here.](http://www.fp.ucalgary.ca/m
 
 ##Gray Level Run Length Matrix
 
-The GLRLM is a matrix which attempts to quantify runs of the same grey level in the image. The GLRLM is set up slightly differently than the GLCM; instead of having grey levels along the abscissa of the table the GLRLM has run lengths.
+The GLRLM is a matrix which attempts to quantify runs of the same grey level in the image. The GLRLM is set up slightly differently than the GLCM; instead of having grey levels along the abscissa of the table, the GLRLM has run lengths.
 
 As with the GLCM, an angle is required (one of "0", "45", "90", or "135"). Below is an example using "0", note that the image matrix is not the same as the GLCM example:
 
@@ -106,7 +106,7 @@ glrlm(image, max_run_length=3)
 
 The goal of the GLSZM is to quantify regions of contiguous pixels in the image. The GLSZM is set up in the same way as the GLRLM, except along the abscissa are size zones rather than run lengths. A size zone is defined as a collection of 9-connected pixels (ie. connected on their edges and corners) of the same grey level.
 
-For the GLSZM we will use the same image as for the GLCM. Rather than labeling grey levels, contiguous size zones are labeled with their size, that is, the number of 9 connected pixels of the same grey level:
+For the GLSZM we will use the same image as for the GLCM. Rather than labeling grey levels, contiguous size zones are labeled with their size:
 
 <img src="http://i.imgur.com/vNQTAsz.png" height="227px" width="496px" />
 
