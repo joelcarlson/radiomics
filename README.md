@@ -138,7 +138,7 @@ For more information on the GLSZM see [here.](http://thibault.biz/Research/Thiba
 From the texture matrices it is possible to calculate many different features. These are summarized in the following table:
 
 
-|First.Order   |GLCM              |GLRLM  |GLSZM |
+|First Order   |GLCM              |GLRLM  |GLSZM |
 |:-------------|:-----------------|:------|:-----|
 |energy        |mean              |GLN    |SAE   |
 |entropy       |variance          |HGLRE  |LAE   |
@@ -161,6 +161,8 @@ From the texture matrices it is possible to calculate many different features. T
 |-             |sumAverage        |-      |-     |
 |-             |sumEntropy        |-      |-     |
 |-             |sumVariance       |-      |-     |
+
+Further information and mathematical definitions of these quantities can be found [here.](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5)
 
 In the `radiomics` package, each feature associated with a given matrix can be calculated by appending the matrix name with the feature name, separated by an underscore. For example:
 
@@ -205,4 +207,18 @@ glszm_LILAE(hbGLSZM)
 ## [1] 8.006944
 ```
 
+##Calculating featues en-masse
+
+It is not practical to type out the exact features you wish to calculate for each image matrix you create. To remedy this situation, there is a `calc_features()` function. This function, given an image matrix and the types of features you wish to calculate (any or all of "first order", "glcm", "glrlm", "glszm", "mglszm") will create the appropriate texture matrices and calculate all the features relevent to the matrix type, outputting all of the features as an observation of a data frame. 
+
+To note: The `calc_features()` function calculates all angles ("0", "45", "90", "135") for the GLCM and GLRLM, and then averages them together. This is to ensure rotation invariance.
+
+```r
+calc_features(hallbey)
+```
+
+```r
+#  image_name n_grey glcm_d  glszm_SAE   glszm_LAE  glszm_IV   glszm_SZV  glszm_ZP   glszm_LIE     glszm_HIE  ...
+#  hallbey     32      1     0.09805366  17.54145   0.9999678  95.82953   0.249782   0.006410295   21973.5 ...
+```
 
