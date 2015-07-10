@@ -15,19 +15,17 @@ In the package are functions for calculating several different types of matrices
 
 ##Gray Level Co-occurrence Matrix
 
-The first matrix type is the gray level co-occurence matrix, or GLCM for short. GLCMs take an image (as a matrix), an angle ("0", "45",  "90", or "135"), and a distance. The axes of the GLCM are defined by the grey levels present in the image. Each pixel of the image is scanned and stored as a "reference pixel". The reference pixel is then compared to the pixel that is distance $d$ at angle $\theta$ away from the reference pixel, known as the neighbor pixel. Each time a reference value and neighbor value pair is found, the corresponding row and column of the GLCM is incremented by 1. 
+The first matrix type is the gray level co-occurence matrix, or GLCM for short. GLCMs take an image (as a matrix), an angle ("0", "45", "90", or "135"), and an integer distance. The axes of the GLCM are defined by the grey levels present in the image. Each pixel of the image is scanned and stored as a "reference pixel". The reference pixel is then compared to the pixel that is distance d at angle theta (where "0" degrees is the pixel to the right, "90" is the pixel above) away from the reference pixel, known as the neighbor pixel. Each time a reference value and neighbor value pair is found, the corresponding row and column of the GLCM is incremented by 1. 
 
 A visual example shows this process. Pixels in the image are colored and labeled by grey value. The GLCM is set up such that each pixel value is represented on each axis.
 
-
-
 <img src="http://i.imgur.com/m9MKq1I.png" height="227px" width="500px" />
 
-We count the number of times each pair of grey levels occurs, for example, if $\theta = 0$ and $d = 1$, for the grey level of $1$, there is one $1:1$ pair:
+We count the number of times each pair of grey levels occurs, for example, if angle = "0" and d = 1, for the grey level of 1, there is one 1:1 pair:
 
 <img src="http://i.imgur.com/z5xFw6C.png" height="227px" width="500px" />
 
-While there are two $1:3$ pairs:
+While there are two 1:3 pairs:
 
 <img src="http://i.imgur.com/4L8dSgf.png" height="227px" width="500px" />
 
@@ -40,21 +38,19 @@ By convention, we sum the GLCM with it's transpose, to obtain the final GLCM:
 This can be accomplished using the `radiomics` package as follows:
 
 
-{% highlight r %}
+```r
 library(radiomics)
 image <- matrix(c(1,2,3,4,1,1,2,4,3,3,3,2,4,1,4,1), nrow=4)
 glcm(image, normalize=FALSE)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ##   1 2 3 4
 ## 1 2 2 3 0
 ## 2 2 0 2 1
 ## 3 3 2 0 2
 ## 4 0 1 2 2
-{% endhighlight %}
+```
 
 Normally, GLCMs are normalized before features are calculated, this is the default situation for the `glcm()` function.
 
@@ -64,7 +60,7 @@ More information about the GLCM can be found [here.](http://www.fp.ucalgary.ca/m
 
 The GLRLM is a matrix which attempts to quantify runs of the same grey level in the image. The GLRLM is set up slightly differently than the GLCM; instead of having grey levels along the abscissa of the table the GLRLM has run lengths.
 
-As with the GLCM, an angle is required (one of $0$, $45$, $90$, or $135$). Below is an example using $0$, note that the image matrix is not the same as the GLCM example:
+As with the GLCM, an angle is required (one of "0", "45", "90", or "135"). Below is an example using "0", note that the image matrix is not the same as the GLCM example:
 
 <img src="http://i.imgur.com/aTapTC1.png" height="227px" width="478x" />
 
@@ -78,39 +74,33 @@ We complete this for all pixels in the image to obtain the final GLRLM:
 
 This can be accomplished using the radiomics package with the command:
 
-
-{% highlight r %}
+```r
 image <- matrix(c(1,2,4,2,1,3,4,4,2,2,3,4,2,3,3,4), nrow=4)
 glrlm(image)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ##   1 2 3 4
 ## 1 0 1 0 0
 ## 2 3 1 0 0
 ## 3 2 1 0 0
 ## 4 0 1 1 0
-{% endhighlight %}
+```
 
 Note the extra run length column, the number of run length columns is a function of the dimensions of the image. If the run length is possible (in this case, if there were 4 pixels in a row), there will be a column for it in the output. This output can be truncated by specifying the maximum run length you wish to search for:
 
 
-{% highlight r %}
+```r
 glrlm(image, max_run_length=3)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ##   1 2 3
 ## 1 0 1 0
 ## 2 3 1 0
 ## 3 2 1 0
 ## 4 0 1 1
-{% endhighlight %}
-
+```
 
 ##Gray Level Size Zone Matrix
 
@@ -127,20 +117,18 @@ For each color we count the number of zones of a given size, here for example, t
 GLSZMs can be calculated using the `glszm` function:
 
 
-{% highlight r %}
+```r
 image <- matrix(c(1,2,3,4,1,1,2,4,3,3,3,2,4,1,4,1), nrow=4)
 glszm(image)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ##   1 2 3
 ## 1 2 0 1
 ## 2 0 0 1
 ## 3 1 0 1
 ## 4 2 1 0
-{% endhighlight %}
+```
 
 For more information on the GLSZM see [here.](http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html)
 
@@ -177,52 +165,44 @@ From the texture matrices it is possible to calculate many different features. T
 In the `radiomics` package, each feature associated with a given matrix can be calculated by appending the matrix name with the feature name, separated by an underscore. For example:
 
 
-{% highlight r %}
+```r
 # First order features are calculated on the image,
 # and are prefixed with 'calc'
 calc_energy(hallbey)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ## [1] 42
-{% endhighlight %}
+```
 
-{% highlight r %}
+```r
 # GLCM features on a glcm:
 hbGLCM <- glcm(hallbey)
 glcm_contrast(hbGLCM)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ## [1] 0.5833333
-{% endhighlight %}
+```
 
-{% highlight r %}
+```r
 # GLRLM features on a glrlm:
 hbGLRLM <- glrlm(hallbey)
 glrlm_GLN(hbGLRLM)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ## [1] 2.25
-{% endhighlight %}
+```
 
-{% highlight r %}
+```r
 # GLSZM features on a glszm:
 hbGLSZM <- glszm(hallbey)
 glszm_LILAE(hbGLSZM)
-{% endhighlight %}
+```
 
-
-
-{% highlight text %}
+```r
 ## [1] 8.006944
-{% endhighlight %}
+```
 
 
