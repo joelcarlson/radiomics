@@ -1,15 +1,13 @@
----
-title: "Radiomic Texture Analysis"
----
+#Radiomic Texture Analysis
 
 The `radiomics` package is a set of tools for computing texture matrices from images, and features derived from the matrices. 
 
 You can install the package using:
 
 
-{% highlight r %}
+```r
 devtools::install_github("joelcarlson/radiomics")
-{% endhighlight %}
+```
 
 #Texture Matrices
 
