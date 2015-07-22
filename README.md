@@ -162,7 +162,7 @@ From the texture matrices it is possible to calculate many different features. T
 |-             |sumEntropy        |-      |-     |
 |-             |sumVariance       |-      |-     |
 
-Further information and mathematical definitions of these quantities can be found [here.](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5)
+Further information and mathematical definitions of these quantities see [here.](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5)
 
 In the `radiomics` package, each feature associated with a given matrix can be calculated by appending the matrix name with the feature name, separated by an underscore. For example:
 

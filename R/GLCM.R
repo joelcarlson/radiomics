@@ -57,6 +57,7 @@ glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normali
   #Add an extra row to allow zeroes in the grey levels.
   #R indexing from 1 makes this necessary
   max_val <- max(image, na.rm=T)
+  min_val <- min(image, na.rm=T)
   counts <- matrix(0, nrow=(max_val + 1), ncol=(max_val + 1))
   
   rownames(counts) <- c(0:max_val)
@@ -88,7 +89,17 @@ glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normali
 
   
   #Remove columns and rows with no values to counter sparsity
-  counts <- counts[!rowSums(counts)==0, !colSums(counts)==0]
+  #There is an issue here when using calc_features. If in one angle there is no
+  #glcm count where there is in any other angle then the matrices will be of different size
+  #counts <- counts[!rowSums(counts)==0, !colSums(counts)==0]
+  
+  #Because of above, we will keep sparse glcms and deal with zeros as follows: 
+  #count <- ifelse(min_val > 0, counts[-1,-1], counts[-nrow(counts), -ncol(counts)])
+  if(min_val > 0){
+    counts <- counts[-1,-1]
+  } else {
+    counts <- counts[-nrow(counts), -ncol(counts)]
+  }
   
   #Normalize
   ifelse(normalize, return(counts/sum(counts)), return(counts) )
