@@ -42,7 +42,7 @@ add_to_rlm <- function(runs, rlm, max_run_length){
 
 glrlm <- function(image, angle="0", n_grey=32, max_run_length = min(dim(image)), ...){
   #discretize image only if n_grey is different from unique grey values in img
-  if( ! identical( n_grey, length( unique( c(image) ) ) )){ 
+  if( ! identical( n_grey, as.numeric(length( unique( c(image) ) )) )){ 
     image <- discretizeImage(image, n_grey=n_grey, ...)
   }
   
