@@ -32,7 +32,7 @@
 
 glszm <- function(image, n_grey=32, ...){
   #discretize image only if n_grey is different from unique grey values in img
-  if( ! identical( n_grey, length( unique( c(image) ) ) )){ 
+  if( ! identical( n_grey, as.numeric(length( unique( c(image) ) )) )){ 
     image <- discretizeImage(image, n_grey=n_grey, ...)
   }
   grey_lvls <- unique(c(image))
