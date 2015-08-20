@@ -30,16 +30,16 @@ calc_kurtosis <- function(image){
   mu <- mean(image, na.rm=TRUE)
   sigma <- sd(image, na.rm=TRUE)
   
-  function_val <- vapply(image, function(x) ((x - mu)/sigma)^4, FUN.VALUE=1)
+  function_val <- vapply(image[!is.na(image)], function(x) ((x - mu)/sigma)^4, FUN.VALUE=1)
   return(scale * sum(function_val) - 3)
 }
 
 #' @describeIn first_order_features Energy (ASM)
 #' 
 calc_kurtosisOptimized <- function(image){
-  n <- length(image)
+  n <- length(image[!is.na(image)])
   image <- image - mean(image, na.rm=TRUE)
-  r <- n * sum(image^4) / (sum(image^2)^2)
+  r <- n * sum(image^4, na.rm=TRUE) / (sum(image^2, na.rm=TRUE)^2)
   return(r * (1 - 1/n)^2 - 3)
 }
 
@@ -47,26 +47,24 @@ calc_kurtosisOptimized <- function(image){
 #' 
 calc_meanDeviation <- function(image){
   scale <- 1/prod(dim(image))
-  mu <- mean(image)
-  return(scale * sum(abs(image - mu)))
+  mu <- mean(image, na.rm=TRUE)
+  return(scale * sum(abs(image - mu), na.rm=TRUE))
 }
 
 #' @describeIn first_order_features Skewness
 #' 
-calc_skewness <- function (image, na.rm = FALSE){
+calc_skewness <- function (image){
   
-  if (na.rm){
-    image <- image[!is.na(image)]
-  }
-  
+  image <- image[!is.na(image)]
+
   return(sum((image - mean(image))^3)/(length(image) * sd(image)^3))
 }
 
 #' @describeIn first_order_features Uniformity
 #'
-calc_uniformity <- function(image, nbins=length(image)){
+calc_uniformity <- function(image, nbins=length(image[!is.na(image)]){
   # Break image into a hist
-  im_range <- range(image)
+  im_range <- range(image, na.rm=TRUE)
   cuts <- table(cut(image, seq(im_range[1], im_range[2], by=diff(im_range)/nbins), include.lowest=TRUE))/length(image)
   function_vals <- vapply(cuts, function(x) x^2, FUN.VALUE = 1)
   return(sum(function_vals))
