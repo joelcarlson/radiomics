@@ -53,8 +53,8 @@ calc_features <- function(image, features = c("first order", "glcm", "glrlm", "g
                                calc_min = function(x) min(x, na.rm=TRUE),
                                #calc_diff = diff,
                                #calc_variance = var,
-                               calc_RMS = function(x) sqrt(mean(x^2)),
-                               calc_sd = sd
+                               calc_RMS = function(x) sqrt(mean(x^2, na.rm=TRUE)),
+                               calc_sd = function(x) sd(x, na.rm=TRUE)
                                )
   
   # GLCM -----------------------------------
