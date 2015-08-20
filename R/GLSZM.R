@@ -36,6 +36,7 @@ glszm <- function(image, n_grey=32, ...){
     image <- discretizeImage(image, n_grey=n_grey, ...)
   }
   grey_lvls <- unique(c(image))
+  grey_lvls <- grey_lvls[-is.na(grey_lvls)]
   #convert to image for use with spatstats functions
   image <- spatstat::as.im(image)
   
