@@ -15,7 +15,7 @@ calc_energy <- function(image, dims=NULL){
 
 #' @describeIn first_order_features Entropy
 
-calc_entropy <- function(image, base=2, nbins=length(image[!is.na(image)])){
+calc_entropy <- function(image, base=2, nbins=length(unique(c(image)))){
   # Break image into a hist
     im_range <- range(image, na.rm=TRUE)
   cuts <- table(cut(image, seq(im_range[1], im_range[2], by=diff(im_range)/nbins), include.lowest=TRUE))/length(image[!is.na(image)])
@@ -62,8 +62,9 @@ calc_skewness <- function (image){
 
 #' @describeIn first_order_features Uniformity
 #'
-calc_uniformity <- function(image, nbins=length(image[!is.na(image)]){
+calc_uniformity <- function(image, nbins=length(unique(c(image)))){
   # Break image into a hist
+  image <- image[!is.na(image)]
   im_range <- range(image, na.rm=TRUE)
   cuts <- table(cut(image, seq(im_range[1], im_range[2], by=diff(im_range)/nbins), include.lowest=TRUE))/length(image)
   function_vals <- vapply(cuts, function(x) x^2, FUN.VALUE = 1)
