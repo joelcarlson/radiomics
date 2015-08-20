@@ -17,7 +17,7 @@ calc_energy <- function(image, dims=NULL){
 
 calc_entropy <- function(image, base=2, nbins=length(image)){
   # Break image into a hist
-  im_range <- range(image)
+  im_range <- range(image, na.rm=TRUE)
   cuts <- table(cut(image, seq(im_range[1], im_range[2], by=diff(im_range)/nbins), include.lowest=TRUE))/length(image)
   
   #Logs cannot take 0 values, so let = 0 if no value
