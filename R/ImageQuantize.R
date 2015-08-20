@@ -35,7 +35,7 @@ discretizeImage <- function(image, n_grey=32, verbose=TRUE){
     n_grey <- l_unique
   } 
   
-  discretized <- cut(image, breaks=seq(min(image), max(image), length.out=(n_grey + 1)),
+  discretized <- cut(image, breaks=seq(min(image, na.rm=TRUE), max(image, na.rm=TRUE), length.out=(n_grey + 1)),
                      labels = seq(1, n_grey, 1),
                      include.lowest=TRUE, right=FALSE) 
   return(matrix(as.numeric(discretized), nrow=nrow(image)))
