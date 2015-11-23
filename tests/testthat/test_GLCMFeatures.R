@@ -1,7 +1,7 @@
 library(radiomics)
 context("GLCM Features")
 
-hbGLCM <- glcm(hallbey)
+hbGLCM <- glcm(hallbey, n_grey=4, verbose=FALSE)
 test_that("0 degree GLCM Features are properly calculated", {
   #Values taken from http://www.fp.ucalgary.ca/mhallbey/tutorial.htm
   expect_equal(glcm_mean(hbGLCM), 1.291667, tolerance = .02)

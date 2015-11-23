@@ -4,12 +4,15 @@
 #'
 #' This function is called in \code{glcm}, \code{glrlm}, \code{glszm}, and \code{mglszm}.
 #' 
-#' @param image A numeric image matrix.
+#' If n_grey is greater than the number of unique grey levels in the matrix then no action
+#' is taken.
+#' 
+#' @param image A numeric 2D matrix.
 #' @param n_grey an integer value, the number of grey levels the image should
 #'   be quantized into.
-#' @param verbose Logical, a warning is given when the user 
+#' @param verbose Logical, a message is given when the user 
 #'  supplies more grey values than exist in the image. Setting this value to FALSE
-#'  will suppress this warning.       
+#'  will suppress this message.       
 #' @return A matrix of the same dimensions as the input matrix. The entries of the matrix
 #'  will be set to begin at 1, and go up to the specified value. There is no guarantee
 #'  that each gray level between 1 and n_grey will have pixels of that value (for example, 
@@ -22,17 +25,24 @@
 #' 
 #' image(tumor)
 #' image(discretizeImage(tumor, n_grey=8, verbose=F))
-#' 
+#' @export
  
 discretizeImage <- function(image, n_grey=32, verbose=TRUE){
   #Not a perfect solution. Makes n_grey breaks, but doesn't necessarily populate all of them
   # eg. n_gey could be 100, but only 75 of the levels are used by pixels
-  #Make sure discretization is valid
   l_unique <- length(unique(c(image)))
-  if(n_grey > l_unique){
+  
+  #Make sure discretization is valid
+  if(l_unique == 0 ) stop("Function not valid for empty input")
+  if(sum(is.na(image)) == length(image)) stop("Matrix must not be entirely NA")
+  
+  #If we don't need to do anything, we don't do anything
+  if(n_grey == l_unique){
+    return(image)
+  } else if(n_grey > l_unique){
     if(verbose) message(sprintf("n_grey (%d) cannot be larger than the number of gray levels in the image (%d)", n_grey, l_unique))
     if(verbose) message(sprintf("n_grey set to %d", l_unique))
-    n_grey <- l_unique
+    return(image)
   } 
   
   discretized <- cut(image, breaks=seq(min(image, na.rm=TRUE), max(image, na.rm=TRUE), length.out=(n_grey + 1)),
@@ -41,6 +51,14 @@ discretizeImage <- function(image, n_grey=32, verbose=TRUE){
   return(matrix(as.numeric(discretized), nrow=nrow(image)))
 }
 
+#' Image Discretization.
+#' 
+#'#' \code{discretizeImage2} Scales the grey values of an image into a specified number of values.
+#'
+#' Not currently used. Different methods of discretizing the image will be explored in the future.
+#'
+#'@param image A numeric image matrix. 
+#'@param n_grey The grey levels the output image will have
 discretizeImage2 <- function(image, n_grey=32){
   #Different from discretizeImage2 in that it preserves the grey levels of the image (roughly)
   l_unique <- length(unique(c(image)))

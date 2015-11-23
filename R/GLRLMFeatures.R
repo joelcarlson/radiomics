@@ -1,6 +1,6 @@
 #' GLRLM Features
 #'
-#' @param glrlm A GLRLM produced by \code{glrlm}.
+#' @param glrlm A matrix of class "glrlm" produced by \code{glrlm}.
 #' @references \url{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5} 
 #' @name glrlm_features
 NULL
@@ -39,14 +39,18 @@ glrlm_LRHGLE <- function(glrlm){
 #' 
 ##
 glrlm_LRLGLE <- function(glrlm){
-  sum(t(as.numeric(colnames(glrlm))^2 * t(glrlm)) / as.numeric(rownames(glrlm))^2) /sum(glrlm)
+  dat <- t(as.numeric(colnames(glrlm))^2 * t(glrlm)) / as.numeric(rownames(glrlm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) /sum(glrlm)
 }
 
 #' @describeIn glrlm_features Low gray level run emphasis
 #' 
 ## 
 glrlm_LGLRE <- function(glrlm){
-  sum(glrlm / as.numeric(rownames(glrlm))^2) / sum(glrlm)
+  dat <- glrlm / as.numeric(rownames(glrlm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) / sum(glrlm)
 }
 
 #' @describeIn glrlm_features un length non-uniformity
@@ -68,7 +72,9 @@ glrlm_RP <- function(glrlm){
 #' 
 ## 
 glrlm_SRE <- function(glrlm){
-  sum(t(glrlm) / as.numeric(colnames(glrlm))^2) / sum(glrlm)
+  dat <- t(glrlm) / as.numeric(colnames(glrlm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) / sum(glrlm)
 }
 
 
@@ -76,14 +82,18 @@ glrlm_SRE <- function(glrlm){
 #' 
 # Sho
 glrlm_SRHGLE <- function(glrlm){
-  sum(t(glrlm * as.numeric(rownames(glrlm))^2) / as.numeric(colnames(glrlm))^2) /sum(glrlm)
+  dat <- t(glrlm * as.numeric(rownames(glrlm))^2) / as.numeric(colnames(glrlm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) /sum(glrlm)
 }
 
 #' @describeIn glrlm_features Short run low grey emphasis
 #' 
 # 
 glrlm_SRLGLE <- function(glrlm){
-  sum( t( t(glrlm) / as.numeric(colnames(glrlm))^2 ) / (as.numeric(rownames(glrlm))^2)) / sum(glrlm)
+  dat <- t( t(glrlm) / as.numeric(colnames(glrlm))^2 ) / (as.numeric(rownames(glrlm))^2)
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum( dat ) / sum(glrlm)
 }
 
 

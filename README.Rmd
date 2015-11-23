@@ -1,0 +1,98 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figs/README-"
+)
+```
+
+#Radiomics: Texture Analysis Matrices
+
+The `radiomics` package is a set of tools for computing texture matrices and features from images. 
+ 
+You can install the development version of the package using:
+
+```{r,echo=FALSE, message=FALSE}
+devtools::load_all(".")
+```
+```{r, eval=FALSE}
+devtools::install_github("joelcarlson/radiomics")
+
+library(radiomics)
+```
+
+#Texture Matrices
+
+In the package are functions for calculating four different types of matrices used to quantify the texture of an image. 
+
+These matrices are the:
+
+  - Gray Level Co-occurrence Matrix
+  - Gray Level Run Length Matrix
+  - Gray Level Size Zone Matrix
+  - Multiple Gray Level Size Zone Matrix
+
+Detailed descriptions and references for each matrix can be found [here](http://joelcarlson.me/2015/07/10/radiomics-package/)
+Detailed usage directions for calculating features and matrices can be found in the package vignette (use `browseVignettes(package = "radiomics")`)
+
+#Using the Package
+
+##Building Texture Matrices
+
+Texture matrices can be created from 2D images by using the abbreviated matrix name as a function call:
+
+```{r, eval=FALSE}
+tumor <- radiomics::tumor #2D MRI slice of a brain tumor
+glcm(tumor)
+glrlm(tumor)
+glszm(tumor)
+mglszm(tumor)
+```
+
+A matrix with the class of the texture matrix type is return, as shown here using `glcm(tumor, n_grey=4)`
+
+```{r,echo=FALSE}
+glcm(tumor, n_grey=4)
+```
+```{r}
+class(glcm(tumor, n_grey=4))[1]
+```
+
+
+##Visualizing Texture Matrices
+
+Each matrix type has an associated `image` function for visualization of the results:
+
+```{r,eval=FALSE}
+image(glcm(tumor))
+image(glrlm(tumor))
+image(glszm(tumor))
+image(mglszm(tumor))
+```
+
+The `image` functions make use of the `viridis` scale, as shown here using `image(glcm(tumor, n_grey=64))`:
+
+```{r tumorglcm,echo=FALSE, message=FALSE}
+image(glcm(tumor, n_grey=64))
+```
+
+##Calculating Features
+
+Each matrix type has an associated `calc_features` function, which returns an object of class `data.frame` with a single observation for each calculated feature. First order features can also be calculated on 2D matrices.
+
+```{r,eval=FALSE}
+calc_features(tumor)
+calc_features(glcm(tumor))
+calc_features(glrlm(tumor))
+calc_features(glszm(tumor))
+calc_features(mglszm(tumor))
+```
+
+
+

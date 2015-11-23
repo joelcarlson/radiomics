@@ -1,108 +1,101 @@
-# GLCM 
-
 #' Gray level co-occurrence matrix.
 #'
 #' \code{glcm} returns a gray level co-occurrence matrix for a given matrix.
-#'
-#' This function can be used alone, or can be executed and it's textural
-#' features automatically calculated using \code{calc_features}.
 #' 
-#' @param image A numeric image matrix.
+#' 
+#' Can be visualized using \code{image(glcm(data))}. For visualization info
+#' see \code{?image.radiomics}
+#'
+#' 
+#' @param data A numeric 2D matrix.
 #' @param angle One of "0", "45", "90" or "135", the pixel to which the 
 #'   current pixel is compared.
 #' @param d an integer value, the distance between the current pixel, and the
 #'   pixel to which it is compared.
 #' @param n_grey an integer value, the number of grey levels the image should
-#'   be quantized into.
-#' @param normalize Logical value, if TRUE the matrix will be normalized such that 
+#'   be quantized into. If greater than the number of unique values in the image,
+#'   no action will be taken.
+#' @param normalize Logical value, if TRUE (default) the matrix will be normalized such that 
 #'   the sum of it's components is 1.
 #' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
 #' @return a matrix of dimension n_grey by n_grey, the GLCM. The column and row names represent 
 #'   grey values in the image.
 #'   
 #'   See \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm} for details.
-#'
+#' @references \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm}
 #' @examples
+#' \dontrun{
 #' hallbey
 #' glcm(hallbey)
 #' glcm(hallbey, angle="90") #vertical GLCM
+#' }
+#' @export
+glcm <- setClass("glcm",
+                 contains="matrix"
+)
 
-glcm <- function(image, angle="0", d=1, n_grey=length(unique(c(image))), normalize=TRUE, ...){
-  #
-  #Given an image matrix and angle, calculate glcm
-  #allows angles of 0 (0,1), 45 (-1,1), 90 (-1,0), 135 (-1,-1)
-  # d is distance
-  if(identical(angle, "0")){
-    angle <- c(0,1)*d
-  } else if (identical(angle, "45")){
-    angle <- c(-1,1)*d
-  } else if (identical(angle, "90")){
-    angle <- c(-1,0)*d
-  } else if (identical(angle, "135")){
-    angle <- c(-1,-1)*d
-  } else {
-    stop("angle must be one of '0', '45', '90', '135'.")
-  }
-  
-  
-  #Minor error checking
-  if(length(dim(image)) != 2) stop("Must be a 2D matrix")
-  
-  
-  #discretize image and initialize GLCM based on discretized image
-  if( ! identical( n_grey, as.numeric(length(unique(c(image)))) ) ){ 
-    image <- discretizeImage(image, n_grey=n_grey, ...)
-  }
-  
-  #Add an extra row to allow zeroes in the grey levels.
-  #R indexing from 1 makes this necessary
-  max_val <- max(image, na.rm=T)
-  min_val <- min(image, na.rm=T)
-  counts <- matrix(0, nrow=(max_val + 1), ncol=(max_val + 1))
-  
-  rownames(counts) <- c(0:max_val)
-  colnames(counts) <- c(0:max_val)
-  
-  #Add columns of NAs to left, top, and right side to mitigate edge
-  NA_cols <- matrix(rep(NA, d*nrow(image)), ncol=d)
-  image <- cbind(NA_cols, image, NA_cols)
-  
-  NA_rows <- matrix(rep(NA, d*ncol(image)), nrow=d)
-  image <- rbind(NA_rows, image)
-  
-  #loops start from d+1 because d cols & rows are NAs
-  for( i in (d+1):nrow(image)){
-    #last col is also NA, so don't loop over it
-    for( j in (d+1):(ncol(image) - d)){
-      ref_val <- image[i,j]
-      neighbor_val <- image[i + angle[1], j + angle[2]]
-      
-      if(is.na(ref_val) | is.na(neighbor_val)) next
-      
-      #Add 1 so that zeroes in the grey levels can be indexed
-      counts[ref_val + 1, neighbor_val + 1] <- counts[ref_val + 1, neighbor_val + 1] + 1
-    }
-  }
-  
-  #GLCMs should be symmetrical, so the transpose is added
-  counts <- counts + t(counts)
-
-  
-  #Remove columns and rows with no values to counter sparsity
-  #There is an issue here when using calc_features. If in one angle there is no
-  #glcm count where there is in any other angle then the matrices will be of different size
-  #counts <- counts[!rowSums(counts)==0, !colSums(counts)==0]
-  
-  #Because of above, we will keep sparse glcms and deal with zeros as follows: 
-  #count <- ifelse(min_val > 0, counts[-1,-1], counts[-nrow(counts), -ncol(counts)])
-  if(min_val > 0){
-    counts <- counts[-1,-1]
-  } else {
-    counts <- counts[-nrow(counts), -ncol(counts)]
-  }
-  
-  #Normalize
-  ifelse(normalize, return(counts/sum(counts)), return(counts) )
-  
-  
-}
+setMethod("initialize", 
+          signature = "glcm", 
+          definition = function(.Object, data, angle = 0, d=1, n_grey = 32, normalize=TRUE, ...){
+            #Check validity of input
+            if (!is.matrix(data)) {
+              stop(paste0("Object of class ", class(data), ".  is.matrix(object) must evaluate TRUE."))
+            }
+            if (any(data < 0)) {
+              stop("Object contains negative values. All values must be greater than 0.")
+            }
+            
+            #Discretize grey values if required
+            #discretize image and initialize GLCM based on discretized image
+            
+            if( !identical(n_grey, length(unique(c(data))) )){ 
+              data <- discretizeImage(data, n_grey=n_grey, ...)
+            }
+            
+            unique_vals <- sort(unique(c(data)))
+            
+            #Given an image matrix and angle, calculate glcm
+            #allows angles of 0 (0,1), 45 (-1,1), 90 (-1,0), 135 (-1,-1)
+            # d is distance
+            if(identical(angle, 0)){
+              angle <- c(0,1)*d
+            } else if (identical(angle, 45)){
+              angle <- c(-1,1)*d
+            } else if (identical(angle, 90)){
+              angle <- c(-1,0)*d
+            } else if (identical(angle, 135)){
+              angle <- c(-1,-1)*d
+            } else {
+              stop("angle must be one of '0', '45', '90', '135'.")
+            }
+            
+            #define count matrix
+            
+            counts <- matrix(0, ncol=length(unique_vals), nrow=length(unique_vals) )
+            rownames(counts) <-colnames(counts) <- unique_vals
+            
+            #loop over rows and columns
+            for(i in 1:nrow(data)){
+              for(j in 1:ncol(data)){
+                ref_val <- data[i,j]
+                neighbour_val <- tryCatch(data[i + angle[1], j + angle[2]], error=function(e) NA)
+                if(is.na(neighbour_val)){
+                  next
+                } else {
+                  counts[as.character(ref_val), as.character(neighbour_val)] <- counts[as.character(ref_val), as.character(neighbour_val)] + 1
+                }
+                
+              }
+            }
+            
+            #GLCMs should be symmetrical, so the transpose is added
+            counts <- counts + t(counts)
+            #Normalize
+            if(normalize) counts <- counts/sum(counts)
+            
+            
+            .Object@.Data <- counts
+            
+            .Object
+            
+          }   )

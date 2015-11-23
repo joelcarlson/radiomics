@@ -1,0 +1,195 @@
+---
+title: "Texture Analysis"
+author: "Joel Carlson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```{r}
+library(radiomics)
+```
+```{r,echo=FALSE, message=FALSE}
+devtools::load_all(".")
+```
+
+
+
+Texture analysis is a technique used to quanitfy the patterns in images that are simple for humans to see, but prove more difficult for computers. The texture analysis features which can be computed using this package can be used as inputs for a classification algorithm, or for visualization of different image properties. In this vignette we will first walk through a basic introduction to the different matrices used to quantify texture, then use these matrices to calculate features of a set of images, and finally use those features to classify the images.
+
+This package includes new classes (which inherit from the "matrix" class) for four different types of texture matrices: "grey level co-occurrence" (glcm), "grey level run-length" (glrlm), "grey level size-zone" (glszm), and "multiple grey lvel size-zone" (mglszm). For each of these matrices a number of features have been defined which characterize the image in question.
+
+##Basics
+
+The features calculated by the package can be accessed using the function `calc_features` on the appropriate class of matrix. For a simple 2D matrix of class "matrix", the function will calculate the first-order features (described below), for a matrix of class "glcm", the glcm feature set will be calculated, and so on for the remaining matrix types. The features are returned as a single observation data frame
+
+The most basic possible use of the function is as follows:
+
+```{r, eval = FALSE}
+test <- matrix(sample(1:10, 25, replace=TRUE), ncol=5)
+calc_features(test)
+```
+
+##First order features
+
+Included in the package is a method for calculating several first-order features of images. First-order features are features which rely only on the values of individual pixels in the image, and do not express their relationship to other image pixels. For example, the mean/median/minimum/maximum pixel values in the image.
+
+The first-order features included are as follows:
+
+
+```{r, echo=FALSE, results='asis', fig.cap = "First-order features."}
+
+knitr::kable(data.frame("Feature"=c("Energy", "Entropy", "Kurtosis", 
+                                    "Mean Deviation","Skewness","Uniformity",
+                                    "Mean","Median","Maximum","Minimum",
+                                    "Variance","Root Mean Square","Standard Deviation"),
+                        "Argument"=c("calc_energy",
+                                "calc_entropy",
+                                "calc_kurtosis",
+                                "calc_meanDeviation",
+                                "calc_skewness",
+                                "calc_uniformity",
+                                "calc_mean",
+                                "calc_median",
+                                "calc_max",
+                                "calc_min",
+                                "calc_variance",
+                                "calc_RMS",
+                                "calc_sd"
+            )))
+```
+
+Arguments can be used to select only certain features for calculation by adding them to the `features` argument of `calc_features`:
+
+```{r, eval=FALSE}
+calc_features(test, features = c("calc_energy", "calc_mean"))
+```
+
+##Gray Level Co-occurrence Matrix (GLCM)
+
+The GLCM is a matrix which considers the spatial relationships between two pixels at a time in the image (the reference and the neighbor pixel). The neighbor pixel can be to the East (0), North-East (45), North (90), or North-West (135) of the reference pixel. The distance between the reference and neighbor pixel can also be chosen. 
+
+The matrix is built such that each row represents a single gray value in the image, and each column also represents a single gray value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it's transpose to create a symmetrical matrix
+
+For a more detailed explanation of the GLCM see [here](http://joelcarlson.me/2015/07/10/radiomics-package/) or [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm )and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
+
+GLCMs can be created using the `glcm` function, and can be calculated for different angles and distances using the `angle` and `d` arguments:
+
+```{r, message=FALSE}
+#Load the dataset from the Hallbey tutorial:
+data(hallbey)
+(hbGLCM <- glcm(hallbey, angle=0, d=1))
+```
+
+And as with first order features, glcm features can be calculated by using the `calc_features` function:
+
+```{r, eval=FALSE}
+calc_features(hbGLCM)
+```
+
+And can be visualized using the `image` generic:
+
+```{r}
+image(hbGLCM)
+```
+
+The available features for the GLCM are as follows:
+
+```{r, echo=FALSE, results='asis', fig.cap = "GLCM features."}
+
+knitr::kable(data.frame("Feature"=c("Mean", "Variance", "Auto Correlation" ,"Cluster Prominence", "Cluster Shade" ,
+                                    "Cluster Tendency", "Contrast" ,"Correlation", "Difference Entropy",
+                                    "Dissimilarity", "Energy","Entropy", "Homogeneity1", "Homogeneity2", 
+                                    "Inverse Difference Moment (Normalized)", "Inverse Difference Moment",
+                                    "Inverse Variance", "Maximum Probability", "Sum Average", "Sum Entropy",
+                                    "Sum Variance"),
+                        "Argument"=c(
+              "glcm_mean", "glcm_variance", "glcm_autoCorrelation",
+              "glcm_cProminence", "glcm_cShade", "glcm_cTendency",
+              "glcm_contrast", "glcm_correlation", "glcm_differenceEntropy",
+              "glcm_dissimilarity", "glcm_energy", "glcm_entropy", 
+              "glcm_homogeneity1", "glcm_homogeneity2", "glcm_IDMN",
+              "glcm_IDN", "glcm_inverseVariance", "glcm_maxProb", 
+              "glcm_sumAverage", "glcm_sumEntropy", "glcm_sumVariance"
+            )))
+```
+
+##Gray Level Run Length Matrix (GLRLM)
+
+Rather than looking at pairs of pixels, the GLRLM looks at runs of pixels. That is, how many pixels of a given grey value occur in a sequence in a given direction.
+
+The rows of the GLRLM represent, again, grey levels in the image. However, the columns now represent lengths of runs, with the entries corresponding to the number of runs of the given length in the image. Let's look at the example matrix used the Galloway 1974.
+
+```{r,echo=FALSE}
+s <- matrix(c(0,1,2,3,0,2,3,3,2,1,1,1,3,0,3,0), nrow=4, byrow=T) #from Galloway 1974
+s
+```
+
+And the GLRLM:
+
+```{r}
+glrlm(s, angle=0, verbose=F)
+```
+
+With available features:
+
+```{r, echo=FALSE, results='asis', fig.cap = "GLCM features."}
+
+knitr::kable(data.frame("Feature"=c("Grey Level Non-uniformity", "High Grey Level Run Emphasis", "Long Run Emphasis", 
+                                "Long Run High Grey Level Emphasis", "Long Run Low Grey Level Emphasis",
+                                "Low Grey Level Run Emphasis", "Run Length Non-uniformity", "Run Percentage",
+                                "Short Run Emphasis", "Short Run High Grey Level Emphasis", "Short Run Low Grey Level Emphasis"
+            ),
+                        "Argument"=c("glrlm_GLN", "glrlm_HGLRE", "glrlm_LRE", 
+                                "glrlm_LRHGLE", "glrlm_LRLGLE",
+                                "glrlm_LGLRE", "glrlm_RLN", "glrlm_RP",
+                                "glrlm_SRE", "glrlm_SRHGLE", "glrlm_SRLGLE"
+            )))
+```
+
+##Gray Level Size Zone Matrix (GLSZM) and Multiple-GLSZM
+
+The GLSZM looks at zones of 9-connected pixels. That is, how many pixels of a given grey value are connected in a single group.
+
+The rows of the GLSZM represent grey levels in the image, and the columns now represent sizes. Thus the entries correspond to the number of groups of pixels of a given grey value that are a given size.
+
+For the GLSZM let's look at a more complicated image, that of a tumor, but discretized into only 16 grey levels (using the `discretizeImage` function incldued in the package)
+
+```{r}
+discTumor <- discretizeImage(radiomics::tumor, n_grey=16)
+image(discTumor, axes=F, col=viridis::viridis(16))
+```
+
+And the corresponding GLSZM:
+
+```{r, message=FALSE}
+image(glszm(discTumor))
+```
+
+The MGLSZM computes a GLSZM for 8 different discretizations of the image (2, 4, 8, 16, 32, 64, 128, and 256 grey levels). It then combines these using a weights based a Gaussian distribution (mean = 0, standard deviation = 1). 
+
+The MGLSZM for the tumor image looks like:
+
+```{r, message=FALSE}
+image(mglszm(tumor))
+```
+
+The GLSZM and MGLSZM use the same feature set:
+
+```{r, echo=FALSE, results='asis', fig.cap = "GLCM features."}
+
+knitr::kable(data.frame("Feature"=c("Small Area Emphasis", "Large Area Emphasis", "Intensity Variability", 
+                                "Size Zone Variance", "Zone Percentage", "Low Intensity",
+                                "High Intensity Emphasis", "Low Intensity Small Area Emphasis", "High Intensity Small Area Emphasis", 
+                                "Low Intensity Large Area Emphasis", "High Intensity Large Area Emphasis"
+            ),
+                        "Argument"=c("glszm_SAE", "glszm_LAE", "glszm_IV", 
+                                "glszm_SZV", "glszm_ZP", "glszm_LIE",
+                                "glszm_HIE", "glszm_LISAE", "glszm_HISAE", 
+                                "glszm_LILAE", "glszm_HILAE"
+            )))
+```
+
+Happy classifying!

@@ -1,6 +1,6 @@
 #' GLSZM Features
 #'
-#' @param glszm A GLSZM produced by \code{glszm}.
+#' @param glszm A matrix of class "glszm" produced by \code{glszm}.
 #' @references \url{http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0102107#s5} 
 #' @name glszm_features
 NULL
@@ -10,7 +10,9 @@ NULL
 #' 
 #
 glszm_SAE <- function(glszm){
-  sum(t(glszm) / as.numeric(colnames(glszm))^2) / sum(glszm)
+  dat <- t(glszm) / as.numeric(colnames(glszm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) / sum(glszm)
 }
 
 #' @describeIn glszm_features Large Area Emphasis
@@ -46,40 +48,52 @@ glszm_ZP <- function(glszm){
 #' 
 #
 glszm_LIE <- function(glszm){
-  sum(glszm / as.numeric(rownames(glszm))^2) / sum(glszm)
+  dat <- glszm / as.numeric(rownames(glszm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) / sum(glszm)
 }
 
 #' @describeIn glszm_features High intensity emphasis
 #' 
 #
 glszm_HIE <- function(glszm){
-  sum(glszm * as.numeric(rownames(glszm))^2) / sum(glszm)
+  dat <- glszm * as.numeric(rownames(glszm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) / sum(glszm)
 }
 
 #' @describeIn glszm_features Low intensity small area emphasis
 #' 
 #
 glszm_LISAE <- function(glszm){
-  sum( t( t(glszm) / as.numeric(colnames(glszm))^2 ) / (as.numeric(rownames(glszm))^2)) / sum(glszm)
+  dat <- t( t(glszm) / as.numeric(colnames(glszm))^2 ) / (as.numeric(rownames(glszm))^2)
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum( dat ) / sum(glszm)
 }
 
 #' @describeIn glszm_features High intensity small area emphasis
 #' 
 #
 glszm_HISAE <- function(glszm){
-  sum(t(glszm * as.numeric(rownames(glszm))^2) / as.numeric(colnames(glszm))^2) /sum(glszm)
+  dat <- t(glszm * as.numeric(rownames(glszm))^2) / as.numeric(colnames(glszm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) /sum(glszm)
 }
 
 #' @describeIn glszm_features Low intensity large area emphasis
 #' 
 #
 glszm_LILAE <- function(glszm){
-  sum(t(as.numeric(colnames(glszm))^2 * t(glszm)) / as.numeric(rownames(glszm))^2) /sum(glszm)
+  dat <- t(as.numeric(colnames(glszm))^2 * t(glszm)) / as.numeric(rownames(glszm))^2
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat) /sum(glszm)
 }
 
 #' @describeIn glszm_features High intensity Large area emphasis
 #' 
 #
 glszm_HILAE <- function(glszm){
-  sum(t(as.numeric(colnames(glszm))^2 * t(glszm)) * as.numeric(rownames(glszm))^2) /sum(glszm)
+  dat <- t(as.numeric(colnames(glszm))^2 * t(glszm)) * (as.numeric(rownames(glszm))^2)
+  dat[is.infinite(dat) | is.na(dat)] <- 0
+  sum(dat /sum(glszm))
 }

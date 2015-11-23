@@ -1,16 +1,37 @@
 Package: radiomics
 Type: Package
-Title: Radiomic image processing toolbox
-Version: 1.0
-Date: 2015-06-10
+Title: Radiomic Image Processing Toolbox
+Version: 0.1.0
+Date: 2015-11-22
 Author: Joel Carlson
 Maintainer: Joel Carlson <jnkcarlson@gmail.com>
-Description: Functions to extract first, second, and third order statistics from images.
-License: MIT
-Imports: 
-    spatstat, 
-    reshape2
-Suggests: testthat,
-    knitr
+Description: Functions to extract first and second order statistics from
+    images.
+License: MIT + file LICENSE
+Depends:
+    R (>= 2.10)
+Imports:
+    spatstat,
+    reshape2,
+    methods,
+Suggests:
+    testthat,
+    knitr,
+    viridis,
+    devtools
 LazyData: true
 VignetteBuilder: knitr
+Collate:
+    'GLSZM.R'
+    'MGLSZM.R'
+    'GLRLM.R'
+    'GLCM.R'
+    'CalculateFeatures.R'
+    'FirstOrder.R'
+    'GLCMFeatures.R'
+    'GLRLMFeatures.R'
+    'GLSZMFeatures.R'
+    'ImageQuantize.R'
+    'data.R'
+    'image.R'
+    'radiomics.R'
