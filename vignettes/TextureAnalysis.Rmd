@@ -8,11 +8,21 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+
+
+<style>
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+</style>
+
 ```{r}
 library(radiomics)
 ```
 ```{r,echo=FALSE, message=FALSE}
 devtools::load_all(".")
+knitr::opts_chunk$set(echo = TRUE, fig.retina=2, fig.width=7, fig.height=5)
 ```
 
 
@@ -91,7 +101,7 @@ calc_features(hbGLCM)
 
 And can be visualized using the `image` generic:
 
-```{r}
+```{r,fig.width=5}
 image(hbGLCM)
 ```
 
@@ -113,7 +123,7 @@ knitr::kable(data.frame("Feature"=c("Mean", "Variance", "Auto Correlation" ,"Clu
               "glcm_homogeneity1", "glcm_homogeneity2", "glcm_IDMN",
               "glcm_IDN", "glcm_inverseVariance", "glcm_maxProb", 
               "glcm_sumAverage", "glcm_sumEntropy", "glcm_sumVariance"
-            )))
+            )), caption="GLCM features")
 ```
 
 ##Gray Level Run Length Matrix (GLRLM)
@@ -146,7 +156,7 @@ knitr::kable(data.frame("Feature"=c("Grey Level Non-uniformity", "High Grey Leve
                                 "glrlm_LRHGLE", "glrlm_LRLGLE",
                                 "glrlm_LGLRE", "glrlm_RLN", "glrlm_RP",
                                 "glrlm_SRE", "glrlm_SRHGLE", "glrlm_SRLGLE"
-            )))
+            )), caption="GLRLM features")
 ```
 
 ##Gray Level Size Zone Matrix (GLSZM) and Multiple-GLSZM
@@ -157,7 +167,7 @@ The rows of the GLSZM represent grey levels in the image, and the columns now re
 
 For the GLSZM let's look at a more complicated image, that of a tumor, but discretized into only 16 grey levels (using the `discretizeImage` function incldued in the package)
 
-```{r}
+```{r, fig.width=5}
 discTumor <- discretizeImage(radiomics::tumor, n_grey=16)
 image(discTumor, axes=F, col=viridis::viridis(16))
 ```
@@ -178,6 +188,7 @@ image(mglszm(tumor))
 
 The GLSZM and MGLSZM use the same feature set:
 
+
 ```{r, echo=FALSE, results='asis', fig.cap = "GLCM features."}
 
 knitr::kable(data.frame("Feature"=c("Small Area Emphasis", "Large Area Emphasis", "Intensity Variability", 
@@ -189,7 +200,7 @@ knitr::kable(data.frame("Feature"=c("Small Area Emphasis", "Large Area Emphasis"
                                 "glszm_SZV", "glszm_ZP", "glszm_LIE",
                                 "glszm_HIE", "glszm_LISAE", "glszm_HISAE", 
                                 "glszm_LILAE", "glszm_HILAE"
-            )))
+            )), caption="GLSMZ and MGLSZM features")
 ```
 
 Happy classifying!
