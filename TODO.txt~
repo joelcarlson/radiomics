@@ -7,24 +7,22 @@
 
 (COMPLETE) grey level messages are annoying, add an option to remove verbosity
 
-(COMPLETE) Allow discretizeImage to handle NAs
+Allow discretizeImage to handle NAs
 
 (WIP) Add tests 
 
 implement fuzzyGLCM (http://link.springer.com/chapter/10.1007/978-3-642-39646-5_18)
 
+Figure out why var and diff fail in calc_features()
+
 (COMPLETE) Add warning to discretizeImage when creating more gray levels than occur in the image (leads to banding in the GLCM) 
 
 (COMPLETE) Add documentation
-
-(COMPLETE) Add image methods for matrices
 
 Optimize MGLSZM definition
 
 Vectorize GLCM features
 
-(DEPRECATED) Create an option within calc_features() to store the calculated matrices
+Create an option within calc_features() to store the calculated matrices
 
 Add references to publications
-
-Allow handling of negative value (maybe)
