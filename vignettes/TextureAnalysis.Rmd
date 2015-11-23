@@ -17,9 +17,9 @@ devtools::load_all(".")
 
 
 
-Texture analysis is a technique used to quanitfy the patterns in images that are simple for humans to see, but prove more difficult for computers. The texture analysis features which can be computed using this package can be used as inputs for a classification algorithm, or for visualization of different image properties. In this vignette we will first walk through a basic introduction to the different matrices used to quantify texture, then use these matrices to calculate features of a set of images, and finally use those features to classify the images.
+Texture analysis is a technique used to quantify the patterns in images that are simple for humans to see, but prove more difficult for computers. The texture analysis features which can be computed using this package can be used as inputs for a classification algorithm, or for visualization of different image properties. In this vignette we will explore the different matrices and features used to quantify texture available in the `radiomics` package.
 
-This package includes new classes (which inherit from the "matrix" class) for four different types of texture matrices: "grey level co-occurrence" (glcm), "grey level run-length" (glrlm), "grey level size-zone" (glszm), and "multiple grey lvel size-zone" (mglszm). For each of these matrices a number of features have been defined which characterize the image in question.
+This package includes new classes (which inherit from the "matrix" class) for four different types of texture matrices: "grey level co-occurrence" (glcm), "grey level run-length" (glrlm), "grey level size-zone" (glszm), and "multiple grey level size-zone" (mglszm). For each of these matrices a number of features have been defined which characterize the image in question.
 
 ##Basics
 

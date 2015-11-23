@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Joel Carlson" />
+
+<meta name="date" content="2015-11-23" />
+
+<title>Texture Analysis</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">Texture Analysis</h1>
+<h4 class="author"><em>Joel Carlson</em></h4>
+<h4 class="date"><em>2015-11-23</em></h4>
+</div>
+
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(radiomics)</code></pre>
+<p>Texture analysis is a technique used to quantify the patterns in images that are simple for humans to see, but prove more difficult for computers. The texture analysis features which can be computed using this package can be used as inputs for a classification algorithm, or for visualization of different image properties. In this vignette we will explore the different matrices and features used to quantify texture available in the <code>radiomics</code> package.</p>
+<p>This package includes new classes (which inherit from the “matrix” class) for four different types of texture matrices: “grey level co-occurrence” (glcm), “grey level run-length” (glrlm), “grey level size-zone” (glszm), and “multiple grey level size-zone” (mglszm). For each of these matrices a number of features have been defined which characterize the image in question.</p>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<p>The features calculated by the package can be accessed using the function <code>calc_features</code> on the appropriate class of matrix. For a simple 2D matrix of class “matrix”, the function will calculate the first-order features (described below), for a matrix of class “glcm”, the glcm feature set will be calculated, and so on for the remaining matrix types. The features are returned as a single observation data frame</p>
+<p>The most basic possible use of the function is as follows:</p>
+<pre class="sourceCode r"><code class="sourceCode r">test &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">25</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>), <span class="dt">ncol=</span><span class="dv">5</span>)
+<span class="kw">calc_features</span>(test)</code></pre>
+</div>
+<div id="first-order-features" class="section level2">
+<h2>First order features</h2>
+<p>Included in the package is a method for calculating several first-order features of images. First-order features are features which rely only on the values of individual pixels in the image, and do not express their relationship to other image pixels. For example, the mean/median/minimum/maximum pixel values in the image.</p>
+<p>The first-order features included are as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Argument</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Energy</td>
+<td align="left">calc_energy</td>
+</tr>
+<tr class="even">
+<td align="left">Entropy</td>
+<td align="left">calc_entropy</td>
+</tr>
+<tr class="odd">
+<td align="left">Kurtosis</td>
+<td align="left">calc_kurtosis</td>
+</tr>
+<tr class="even">
+<td align="left">Mean Deviation</td>
+<td align="left">calc_meanDeviation</td>
+</tr>
+<tr class="odd">
+<td align="left">Skewness</td>
+<td align="left">calc_skewness</td>
+</tr>
+<tr class="even">
+<td align="left">Uniformity</td>
+<td align="left">calc_uniformity</td>
+</tr>
+<tr class="odd">
+<td align="left">Mean</td>
+<td align="left">calc_mean</td>
+</tr>
+<tr class="even">
+<td align="left">Median</td>
+<td align="left">calc_median</td>
+</tr>
+<tr class="odd">
+<td align="left">Maximum</td>
+<td align="left">calc_max</td>
+</tr>
+<tr class="even">
+<td align="left">Minimum</td>
+<td align="left">calc_min</td>
+</tr>
+<tr class="odd">
+<td align="left">Variance</td>
+<td align="left">calc_variance</td>
+</tr>
+<tr class="even">
+<td align="left">Root Mean Square</td>
+<td align="left">calc_RMS</td>
+</tr>
+<tr class="odd">
+<td align="left">Standard Deviation</td>
+<td align="left">calc_sd</td>
+</tr>
+</tbody>
+</table>
+<p>Arguments can be used to select only certain features for calculation by adding them to the <code>features</code> argument of <code>calc_features</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_features</span>(test, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">&quot;calc_energy&quot;</span>, <span class="st">&quot;calc_mean&quot;</span>))</code></pre>
+</div>
+<div id="gray-level-co-occurrence-matrix-glcm" class="section level2">
+<h2>Gray Level Co-occurrence Matrix (GLCM)</h2>
+<p>The GLCM is a matrix which considers the spatial relationships between two pixels at a time in the image (the reference and the neighbor pixel). The neighbor pixel can be to the East (0), North-East (45), North (90), or North-West (135) of the reference pixel. The distance between the reference and neighbor pixel can also be chosen.</p>
+<p>The matrix is built such that each row represents a single gray value in the image, and each column also represents a single gray value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it’s transpose to create a symmetrical matrix</p>
+<p>For a more detailed explanation of the GLCM see <a href="http://joelcarlson.me/2015/07/10/radiomics-package/">here</a> or <a href="http://www.fp.ucalgary.ca/mhallbey/tutorial.htm">here</a>and for the seminal 1974 paper, see <a href="http://haralick.org/journals/TexturalFeatures.pdf">here</a> (Warning: PDF download)</p>
+<p>GLCMs can be created using the <code>glcm</code> function, and can be calculated for different angles and distances using the <code>angle</code> and <code>d</code> arguments:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Load the dataset from the Hallbey tutorial:</span>
+<span class="kw">data</span>(hallbey)
+(hbGLCM &lt;-<span class="st"> </span><span class="kw">glcm</span>(hallbey, <span class="dt">angle=</span><span class="dv">0</span>, <span class="dt">d=</span><span class="dv">1</span>))</code></pre>
+<pre><code>## An object of class &quot;glcm&quot;
+##            0          1          2          3
+## 0 0.16666667 0.08333333 0.04166667 0.00000000
+## 1 0.08333333 0.16666667 0.00000000 0.00000000
+## 2 0.04166667 0.00000000 0.25000000 0.04166667
+## 3 0.00000000 0.00000000 0.04166667 0.08333333</code></pre>
+<p>And as with first order features, glcm features can be calculated by using the <code>calc_features</code> function:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_features</span>(hbGLCM)</code></pre>
+<p>And can be visualized using the <code>image</code> generic:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">image</span>(hbGLCM)</code></pre>
+<p><img src="data:image/png;base64,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" /></p>
+<p>The available features for the GLCM are as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Argument</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mean</td>
+<td align="left">glcm_mean</td>
+</tr>
+<tr class="even">
+<td align="left">Variance</td>
+<td align="left">glcm_variance</td>
+</tr>
+<tr class="odd">
+<td align="left">Auto Correlation</td>
+<td align="left">glcm_autoCorrelation</td>
+</tr>
+<tr class="even">
+<td align="left">Cluster Prominence</td>
+<td align="left">glcm_cProminence</td>
+</tr>
+<tr class="odd">
+<td align="left">Cluster Shade</td>
+<td align="left">glcm_cShade</td>
+</tr>
+<tr class="even">
+<td align="left">Cluster Tendency</td>
+<td align="left">glcm_cTendency</td>
+</tr>
+<tr class="odd">
+<td align="left">Contrast</td>
+<td align="left">glcm_contrast</td>
+</tr>
+<tr class="even">
+<td align="left">Correlation</td>
+<td align="left">glcm_correlation</td>
+</tr>
+<tr class="odd">
+<td align="left">Difference Entropy</td>
+<td align="left">glcm_differenceEntropy</td>
+</tr>
+<tr class="even">
+<td align="left">Dissimilarity</td>
+<td align="left">glcm_dissimilarity</td>
+</tr>
+<tr class="odd">
+<td align="left">Energy</td>
+<td align="left">glcm_energy</td>
+</tr>
+<tr class="even">
+<td align="left">Entropy</td>
+<td align="left">glcm_entropy</td>
+</tr>
+<tr class="odd">
+<td align="left">Homogeneity1</td>
+<td align="left">glcm_homogeneity1</td>
+</tr>
+<tr class="even">
+<td align="left">Homogeneity2</td>
+<td align="left">glcm_homogeneity2</td>
+</tr>
+<tr class="odd">
+<td align="left">Inverse Difference Moment (Normalized)</td>
+<td align="left">glcm_IDMN</td>
+</tr>
+<tr class="even">
+<td align="left">Inverse Difference Moment</td>
+<td align="left">glcm_IDN</td>
+</tr>
+<tr class="odd">
+<td align="left">Inverse Variance</td>
+<td align="left">glcm_inverseVariance</td>
+</tr>
+<tr class="even">
+<td align="left">Maximum Probability</td>
+<td align="left">glcm_maxProb</td>
+</tr>
+<tr class="odd">
+<td align="left">Sum Average</td>
+<td align="left">glcm_sumAverage</td>
+</tr>
+<tr class="even">
+<td align="left">Sum Entropy</td>
+<td align="left">glcm_sumEntropy</td>
+</tr>
+<tr class="odd">
+<td align="left">Sum Variance</td>
+<td align="left">glcm_sumVariance</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gray-level-run-length-matrix-glrlm" class="section level2">
+<h2>Gray Level Run Length Matrix (GLRLM)</h2>
+<p>Rather than looking at pairs of pixels, the GLRLM looks at runs of pixels. That is, how many pixels of a given grey value occur in a sequence in a given direction.</p>
+<p>The rows of the GLRLM represent, again, grey levels in the image. However, the columns now represent lengths of runs, with the entries corresponding to the number of runs of the given length in the image. Let’s look at the example matrix used the Galloway 1974.</p>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    1    2    3
+## [2,]    0    2    3    3
+## [3,]    2    1    1    1
+## [4,]    3    0    3    0</code></pre>
+<p>And the GLRLM:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glrlm</span>(s, <span class="dt">angle=</span><span class="dv">0</span>, <span class="dt">verbose=</span>F)</code></pre>
+<pre><code>## An object of class &quot;glrlm&quot;
+##   1 2 3 4
+## 0 4 0 0 0
+## 1 1 0 1 0
+## 2 3 0 0 0
+## 3 3 1 0 0</code></pre>
+<p>With available features:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Argument</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Grey Level Non-uniformity</td>
+<td align="left">glrlm_GLN</td>
+</tr>
+<tr class="even">
+<td align="left">High Grey Level Run Emphasis</td>
+<td align="left">glrlm_HGLRE</td>
+</tr>
+<tr class="odd">
+<td align="left">Long Run Emphasis</td>
+<td align="left">glrlm_LRE</td>
+</tr>
+<tr class="even">
+<td align="left">Long Run High Grey Level Emphasis</td>
+<td align="left">glrlm_LRHGLE</td>
+</tr>
+<tr class="odd">
+<td align="left">Long Run Low Grey Level Emphasis</td>
+<td align="left">glrlm_LRLGLE</td>
+</tr>
+<tr class="even">
+<td align="left">Low Grey Level Run Emphasis</td>
+<td align="left">glrlm_LGLRE</td>
+</tr>
+<tr class="odd">
+<td align="left">Run Length Non-uniformity</td>
+<td align="left">glrlm_RLN</td>
+</tr>
+<tr class="even">
+<td align="left">Run Percentage</td>
+<td align="left">glrlm_RP</td>
+</tr>
+<tr class="odd">
+<td align="left">Short Run Emphasis</td>
+<td align="left">glrlm_SRE</td>
+</tr>
+<tr class="even">
+<td align="left">Short Run High Grey Level Emphasis</td>
+<td align="left">glrlm_SRHGLE</td>
+</tr>
+<tr class="odd">
+<td align="left">Short Run Low Grey Level Emphasis</td>
+<td align="left">glrlm_SRLGLE</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gray-level-size-zone-matrix-glszm-and-multiple-glszm" class="section level2">
+<h2>Gray Level Size Zone Matrix (GLSZM) and Multiple-GLSZM</h2>
+<p>The GLSZM looks at zones of 9-connected pixels. That is, how many pixels of a given grey value are connected in a single group.</p>
+<p>The rows of the GLSZM represent grey levels in the image, and the columns now represent sizes. Thus the entries correspond to the number of groups of pixels of a given grey value that are a given size.</p>
+<p>For the GLSZM let’s look at a more complicated image, that of a tumor, but discretized into only 16 grey levels (using the <code>discretizeImage</code> function incldued in the package)</p>
+<pre class="sourceCode r"><code class="sourceCode r">discTumor &lt;-<span class="st"> </span><span class="kw">discretizeImage</span>(radiomics::tumor, <span class="dt">n_grey=</span><span class="dv">16</span>)
+<span class="kw">image</span>(discTumor, <span class="dt">axes=</span>F, <span class="dt">col=</span>viridis::<span class="kw">viridis</span>(<span class="dv">16</span>))</code></pre>
+<p><img src="data:image/png;base64,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" /></p>
+<p>And the corresponding GLSZM:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">image</span>(<span class="kw">glszm</span>(discTumor))</code></pre>
+<p><img src="data:image/png;base64,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" /></p>
+<p>The MGLSZM computes a GLSZM for 8 different discretizations of the image (2, 4, 8, 16, 32, 64, 128, and 256 grey levels). It then combines these using a weights based a Gaussian distribution (mean = 0, standard deviation = 1).</p>
+<p>The MGLSZM for the tumor image looks like:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">image</span>(<span class="kw">mglszm</span>(tumor))</code></pre>
+<p><img src="data:image/png;base64,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" /></p>
+<p>The GLSZM and MGLSZM use the same feature set:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="left">Argument</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Small Area Emphasis</td>
+<td align="left">glszm_SAE</td>
+</tr>
+<tr class="even">
+<td align="left">Large Area Emphasis</td>
+<td align="left">glszm_LAE</td>
+</tr>
+<tr class="odd">
+<td align="left">Intensity Variability</td>
+<td align="left">glszm_IV</td>
+</tr>
+<tr class="even">
+<td align="left">Size Zone Variance</td>
+<td align="left">glszm_SZV</td>
+</tr>
+<tr class="odd">
+<td align="left">Zone Percentage</td>
+<td align="left">glszm_ZP</td>
+</tr>
+<tr class="even">
+<td align="left">Low Intensity</td>
+<td align="left">glszm_LIE</td>
+</tr>
+<tr class="odd">
+<td align="left">High Intensity Emphasis</td>
+<td align="left">glszm_HIE</td>
+</tr>
+<tr class="even">
+<td align="left">Low Intensity Small Area Emphasis</td>
+<td align="left">glszm_LISAE</td>
+</tr>
+<tr class="odd">
+<td align="left">High Intensity Small Area Emphasis</td>
+<td align="left">glszm_HISAE</td>
+</tr>
+<tr class="even">
+<td align="left">Low Intensity Large Area Emphasis</td>
+<td align="left">glszm_LILAE</td>
+</tr>
+<tr class="odd">
+<td align="left">High Intensity Large Area Emphasis</td>
+<td align="left">glszm_HILAE</td>
+</tr>
+</tbody>
+</table>
+<p>Happy classifying!</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
