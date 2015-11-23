@@ -36,7 +36,7 @@ glcm <- setClass("glcm",
 
 setMethod("initialize", 
           signature = "glcm", 
-          definition = function(.Object, data, angle = 0, d=1, n_grey = 32, normalize=TRUE, ...){
+          definition = function(.Object, data, angle, d, n_grey, normalize, ...){
             #Check validity of input
             if (!is.matrix(data)) {
               stop(paste0("Object of class ", class(data), ".  is.matrix(object) must evaluate TRUE."))
@@ -101,6 +101,6 @@ setMethod("initialize",
           }   )
 
 #' @export          
-glcm <- function(data, ...){
- return(new("glcm", data, ...))
+glcm <- function(data, angle = 0, d=1, n_grey = 32, normalize=TRUE, ...){
+ return(new("glcm", data, angle, d, n_grey, normalize, ...))
 }

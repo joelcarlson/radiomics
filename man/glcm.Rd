@@ -4,12 +4,10 @@
 \alias{glcm}
 \title{Gray level co-occurrence matrix.}
 \usage{
-glcm(data, ...)
+glcm(data, angle = 0, d = 1, n_grey = 32, normalize = TRUE, ...)
 }
 \arguments{
 \item{data}{A numeric 2D matrix.}
-
-\item{...}{Can be given verbose=FALSE to suppress output from the n_grey conversion.}
 
 \item{angle}{One of "0", "45", "90" or "135", the pixel to which the
 current pixel is compared.}
@@ -23,6 +21,8 @@ no action will be taken.}
 
 \item{normalize}{Logical value, if TRUE (default) the matrix will be normalized such that
 the sum of it's components is 1.}
+
+\item{...}{Can be given verbose=FALSE to suppress output from the n_grey conversion.}
 }
 \value{
 a matrix of dimension n_grey by n_grey, the GLCM. The column and row names represent
