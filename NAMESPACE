@@ -2,7 +2,7 @@
 
 export(calc_features)
 export(discretizeImage)
-exportClasses(glcm)
+export(glcm)
 exportClasses(glrlm)
 exportClasses(glszm)
 exportClasses(mglszm)
