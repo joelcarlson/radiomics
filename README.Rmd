@@ -15,8 +15,14 @@ knitr::opts_chunk$set(
 #Radiomics: Texture Analysis Matrices
 
 The `radiomics` package is a set of tools for computing texture matrices and features from images. 
- 
-You can install the development version of the package using:
+
+The release version of this package is available from [CRAN](https://cran.r-project.org/web/packages/radiomics/index.html) using:
+
+```{r,eval=FALSE}
+install.packages("radiomics")
+```
+
+Or you can install the development version of the package using:
 
 ```{r,echo=FALSE, message=FALSE}
 devtools::load_all(".")

@@ -3,7 +3,13 @@ Radiomics: Texture Analysis Matrices
 
 The `radiomics` package is a set of tools for computing texture matrices and features from images.
 
-You can install the development version of the package using:
+The release version of this package is available from [CRAN](https://cran.r-project.org/web/packages/radiomics/index.html) using:
+
+``` r
+install.packages("radiomics")
+```
+
+Or you can install the development version of the package using:
 
 ``` r
 devtools::install_github("joelcarlson/radiomics")
@@ -74,9 +80,10 @@ The `image` functions make use of the `viridis` scale, as shown here using `imag
 Calculating Features
 --------------------
 
-Each matrix type has an associated `calc_features` function, which returns an object of class `data.frame` with a single observation for each calculated feature.
+Each matrix type has an associated `calc_features` function, which returns an object of class `data.frame` with a single observation for each calculated feature. First order features can also be calculated on 2D matrices.
 
 ``` r
+calc_features(tumor)
 calc_features(glcm(tumor))
 calc_features(glrlm(tumor))
 calc_features(glszm(tumor))
