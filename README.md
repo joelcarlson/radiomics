@@ -75,7 +75,7 @@ image(mglszm(tumor))
 
 The `image` functions make use of the `viridis` scale, as shown here using `image(glcm(tumor, n_grey=64))`:
 
-![](figs/README-tumorglcm-1.png)
+![Sample image](https://raw.githubusercontent.com/joelcarlson/radiomics/master/figs/README-tumorglcm-1.png)
 
 Calculating Features
 --------------------
