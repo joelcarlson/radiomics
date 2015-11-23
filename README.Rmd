@@ -61,7 +61,7 @@ glszm(tumor)
 mglszm(tumor)
 ```
 
-A matrix with the class of the texture matrix type is return, as shown here using `glcm(tumor, n_grey=4)`
+A matrix with the class of the texture matrix type is returned, as shown here using `glcm(tumor, n_grey=4)`
 
 ```{r,echo=FALSE}
 glcm(tumor, n_grey=4)

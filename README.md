@@ -1,8 +1,6 @@
 Radiomics: Texture Analysis Matrices
 ====================================
 
-[![cran version](http://www.r-pkg.org/badges/version/radiomics)](http://cran.rstudio.com/web/packages/radiomics)
-
 The `radiomics` package is a set of tools for computing texture matrices and features from images.
 
 The release version of this package is available from [CRAN](https://cran.r-project.org/web/packages/radiomics/index.html) using:
@@ -49,7 +47,7 @@ glszm(tumor)
 mglszm(tumor)
 ```
 
-A matrix with the class of the texture matrix type is return, as shown here using `glcm(tumor, n_grey=4)`
+A matrix with the class of the texture matrix type is returned, as shown here using `glcm(tumor, n_grey=4)`
 
     #> An object of class "glcm"
     #>              1          2           3            4
