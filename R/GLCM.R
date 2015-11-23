@@ -79,7 +79,7 @@ setMethod("initialize",
               for(j in 1:ncol(data)){
                 ref_val <- data[i,j]
                 neighbour_val <- tryCatch(data[i + angle[1], j + angle[2]], error=function(e) NA)
-                if(is.na(neighbour_val)){
+                if(is.na(neighbour_val) | length(neighbour_val) == 0){
                   next
                 } else {
                   counts[as.character(ref_val), as.character(neighbour_val)] <- counts[as.character(ref_val), as.character(neighbour_val)] + 1
