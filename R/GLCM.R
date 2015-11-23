@@ -21,7 +21,6 @@
 #' @return a matrix of dimension n_grey by n_grey, the GLCM. The column and row names represent 
 #'   grey values in the image.
 #'   
-#'   See \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm} for details.
 #' @references \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm}
 #' @examples
 #' \dontrun{

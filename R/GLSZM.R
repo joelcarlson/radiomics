@@ -14,7 +14,6 @@
 #'   names represent the region size, row names represent grey level, and 
 #'   the entries represent the count of how many times a given size of given grey level
 #'   occur.
-#'   See (\url{http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html}) for details.   
 #'
 #' @examples
 #' \dontrun{
@@ -38,7 +37,7 @@ glszm <- setClass("glszm",
 
 setMethod("initialize", 
           signature = "glszm", 
-          definition = function(.Object, data, n_grey=32, ...){
+          definition = function(.Object, data, n_grey, ...){
             #discretize data only if n_grey is different from unique grey values in img
             if( ! identical( n_grey, as.numeric(length( unique( c(data) ) )) )){ 
               data <- discretizeImage(data, n_grey=n_grey, ...)
@@ -79,3 +78,8 @@ setMethod("initialize",
             .Object
           }
 )
+
+#' @export          
+glszm <- function(data, n_grey = 32, ...){
+  return(new("glszm", data, n_grey, ...))
+}

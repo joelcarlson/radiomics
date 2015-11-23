@@ -18,8 +18,7 @@
 #' @return a matrix of class "glrlm" of dimension n_grey by run length. The column 
 #'   names represent the length of the run, and row names represent 
 #'   grey values in the image.
-#'   See Galloway 1974
-#'   (\url{http://www.sciencedirect.com/science/article/pii/S0146664X75800086}) for details.   
+#'   
 #' @references \url{http://www.sciencedirect.com/science/article/pii/S0146664X75800086}
 #' @examples
 #' \dontrun{
@@ -35,7 +34,7 @@ glrlm <- setClass("glrlm",
 
 setMethod("initialize", 
           signature = "glrlm", 
-          definition = function(.Object, data, angle=0, n_grey=32, max_run_length = min(dim(data)), ...){
+          definition = function(.Object, data, angle, n_grey, max_run_length, ...){
             #discretize data only if n_grey is different from unique grey values in img
             if( ! identical( n_grey, as.numeric(length( unique( c(data) ) )) )){ 
               data <- discretizeImage(data, n_grey=n_grey, ...)
@@ -83,6 +82,11 @@ setMethod("initialize",
           
           
 )
+
+#' @export          
+glrlm <- function(data, angle = 0, n_grey = 32, max_run_length = min(dim(data)), ...){
+  return(new("glrlm", data, angle, n_grey, max_run_length, ...))
+}
 
 add_to_rlm <- function(runs, rlm, max_run_length){
   #Intermediate function, not meant to be called directly

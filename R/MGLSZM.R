@@ -15,7 +15,7 @@ NULL
 #' Can be visualized using \code{image(mglszm(data))}. For visualization info
 #' see \code{?image.radiomics}
 #' 
-#' @param image A 2D image matrix.
+#' @param data A 2D image matrix.
 #' @param truncate Logical, removes any sizes or gray levels that have no entries.
 #' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
 #' @return a matrix of dimension n_grey by region size, the MGLSZM. The column 
@@ -41,7 +41,7 @@ mglszm <- setClass("mglszm",
 
 setMethod("initialize", 
           signature = "mglszm", 
-          definition = function(.Object, data, truncate=TRUE, ...){
+          definition = function(.Object, data, truncate, ...){
             #TODO: Make weights a function argument
             #TODO: Make number of bits a function argument
             
@@ -96,3 +96,8 @@ setMethod("initialize",
             
           }
 )
+
+#' @export          
+mglszm <- function(data, truncate = TRUE, ...){
+  return(new("mglszm", data, truncate, ...))
+}

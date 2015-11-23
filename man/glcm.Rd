@@ -27,8 +27,6 @@ the sum of it's components is 1.}
 \value{
 a matrix of dimension n_grey by n_grey, the GLCM. The column and row names represent
   grey values in the image.
-
-  See \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm} for details.
 }
 \description{
 \code{glcm} returns a gray level co-occurrence matrix for a given matrix.
