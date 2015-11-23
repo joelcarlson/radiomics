@@ -99,7 +99,8 @@ setMethod("initialize",
             .Object
             
           }   )
-          
+
+#' @export          
 glcm <- function(data, ...){
  return(new("glcm", data, ...))
 }
