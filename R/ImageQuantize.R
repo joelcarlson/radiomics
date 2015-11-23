@@ -7,7 +7,7 @@
 #' If n_grey is greater than the number of unique grey levels in the matrix then no action
 #' is taken.
 #' 
-#' @param image A numeric 2D matrix.
+#' @param data A numeric 2D matrix.
 #' @param n_grey an integer value, the number of grey levels the image should
 #'   be quantized into.
 #' @param verbose Logical, a message is given when the user 
@@ -27,28 +27,37 @@
 #' image(discretizeImage(tumor, n_grey=8, verbose=F))
 #' @export
  
-discretizeImage <- function(image, n_grey=32, verbose=TRUE){
+discretizeImage <- function(data, n_grey=32, verbose=TRUE){
+  #Error checking
+  #Check validity of input
+  if (!is.matrix(data)) {
+    stop(paste0("Object of class ", class(data), ".  is.matrix(object) must evaluate TRUE."))
+  }
+  if (any(data < 0, na.rm=TRUE)) {
+    stop("Object contains negative values. All values must be greater than 0.")
+  }
+  
   #Not a perfect solution. Makes n_grey breaks, but doesn't necessarily populate all of them
   # eg. n_gey could be 100, but only 75 of the levels are used by pixels
-  l_unique <- length(unique(c(image)))
+  l_unique <- length(unique(c(data)))
   
   #Make sure discretization is valid
   if(l_unique == 0 ) stop("Function not valid for empty input")
-  if(sum(is.na(image)) == length(image)) stop("Matrix must not be entirely NA")
+  if(sum(is.na(data)) == length(data)) stop("Matrix must not be entirely NA")
   
   #If we don't need to do anything, we don't do anything
   if(n_grey == l_unique){
-    return(image)
+    return(data)
   } else if(n_grey > l_unique){
     if(verbose) message(sprintf("n_grey (%d) cannot be larger than the number of gray levels in the image (%d)", n_grey, l_unique))
     if(verbose) message(sprintf("n_grey set to %d", l_unique))
-    return(image)
+    return(data)
   } 
   
-  discretized <- cut(image, breaks=seq(min(image, na.rm=TRUE), max(image, na.rm=TRUE), length.out=(n_grey + 1)),
+  discretized <- cut(data, breaks=seq(min(data, na.rm=TRUE), max(data, na.rm=TRUE), length.out=(n_grey + 1)),
                      labels = seq(1, n_grey, 1),
                      include.lowest=TRUE, right=FALSE) 
-  return(matrix(as.numeric(discretized), nrow=nrow(image)))
+  return(matrix(as.numeric(discretized), nrow=nrow(data)))
 }
 
 #' Image Discretization.

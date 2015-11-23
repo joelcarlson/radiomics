@@ -38,10 +38,9 @@ glszm <- setClass("glszm",
 setMethod("initialize", 
           signature = "glszm", 
           definition = function(.Object, data, n_grey, ...){
-            #discretize data only if n_grey is different from unique grey values in img
-            if( ! identical( n_grey, as.numeric(length( unique( c(data) ) )) )){ 
-              data <- discretizeImage(data, n_grey=n_grey, ...)
-            }
+            #send to discretizeImage for error checking
+            data <- discretizeImage(data, n_grey=n_grey, ...)
+            
             grey_lvls <- unique(c(data))
             grey_lvls <- grey_lvls[!is.na(grey_lvls)]
             #convert to data for use with spatstats functions

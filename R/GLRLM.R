@@ -35,11 +35,10 @@ glrlm <- setClass("glrlm",
 setMethod("initialize", 
           signature = "glrlm", 
           definition = function(.Object, data, angle, n_grey, max_run_length, ...){
-            #discretize data only if n_grey is different from unique grey values in img
-            if( ! identical( n_grey, as.numeric(length( unique( c(data) ) )) )){ 
-              data <- discretizeImage(data, n_grey=n_grey, ...)
-            }
             
+            #send to discretizeImage for error checking
+            data <- discretizeImage(data, n_grey=n_grey, ...)
+
             #initialize rlm
             unique_vals <- sort(unique(c(data)))
             rlm <- matrix(0, nrow=length(unique_vals), ncol=max_run_length)

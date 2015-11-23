@@ -36,20 +36,11 @@ glcm <- setClass("glcm",
 setMethod("initialize", 
           signature = "glcm", 
           definition = function(.Object, data, angle, d, n_grey, normalize, ...){
-            #Check validity of input
-            if (!is.matrix(data)) {
-              stop(paste0("Object of class ", class(data), ".  is.matrix(object) must evaluate TRUE."))
-            }
-            if (any(data < 0)) {
-              stop("Object contains negative values. All values must be greater than 0.")
-            }
-            
+
+            #Send to discretizeImage for error checking
             #Discretize grey values if required
             #discretize image and initialize GLCM based on discretized image
-            
-            if( !identical(n_grey, length(unique(c(data))) )){ 
-              data <- discretizeImage(data, n_grey=n_grey, ...)
-            }
+            data <- discretizeImage(data, n_grey=n_grey, ...)
             
             unique_vals <- sort(unique(c(data)))
             
@@ -77,8 +68,9 @@ setMethod("initialize",
             for(i in 1:nrow(data)){
               for(j in 1:ncol(data)){
                 ref_val <- data[i,j]
+                #tryCatch neighbour_val in case subscript is out of bounds
                 neighbour_val <- tryCatch(data[i + angle[1], j + angle[2]], error=function(e) NA)
-                if(is.na(neighbour_val) | length(neighbour_val) == 0){
+                if(is.na(ref_val) | is.na(neighbour_val) | length(neighbour_val) == 0){
                   next
                 } else {
                   counts[as.character(ref_val), as.character(neighbour_val)] <- counts[as.character(ref_val), as.character(neighbour_val)] + 1

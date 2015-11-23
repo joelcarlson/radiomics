@@ -4,10 +4,10 @@
 \alias{discretizeImage}
 \title{Image Discretization.}
 \usage{
-discretizeImage(image, n_grey = 32, verbose = TRUE)
+discretizeImage(data, n_grey = 32, verbose = TRUE)
 }
 \arguments{
-\item{image}{A numeric 2D matrix.}
+\item{data}{A numeric 2D matrix.}
 
 \item{n_grey}{an integer value, the number of grey levels the image should
 be quantized into.}
