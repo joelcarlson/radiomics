@@ -76,7 +76,9 @@ setMethod("initialize",
             
             if(truncate){
               truncated_rlm <- rlm[,which(colSums(rlm) > 0)]
-              rlm <- ifelse(is.matrix(truncated_rlm), truncated_rlm, rlm)
+              if(is.matrix(truncated_rlm)){
+                rlm <- truncated_rlm
+              }
             }
             .Object@.Data <- rlm
             
