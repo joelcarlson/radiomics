@@ -7,3 +7,4 @@
 ^NEWS\.md$
 ^figs$
 ^TODO\.txt$
+^\.travis\.yml$
