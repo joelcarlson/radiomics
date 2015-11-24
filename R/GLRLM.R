@@ -74,7 +74,7 @@ setMethod("initialize",
               stop("Angle must be one of '0', '45', '90', '135'.")
             }
             
-            if(truncate) rlm <- rlm[,which(colSums(rlm) > 0)]
+            if(truncate) rlm <- as.matrix(rlm[,which(colSums(rlm) > 0)])
             
             .Object@.Data <- rlm
             
