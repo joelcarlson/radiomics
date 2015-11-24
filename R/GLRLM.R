@@ -86,7 +86,7 @@ setMethod("initialize",
 
 #' @export          
 glrlm <- function(data, angle = 0, n_grey = 32, max_run_length = min(dim(data)), truncate=TRUE, ...){
-  return(new("glrlm", data, angle, n_grey, max_run_length, ...))
+  return(new("glrlm", data, angle, n_grey, max_run_length, truncate, ...))
 }
 
 add_to_rlm <- function(runs, rlm, max_run_length){
