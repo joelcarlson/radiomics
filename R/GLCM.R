@@ -60,24 +60,23 @@ setMethod("initialize",
             }
             
             #define count matrix
-            
             counts <- matrix(0, ncol=length(unique_vals), nrow=length(unique_vals) )
-            rownames(counts) <-colnames(counts) <- unique_vals
+            rownames(counts) <- colnames(counts) <- unique_vals
             
-            #loop over rows and columns
-            for(i in 1:nrow(data)){
-              for(j in 1:ncol(data)){
-                ref_val <- data[i,j]
-                #tryCatch neighbour_val in case subscript is out of bounds
-                neighbour_val <- tryCatch(data[i + angle[1], j + angle[2]], error=function(e) NA)
-                if(is.na(ref_val) | is.na(neighbour_val) | length(neighbour_val) == 0){
-                  next
-                } else {
-                  counts[as.character(ref_val), as.character(neighbour_val)] <- counts[as.character(ref_val), as.character(neighbour_val)] + 1
-                }
-                
-              }
+            #ref = reference pixel value
+            #nei = neighbor pixel value
+            #This loop finds indices of neighbor pixels given a ref value and angle, counts occurrence of each
+            #pixel value, and adds them into the counts matrix
+            for(ref in unique_vals){
+              ref_indices <- which(data==ref, arr.ind=TRUE)
+              nei_indices <- matrix(c(ref_indices[,'row'] + angle[1], ref_indices[,'col'] + angle[2]), ncol=2)
+              #make sure indices exist
+              nei_indices <- matrix(nei_indices[which(nei_indices[,1] <= nrow(data) & nei_indices[,2] <= ncol(data)),], ncol=2)
+              nei <- data[nei_indices] 
+              nei_counts <- as.data.frame(table(nei))
+              counts[as.character(ref), as.character(nei_counts$nei) ] <- counts[as.character(ref), as.character(nei_counts$nei)] + nei_counts$Freq
             }
+            
             
             #GLCMs should be symmetrical, so the transpose is added
             counts <- counts + t(counts)
