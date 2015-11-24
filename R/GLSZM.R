@@ -9,7 +9,8 @@
 #' @param data A numeric 2D matrix.
 #' @param n_grey an integer value, the number of grey levels the image should
 #'   be quantized into.
-#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion.       
+#' @param truncate Logical. Remove values for sizes that have no entries
+#' @param ... Can be given verbose=FALSE to suppress output from the n_grey conversion. 
 #' @return a matrix of dimension n_grey by region size, the GLSZM. The column 
 #'   names represent the region size, row names represent grey level, and 
 #'   the entries represent the count of how many times a given size of given grey level
@@ -37,7 +38,7 @@ glszm <- setClass("glszm",
 
 setMethod("initialize", 
           signature = "glszm", 
-          definition = function(.Object, data, n_grey, ...){
+          definition = function(.Object, data, n_grey, truncate, ...){
             #send to discretizeImage for error checking
             data <- discretizeImage(data, n_grey=n_grey, ...)
             
@@ -71,6 +72,7 @@ setMethod("initialize",
             count_data[is.na(count_data)] <- 0
             
             
+            if(truncate) count_data <- count_data[,which(colSums(count_data) > 0)]
             
             .Object@.Data <- count_data
             
@@ -79,6 +81,6 @@ setMethod("initialize",
 )
 
 #' @export          
-glszm <- function(data, n_grey = 32, ...){
-  return(new("glszm", data, n_grey, ...))
+glszm <- function(data, n_grey = 32, truncate=TRUE, ...){
+  return(new("glszm", data, n_grey,truncate, ...))
 }
