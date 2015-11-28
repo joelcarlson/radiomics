@@ -1,6 +1,7 @@
 ## Release summary
 
-This is the first submission of this package to CRAN 
+This release, most importantly, added generator functions for the matrix classes. Without these the user had to use new("glcm", data), which is not ideal.
+Apologies for the fast re-release (~1 week), there were some issues that needed to be addressed due to this being my first CRAN submission.
 
 ## Test environments
 
@@ -9,9 +10,7 @@ This is the first submission of this package to CRAN
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-
-There is one NOTE due to this being a first submission.
+There were no NOTES, ERRORs or WARNINGs.
 
 ## Downstream dependencies
 

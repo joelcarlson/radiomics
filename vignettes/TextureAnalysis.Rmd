@@ -17,9 +17,7 @@ img {
 }
 </style>
 
-```{r}
-library(radiomics)
-```
+
 ```{r,echo=FALSE, message=FALSE}
 devtools::load_all(".")
 knitr::opts_chunk$set(echo = TRUE, fig.retina=2, fig.width=7, fig.height=5)
@@ -30,6 +28,10 @@ knitr::opts_chunk$set(echo = TRUE, fig.retina=2, fig.width=7, fig.height=5)
 Texture analysis is a technique used to quantify the patterns in images that are simple for humans to see, but prove more difficult for computers. The texture analysis features which can be computed using this package can be used as inputs for a classification algorithm, or for visualization of different image properties. In this vignette we will explore the different matrices and features used to quantify texture available in the `radiomics` package.
 
 This package includes new classes (which inherit from the "matrix" class) for four different types of texture matrices: "grey level co-occurrence" (glcm), "grey level run-length" (glrlm), "grey level size-zone" (glszm), and "multiple grey level size-zone" (mglszm). For each of these matrices a number of features have been defined which characterize the image in question.
+
+```{r, message=FALSE}
+library(radiomics)
+```
 
 ##Basics
 
@@ -77,13 +79,13 @@ Arguments can be used to select only certain features for calculation by adding 
 calc_features(test, features = c("calc_energy", "calc_mean"))
 ```
 
-##Gray Level Co-occurrence Matrix (GLCM)
+##Grey Level Co-occurrence Matrix (GLCM)
 
 The GLCM is a matrix which considers the spatial relationships between two pixels at a time in the image (the reference and the neighbor pixel). The neighbor pixel can be to the East (0), North-East (45), North (90), or North-West (135) of the reference pixel. The distance between the reference and neighbor pixel can also be chosen. 
 
-The matrix is built such that each row represents a single gray value in the image, and each column also represents a single gray value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it's transpose to create a symmetrical matrix
+The matrix is built such that each row represents a single grey value in the image, and each column also represents a single grey value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it's transpose to create a symmetrical matrix
 
-For a more detailed explanation of the GLCM see [here](http://joelcarlson.me/2015/07/10/radiomics-package/) or [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm )and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
+For a more detailed explanation of the GLCM see [here](http://joelcarlson.me/2015/07/10/radiomics-package/) or [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm ) and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
 
 GLCMs can be created using the `glcm` function, and can be calculated for different angles and distances using the `angle` and `d` arguments:
 
@@ -126,11 +128,11 @@ knitr::kable(data.frame("Feature"=c("Mean", "Variance", "Auto Correlation" ,"Clu
             )), caption="GLCM features")
 ```
 
-##Gray Level Run Length Matrix (GLRLM)
+##Grey Level Run Length Matrix (GLRLM)
 
 Rather than looking at pairs of pixels, the GLRLM looks at runs of pixels. That is, how many pixels of a given grey value occur in a sequence in a given direction.
 
-The rows of the GLRLM represent, again, grey levels in the image. However, the columns now represent lengths of runs, with the entries corresponding to the number of runs of the given length in the image. Let's look at the example matrix used the Galloway 1974.
+The rows of the GLRLM represent, again, grey levels in the image. However, the columns now represent lengths of runs, with the entries corresponding to the number of runs of the given length in the image. Let's look at the example matrix used in the Galloway paper from 1974 which first described the GLRLM.
 
 ```{r,echo=FALSE}
 s <- matrix(c(0,1,2,3,0,2,3,3,2,1,1,1,3,0,3,0), nrow=4, byrow=T) #from Galloway 1974
@@ -159,13 +161,13 @@ knitr::kable(data.frame("Feature"=c("Grey Level Non-uniformity", "High Grey Leve
             )), caption="GLRLM features")
 ```
 
-##Gray Level Size Zone Matrix (GLSZM) and Multiple-GLSZM
+##Grey Level Size Zone Matrix (GLSZM) and Multiple-GLSZM
 
 The GLSZM looks at zones of 9-connected pixels. That is, how many pixels of a given grey value are connected in a single group.
 
 The rows of the GLSZM represent grey levels in the image, and the columns now represent sizes. Thus the entries correspond to the number of groups of pixels of a given grey value that are a given size.
 
-For the GLSZM let's look at a more complicated image, that of a tumor, but discretized into only 16 grey levels (using the `discretizeImage` function incldued in the package)
+For the GLSZM let's look at a more complicated image, that of a tumor, but discretized into only 16 grey levels (using the `discretizeImage` function included in the package)
 
 ```{r, fig.width=5}
 discTumor <- discretizeImage(radiomics::tumor, n_grey=16)
