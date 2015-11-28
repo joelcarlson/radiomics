@@ -4,13 +4,15 @@
 \alias{glszm}
 \title{Gray level size zone matrix.}
 \usage{
-glszm(data, n_grey = 32, ...)
+glszm(data, n_grey = 32, truncate = TRUE, ...)
 }
 \arguments{
 \item{data}{A numeric 2D matrix.}
 
 \item{n_grey}{an integer value, the number of grey levels the image should
 be quantized into.}
+
+\item{truncate}{Logical. Remove values for sizes that have no entries}
 
 \item{...}{Can be given verbose=FALSE to suppress output from the n_grey conversion.}
 }

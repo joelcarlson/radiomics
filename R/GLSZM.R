@@ -71,8 +71,12 @@ setMethod("initialize",
             }
             count_data[is.na(count_data)] <- 0
             
-            
-            if(truncate) count_data <- count_data[,which(colSums(count_data) > 0)]
+            if(truncate){
+              truncated <- count_data[,which(colSums(count_data) > 0)]
+              if(is.matrix(truncated)){
+                count_data <- truncated
+              }
+            }
             
             .Object@.Data <- count_data
             

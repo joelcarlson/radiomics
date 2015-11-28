@@ -35,3 +35,4 @@ Collate:
     'data.R'
     'image.R'
     'radiomics.R'
+    'startupMessage.R'

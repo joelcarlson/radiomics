@@ -85,11 +85,13 @@ setMethod("initialize",
               MGLSZM <- MGLSZM + KGLSZM
             }
             
-            # Remove rows containing no information
             if(truncate){
-              MGLSZM <- MGLSZM[which(rowSums(MGLSZM) > 0),which(colSums(MGLSZM) > 0)]
-            } 
-            
+              truncated <- MGLSZM[which(rowSums(MGLSZM) > 0),which(colSums(MGLSZM) > 0)]
+              if(is.matrix(truncated)){
+                MGLSZM <- truncated
+              }
+            }
+
             .Object@.Data <- MGLSZM
             
             .Object

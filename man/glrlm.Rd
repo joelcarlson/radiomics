@@ -4,12 +4,13 @@
 \alias{glrlm}
 \title{Gray level run length matrix.}
 \usage{
-glrlm(data, angle = 0, n_grey = 32, max_run_length = min(dim(data)), ...)
+glrlm(data, angle = 0, n_grey = 32, max_run_length = min(dim(data)),
+  truncate = TRUE, ...)
 }
 \arguments{
 \item{data}{A numeric 2D matrix.}
 
-\item{angle}{One of "0", "45", "90" or "135", the direction the run is calculated.}
+\item{angle}{One of 0, 45, 90 or 135, the direction the run is calculated.}
 
 \item{n_grey}{an integer value, the number of grey levels the image should
 be quantized into.}
@@ -18,6 +19,8 @@ be quantized into.}
 run length. Setting it to a smaller value truncates the output. Desirable
 in cases where the matrix is extremely sparse, for example when
 there are few long runs.}
+
+\item{truncate}{Logical Remove run lengths which have no entries}
 
 \item{...}{Can be given verbose=FALSE to suppress output from the n_grey conversion.}
 }
