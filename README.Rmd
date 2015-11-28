@@ -48,7 +48,7 @@ These matrices are the:
   - Grey Level Size Zone Matrix
   - Multiple Grey Level Size Zone Matrix
 
-Detailed descriptions and references for each matrix can be found [here](http://joelcarlson.me/2015/07/10/radiomics-package/)
+Detailed descriptions and references for each matrix can be found [here](http://joelcarlson.me/2015/07/10/radiomics-package/). 
 Detailed usage directions for calculating features and matrices can be found in the package vignette (use `browseVignettes(package = "radiomics")`)
 
 #Using the Package
