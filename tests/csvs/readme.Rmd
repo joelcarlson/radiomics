@@ -1,0 +1,36 @@
+---
+title: "readme"
+author: "Joel Carlson"
+date: "December 4, 2015"
+output: html_document
+---
+
+You might be asking yourself "What are all of these files and folders?"
+
+Well, surely interested reader, in preparation for converting the 'heavy lifting' parts of the algorithms to C++, I wanted to save confirmed matrices to make sure I don't accidentally break anything. As the algorithms are hand confirmed by myself to be working at this time, I am saving the outputs now.
+
+It's impractical for me to type the values into testthat expectations, so I've saved them all as .csv files. 
+
+These will only be on github, CRAN would probably complain about the size, we'll see.
+
+They were produced simply, as follows:
+
+```{r, eval=FALSE}
+#Matrices
+for(angle in c(0,45,90,135)){
+  write.table(glcm(hallbey, angle=angle, v=F)@.Data, paste0("hb", angle,".csv"), sep=",")
+  write.table(glcm(tumor, angle=angle, v=F)@.Data, paste0("tumor", angle,".csv"), sep=",")
+  write.table(glcm(bars, angle=angle, v=F)@.Data, paste0("bars", angle,".csv"), sep=",")
+  write.table(glcm(noise, angle=angle, v=F)@.Data, paste0("noise", angle,".csv"), sep=",")
+}
+
+#Features
+for(angle in c(0,45,90,135)){
+  write.table(calc_features(glcm(hallbey, angle=angle)), paste0("hb", angle,".csv"), sep=",", row.names=FALSE)
+  write.table(calc_features(glcm(tumor, angle=angle)), paste0("tumor", angle,".csv"), sep=",", row.names=FALSE)
+  write.table(calc_features(glcm(bars, angle=angle)), paste0("bars", angle,".csv"), sep=",", row.names=FALSE)
+  write.table(calc_features(glcm(noise, angle=angle)), paste0("noise", angle,".csv"), sep=",", row.names=FALSE)
+}
+```
+
+That's all, really! Let's speed up some algorithms!

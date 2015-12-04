@@ -34,3 +34,34 @@ test_that("45 degree GLRLM Features are properly calculated", {
   expect_equal(glrlm_SRLGLE(hbGLRLM45), 0.259, tolerance = .02)
 })
 
+test_that("0 degree GLRLM features are properly calculated", {
+  expect_equal(calc_features(glrlm(hallbey, angle=0, v=F)), read.csv("../csvs/glrlm_features/hb0.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(tumor, angle=0, v=F)), read.csv("../csvs/glrlm_features/tumor0.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(noise, angle=0, v=F)), read.csv("../csvs/glrlm_features/noise0.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(bars, angle=0, v=F)), read.csv("../csvs/glrlm_features/bars0.csv", stringsAsFactors=FALSE))
+  
+})
+
+test_that("45 degree GLRLM features are properly calculated", {
+  expect_equal(calc_features(glrlm(hallbey, angle=45, v=F)), read.csv("../csvs/glrlm_features/hb45.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(tumor, angle=45, v=F)), read.csv("../csvs/glrlm_features/tumor45.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(noise, angle=45, v=F)), read.csv("../csvs/glrlm_features/noise45.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(bars, angle=45, v=F)), read.csv("../csvs/glrlm_features/bars45.csv", stringsAsFactors=FALSE))
+  
+})
+
+test_that("90 degree GLRLM features are properly calculated", {
+  expect_equal(calc_features(glrlm(hallbey, angle=90, v=F)), read.csv("../csvs/glrlm_features/hb90.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(tumor, angle=90, v=F)), read.csv("../csvs/glrlm_features/tumor90.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(noise, angle=90, v=F)), read.csv("../csvs/glrlm_features/noise90.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(bars, angle=90, v=F)), read.csv("../csvs/glrlm_features/bars90.csv", stringsAsFactors=FALSE))
+  
+})
+
+test_that("135 degree GLRLM features are properly calculated", {
+  expect_equal(calc_features(glrlm(hallbey, angle=135, v=F)), read.csv("../csvs/glrlm_features/hb135.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(tumor, angle=135, v=F)), read.csv("../csvs/glrlm_features/tumor135.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(noise, angle=135, v=F)), read.csv("../csvs/glrlm_features/noise135.csv", stringsAsFactors=FALSE))
+  expect_equal(calc_features(glrlm(bars, angle=135, v=F)), read.csv("../csvs/glrlm_features/bars135.csv", stringsAsFactors=FALSE))
+  
+})
