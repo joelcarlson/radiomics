@@ -31,4 +31,6 @@ Allow handling of negative value (maybe)
 
 Use C++ for main loops in GLCM, GLRLM, GLZM, and MGLSZM
 
-Use C++ for main loops in feature calculations (and benchmark speeds)
+Use C++ for main loops in feature calculations (and benchmark speeds) 
+
+C++ tests
