@@ -36,7 +36,7 @@ glcm <- setClass("glcm",
 setMethod("initialize", 
           signature = "glcm", 
           definition = function(.Object, data, angle, d, n_grey, normalize, ...){
-
+            
             #Send to discretizeImage for error checking
             #Discretize grey values if required
             #discretize image and initialize GLCM based on discretized image
@@ -44,38 +44,37 @@ setMethod("initialize",
             
             unique_vals <- sort(unique(c(data)))
             
-            #Given an image matrix and angle, calculate glcm
-            #allows angles of 0 (0,1), 45 (-1,1), 90 (-1,0), 135 (-1,-1)
-            # d is distance
+            #the value of 0 is reserved for NAs in the matrix, 
+            #if there are any 0's in the DF, add 1 to all values
+            #original values will be replaced after
+            if(is.element(0, data)) data <- data + 1
+            
+            #Convert All NAs to 0
+            data[is.na(data)] <- 0
+            
+            
             if(identical(angle, 0)){
-              angle <- c(0,1)*d
+              counts <- glcm0(data, n_grey = length(unique_vals), d)
+              
             } else if (identical(angle, 45)){
-              angle <- c(-1,1)*d
+              counts <- glcm45(data, n_grey = length(unique_vals), d)
+              
             } else if (identical(angle, 90)){
-              angle <- c(-1,0)*d
+              counts <- glcm90(data, n_grey = length(unique_vals), d)
+              
             } else if (identical(angle, 135)){
-              angle <- c(-1,-1)*d
+              counts <- glcm135(data, n_grey = length(unique_vals), d)
+              
             } else {
               stop("angle must be one of '0', '45', '90', '135'.")
             }
             
-            #define count matrix
-            counts <- matrix(0, ncol=length(unique_vals), nrow=length(unique_vals) )
+            #Row 1 and Col 1 hold NA values, remove them
+            counts <- counts[-1, -1]
+            
+            #Replace proper values
             rownames(counts) <- colnames(counts) <- unique_vals
             
-            #ref = reference pixel value
-            #nei = neighbor pixel value
-            #This loop finds indices of neighbor pixels given a ref value and angle, counts occurrence of each
-            #pixel value, and adds them into the counts matrix
-            for(ref in unique_vals){
-              ref_indices <- which(data==ref, arr.ind=TRUE)
-              nei_indices <- matrix(c(ref_indices[,'row'] + angle[1], ref_indices[,'col'] + angle[2]), ncol=2)
-              #make sure indices exist
-              nei_indices <- matrix(nei_indices[which(nei_indices[,1] <= nrow(data) & nei_indices[,2] <= ncol(data)),], ncol=2)
-              nei <- data[nei_indices] 
-              nei_counts <- as.data.frame(table(nei))
-              counts[as.character(ref), as.character(nei_counts$nei) ] <- counts[as.character(ref), as.character(nei_counts$nei)] + nei_counts$Freq
-            }
             
             
             #GLCMs should be symmetrical, so the transpose is added
@@ -92,5 +91,5 @@ setMethod("initialize",
 
 #' @export          
 glcm <- function(data, angle = 0, d=1, n_grey = 32, normalize=TRUE, ...){
- return(new("glcm", data, angle, d, n_grey, normalize, ...))
+  return(new("glcm", data, angle, d, n_grey, normalize, ...))
 }

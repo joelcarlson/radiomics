@@ -13,7 +13,7 @@ Depends:
 Imports:
     spatstat,
     reshape2,
-    methods,
+    methods,,
     Rcpp
 Suggests:
     testthat,
@@ -33,7 +33,6 @@ Collate:
     'GLRLMFeatures.R'
     'GLSZMFeatures.R'
     'ImageQuantize.R'
-    'RcppExports.R'
     'data.R'
     'image.R'
     'radiomics.R'

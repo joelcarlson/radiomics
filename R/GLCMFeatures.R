@@ -6,8 +6,8 @@
 NULL
 #> NULL
 
-
-glcm_xplusy <- function(glcm, k){
+#derecated
+glcm_xpy <- function(glcm, k){
   sum <- 0
   for(i in 0:(nrow(glcm)-1)){
     for(j in 0:(nrow(glcm)-1)){
@@ -17,8 +17,25 @@ glcm_xplusy <- function(glcm, k){
   return(sum)
 }
 
+glcm_xplusy <- function(glcm, k){
+  #Sum each element where the indices of the matrix sum to k
+  sum <- 0
+  map <- as.numeric(colnames(glcm))
+  for(value in map){
+    target <- k - value
+    #check if target in map
+    targetInMap <- which(map == target)
+    if( length(targetInMap > 0) ) sum <- sum + glcm[targetInMap, which(map == value)]
+    
+    #Stop early to avoid checking values which 
+    #are larger than k (i.e. could never sum to k)
+    if(value > k) return(sum)
+  }
+  return(sum)
+}
 
-glcm_xminusy <- function(glcm, k){
+#Deprecated
+glcm_xmy <- function(glcm, k){
   sum <- 0
   for(i in 0:(nrow(glcm)-1)){
     for(j in 0:(nrow(glcm)-1)){
@@ -26,6 +43,23 @@ glcm_xminusy <- function(glcm, k){
     }
   }
   return(sum)
+}
+
+glcm_xminusy <- function(glcm, k){
+  #Sum each element where the indices of the matrix sum to k
+  sum <- 0
+  map <- as.numeric(colnames(glcm))
+  for(value in map){
+    target <- k + value
+    #check if target in map
+    targetInMap <- which(map == target)
+    if( length(targetInMap > 0) ) sum <- sum + glcm[targetInMap, which(map == value)]
+  }
+  
+  #This ensure that values on both sides of the symmetrical matrix are accounted for
+  #if k = 0 it's onyl values along the main diagonal, and thus doesn't need doubling
+  if(k == 0){ return(sum) }
+  return(sum*2)
 }
 
 #' @describeIn glcm_features Mean

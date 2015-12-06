@@ -11,10 +11,10 @@ The release version of this package is available from [CRAN](https://cran.r-proj
 install.packages("radiomics")
 ```
 
-Or you can install the development version of the package using:
+Or you can install the development version of the package (currently converting package to use C++ for computationally expensive tasks) using:
 
 ``` r
-devtools::install_github("joelcarlson/radiomics")
+devtools::install_github("joelcarlson/radiomics", ref="develop")
 
 library(radiomics)
 ```
