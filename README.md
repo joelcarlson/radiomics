@@ -11,7 +11,7 @@ The release version of this package is available from [CRAN](https://cran.r-proj
 install.packages("radiomics")
 ```
 
-Or you can install the development version of the package (currently converting package to use C++ for computationally expensive tasks) using:
+Or you can install the development version of the package (currently converting package to use C++ for computationally expensive tasks - GLCM calculation is considerably faster than the CRAN version) using:
 
 ``` r
 devtools::install_github("joelcarlson/radiomics", ref="develop")
