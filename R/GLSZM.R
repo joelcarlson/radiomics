@@ -41,7 +41,10 @@ setMethod("initialize",
           definition = function(.Object, data, n_grey, truncate, ...){
             #send to discretizeImage for error checking
             data <- discretizeImage(data, n_grey=n_grey, ...)
-            
+            if(sum(is.na(data)) == dim(data)[1]*dim(data)[2]){
+              .Object@.Data <- matrix()[-1,-1]
+              return(.Object)
+            } 
             grey_lvls <- unique(c(data))
             grey_lvls <- grey_lvls[!is.na(grey_lvls)]
             #convert to data for use with spatstats functions

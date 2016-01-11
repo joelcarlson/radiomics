@@ -6,6 +6,6 @@ test_that("Image discretization ", {
   expect_error(discretizeImage())
   expect_error(discretizeImage(c()))
   expect_error(discretizeImage(list()))
-  expect_error(discretizeImage(matrix()))
+  expect_warning(discretizeImage(matrix()))
   
 })

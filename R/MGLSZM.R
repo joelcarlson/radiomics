@@ -44,7 +44,13 @@ setMethod("initialize",
           definition = function(.Object, data, truncate, ...){
             #TODO: Make weights a function argument
             #TODO: Make number of bits a function argument
-            
+            #If composed entirely of NA, return <0,0> matrix
+            #pass through discretizeImage to access warnings and errors
+            data <- discretizeImage(data, n_grey=length(unique(c(data))), ...)
+            if(sum(is.na(data)) == dim(data)[1]*dim(data)[2]){
+              .Object@.Data <- matrix()[-1,-1]
+              return(.Object)
+            } 
             #create weights
             #  - -3.5 to 3.5 makes the sum of the weights ~1
             #  - 8 is the number of bits we will use (2^k)

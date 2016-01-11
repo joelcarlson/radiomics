@@ -43,7 +43,10 @@ discretizeImage <- function(data, n_grey=32, verbose=TRUE){
   
   #Make sure discretization is valid
   if(l_unique == 0 ) stop("Function not valid for empty input")
-  if(sum(is.na(data)) == length(data)) stop("Matrix must not be entirely NA")
+  if(sum(is.na(data)) == length(data)){
+    if(verbose) warning("Matrix composed entirely of NA's\nReturning Matrix")
+    return(data)
+  } 
   
   #If we don't need to do anything, we don't do anything
   if(n_grey == l_unique){

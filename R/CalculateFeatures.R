@@ -73,7 +73,10 @@ setMethod("calc_features",
               } 
               feature_list <- feature_list[feature_list %in% features]
             }
-            feature_df <- data.frame(lapply(feature_list, function(f) get(f)(object)))
+            
+            feature_df <- data.frame(lapply(feature_list, function(f) tryCatch(get(f)(object),
+                                                                               error=function(cond) return(NA),
+                                                                               warning=function(cond) return(NA))))
             colnames(feature_df) <- feature_list
             return(feature_df)
           }
@@ -111,7 +114,9 @@ setMethod("calc_features",
               } 
               feature_list <- feature_list[feature_list %in% features]
             }
-            feature_df <- data.frame(lapply(feature_list, function(f) get(f)(object)))
+            feature_df <- data.frame(lapply(feature_list, function(f) tryCatch(get(f)(object),
+                                            error=function(cond) return(NA),
+                                            warning=function(cond) return(NA))))
             colnames(feature_df) <- feature_list
             return(feature_df)
           }
@@ -141,7 +146,9 @@ setMethod("calc_features",
               } 
               feature_list <- feature_list[feature_list %in% features]
             }
-            feature_df <- data.frame(lapply(feature_list, function(f) get(f)(object)))
+            feature_df <- data.frame(lapply(feature_list, function(f) tryCatch(get(f)(object),
+                                            error=function(cond) return(NA),
+                                            warning=function(cond) return(NA))))
             colnames(feature_df) <- feature_list
             return(feature_df)
           }
@@ -172,7 +179,9 @@ setMethod("calc_features",
               } 
               feature_list <- feature_list[feature_list %in% features]
             }
-            feature_df <- data.frame(lapply(feature_list, function(f) get(f)(object)))
+            feature_df <- data.frame(lapply(feature_list, function(f) tryCatch(get(f)(object),
+                                                                               error=function(cond) return(NA),
+                                                                               warning=function(cond) return(NA))))
             
             colnames(feature_df) <- feature_list
             return(feature_df)
@@ -204,7 +213,9 @@ setMethod("calc_features",
               } 
               feature_list <- feature_list[feature_list %in% features]
             }
-            feature_df <- data.frame(lapply(feature_list, function(f) get(f)(object)))
+            feature_df <- data.frame(lapply(feature_list, function(f) tryCatch(get(f)(object),
+                                                                               error=function(cond) return(NA),
+                                                                               warning=function(cond) return(NA))))
             
             
             colnames(feature_df) <- paste0("m",feature_list)
