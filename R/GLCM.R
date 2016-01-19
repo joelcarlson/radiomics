@@ -54,29 +54,43 @@ setMethod("initialize",
             
             
             if(identical(angle, 0)){
-              counts <- glcm0(data, n_grey = length(unique_vals), d)
+              counts <- glcm0(data, n_grey = max(data), d)
               
             } else if (identical(angle, 45)){
-              counts <- glcm45(data, n_grey = length(unique_vals), d)
+              counts <- glcm45(data, n_grey = max(data), d)
               
             } else if (identical(angle, 90)){
-              counts <- glcm90(data, n_grey = length(unique_vals), d)
+              counts <- glcm90(data, n_grey = max(data), d)
               
             } else if (identical(angle, 135)){
-              counts <- glcm135(data, n_grey = length(unique_vals), d)
+              counts <- glcm135(data, n_grey = max(data), d)
               
             } else {
               stop("angle must be one of '0', '45', '90', '135'.")
             }
-            
+                            
             #Row 1 and Col 1 hold NA values, remove them
             counts <- counts[-1, -1]
             
-            #Replace proper values
+            #Situation where matrix is composed of a single NA
+            if(length(counts) == 0){
+              .Object@.Data <- counts
+              return(.Object)
+            }
+            rownames(counts) <- colnames(counts) <- seq(1, max(data), 1)
+            
+            #Replace proper values in column and row names
+            #Two situations:
+            #1. No zeroes were present, thus nothing was added
+            #2. One was added to all entries because there were zeros in the matrix
+            if(max(as.numeric(rownames(counts))) == max(unique_vals)){ #ie. 1 wasn't added
+              counts <- counts[which(rownames(counts) %in% unique_vals), which(colnames(counts) %in% unique_vals)]
+            } else {
+              counts <- counts[which((as.numeric(rownames(counts)) - 1) %in% unique_vals), which((as.numeric(colnames(counts)) - 1) %in% unique_vals)]
+            }
+                      
             rownames(counts) <- colnames(counts) <- unique_vals
-            
-            
-            
+                      
             #GLCMs should be symmetrical, so the transpose is added
             counts <- counts + t(counts)
             #Normalize
