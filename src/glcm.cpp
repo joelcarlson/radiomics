@@ -9,7 +9,7 @@ using namespace Rcpp;
 //' @param n_grey Number of grey levels
 //' @param d distance from reference pixel to neighbour pixel
 // [[Rcpp::export]]
-NumericMatrix glcm0(NumericMatrix x, double n_grey, int d){
+NumericMatrix glcm0(NumericMatrix x, int n_grey, int d){
   //add 1 extra row/column for NAs (whether or not they exist)
   NumericMatrix counts(n_grey + 1, n_grey + 1);
   
@@ -37,7 +37,7 @@ NumericMatrix glcm0(NumericMatrix x, double n_grey, int d){
 //' @param n_grey Number of grey levels
 //' @param d distance from reference pixel to neighbour pixel
 // [[Rcpp::export]]
-NumericMatrix glcm90(NumericMatrix x, double n_grey, int d){
+NumericMatrix glcm90(NumericMatrix x, int n_grey, int d){
   //add 1 extra row/column for NAs (whether or not they exist)
   NumericMatrix counts(n_grey + 1, n_grey + 1);
   
@@ -61,7 +61,7 @@ NumericMatrix glcm90(NumericMatrix x, double n_grey, int d){
 //' @param n_grey Number of grey levels
 //' @param d distance from reference pixel to neighbour pixel
 // [[Rcpp::export]]
-NumericMatrix glcm45(NumericMatrix x, double n_grey, int d){
+NumericMatrix glcm45(NumericMatrix x, int n_grey, int d){
   //add 1 extra row/column for NAs (whether or not they exist)
   NumericMatrix counts(n_grey + 1, n_grey + 1);
   
@@ -89,7 +89,7 @@ NumericMatrix glcm45(NumericMatrix x, double n_grey, int d){
 //' @param n_grey Number of grey levels
 //' @param d distance from reference pixel to neighbour pixel
 // [[Rcpp::export]]
-NumericMatrix glcm135(NumericMatrix x, double n_grey, int d){
+NumericMatrix glcm135(NumericMatrix x, int n_grey, int d){
   //add 1 extra row/column for NAs (whether or not they exist)
   NumericMatrix counts(n_grey + 1, n_grey + 1);
   
