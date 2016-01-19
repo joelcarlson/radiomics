@@ -10,7 +10,7 @@ NULL
 #' 
 calc_energy <- function(data){
   #TODO: Add dim check for 2D vs 3D
-  return(sum(data*data, na.rm=TRUE))
+  return(sum(as.numeric(data)*as.numeric(data), na.rm=TRUE))
 }
 
 #' @describeIn first_order_features Entropy
