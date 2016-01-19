@@ -14,14 +14,10 @@ NumericMatrix glcm0(NumericMatrix x, int n_grey, int d){
   NumericMatrix counts(n_grey + 1, n_grey + 1);
   
   for(int i = 0; i < x.nrow(); i++){
-    for(int j = 0; j < x.ncol() - d; j++){
-      double ref_val = x(i,j);
-      double nei_val = x(i, j+d);
-      
-      //Rcout << "The ref_value is " << ref_val << std::endl;
-      //Rcout << "The nei_value is " << nei_val << std::endl;
+    for(int j = 0; j < x.ncol() - d ; j++){
+      int ref_val = x(i,j);
+      int nei_val = x(i, j+d);    
       counts(ref_val, nei_val) += 1;
-      //Rcout << counts << std::endl;
     }
     
   }
@@ -43,8 +39,8 @@ NumericMatrix glcm90(NumericMatrix x, int n_grey, int d){
   
   for(int i = d; i < x.nrow(); i++){
     for(int j = 0; j < x.ncol(); j++){
-      double ref_val = x(i,j);
-      double nei_val = x(i-d, j);
+      int ref_val = x(i,j);
+      int nei_val = x(i-d, j);
       counts(ref_val, nei_val) += 1;
     }
     
@@ -67,8 +63,8 @@ NumericMatrix glcm45(NumericMatrix x, int n_grey, int d){
   
   for(int i = d; i < x.nrow(); i++){
     for(int j = 0; j < x.ncol() - d; j++){
-      double ref_val = x(i,j);
-      double nei_val = x(i-d, j+d);
+      int ref_val = x(i,j);
+      int nei_val = x(i-d, j+d);
       
       //Rcout << "The ref_value is " << ref_val << std::endl;
       //Rcout << "The nei_value is " << nei_val << std::endl;
@@ -95,8 +91,8 @@ NumericMatrix glcm135(NumericMatrix x, int n_grey, int d){
   
   for(int i = d; i < x.nrow(); i++){
     for(int j = d; j < x.ncol(); j++){
-      double ref_val = x(i,j);
-      double nei_val = x(i-d, j-d);
+      int ref_val = x(i,j);
+      int nei_val = x(i-d, j-d);
       
       //Rcout << "The ref_value is " << ref_val << std::endl;
       //Rcout << "The nei_value is " << nei_val << std::endl;
