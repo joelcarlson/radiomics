@@ -45,11 +45,7 @@ NumericMatrix glcm90(NumericMatrix x, double n_grey, int d){
     for(int j = 0; j < x.ncol(); j++){
       double ref_val = x(i,j);
       double nei_val = x(i-d, j);
-      
-      //Rcout << "The ref_value is " << ref_val << std::endl;
-      //Rcout << "The nei_value is " << nei_val << std::endl;
       counts(ref_val, nei_val) += 1;
-      //Rcout << counts << std::endl;
     }
     
   }
