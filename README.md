@@ -1,8 +1,7 @@
 Radiomics: Texture Analysis Matrices
 ====================================
 
-[![cran version](http://www.r-pkg.org/badges/version/radiomics)](http://cran.rstudio.com/web/packages/radiomics)
-[![Build Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/radiomics)](https://github.com/metacran/cranlogs.app)
+[![cran version](http://www.r-pkg.org/badges/version/radiomics)](http://cran.rstudio.com/web/packages/radiomics) [![Build Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/radiomics)](https://github.com/metacran/cranlogs.app)
 
 The `radiomics` package is a set of tools for computing texture matrices and features from images.
 
@@ -12,10 +11,10 @@ The release version of this package is available from [CRAN](https://cran.r-proj
 install.packages("radiomics")
 ```
 
-Or you can install the development version of the package (currently converting package to use C++ for computationally expensive tasks - GLCM calculation is considerably faster than the CRAN version) using:
+Or you can install the development version of the package using:
 
 ``` r
-devtools::install_github("joelcarlson/radiomics", ref="develop")
+devtools::install_github("joelcarlson/radiomics")
 
 library(radiomics)
 ```
