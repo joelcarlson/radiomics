@@ -44,13 +44,26 @@ setMethod("initialize",
           definition = function(.Object, data, truncate, ...){
             #TODO: Make weights a function argument
             #TODO: Make number of bits a function argument
-            #If composed entirely of NA, return <0,0> matrix
+            unique_vals <- unique(c(data))
+            
             #pass through discretizeImage to access warnings and errors
-            data <- discretizeImage(data, n_grey=length(unique(c(data))), ...)
+            data <- discretizeImage(data, n_grey=length(unique_vals), ...)
+            
+            #If composed entirely of NA, return <0,0> matrix
             if(sum(is.na(data)) == dim(data)[1]*dim(data)[2]){
               .Object@.Data <- matrix()[-1,-1]
               return(.Object)
-            } 
+            }
+            
+            # Check if image consists of single pixel 
+            # Multiple behaviours are potentially desirable -
+            # Here I have chosen to return nothing, as the glszm will 
+            # contain all relevant information already.
+            #Another option would be to return the glszm. Unclear which is the better choice.
+            if(length(sort(unique_vals)) == 1 && length(which(data == sort(unique_vals))) == 1){
+              .Object@.Data <- matrix()[-1,-1]
+              return(.Object)
+            }
             #create weights
             #  - -3.5 to 3.5 makes the sum of the weights ~1
             #  - 8 is the number of bits we will use (2^k)
