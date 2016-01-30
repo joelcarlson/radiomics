@@ -44,6 +44,13 @@ setMethod("initialize",
             
             unique_vals <- sort(unique(c(data)))
             
+            #If matrix is composed of a single value glcm is undefined
+            #return empty matrix
+            if(length(unique_vals) == 1 && length(which(data == unique_vals)) == 1){
+              .Object@.Data <- matrix(NA)[-1,-1]
+              return(.Object)
+            }
+            
             #the value of 0 is reserved for NAs in the matrix, 
             #if there are any 0's in the DF, add 1 to all values
             #original values will be replaced after
