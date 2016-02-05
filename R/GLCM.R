@@ -95,7 +95,9 @@ setMethod("initialize",
             } else {
               counts <- counts[which((as.numeric(rownames(counts)) - 1) %in% unique_vals), which((as.numeric(colnames(counts)) - 1) %in% unique_vals)]
             }
-                      
+            
+            #If there is only a single value in the matrix it becomes a numeric
+            if(length(counts) == 1) counts <- matrix(counts)
             rownames(counts) <- colnames(counts) <- unique_vals
                       
             #GLCMs should be symmetrical, so the transpose is added

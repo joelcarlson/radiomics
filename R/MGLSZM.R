@@ -60,7 +60,7 @@ setMethod("initialize",
             # Here I have chosen to return nothing, as the glszm will 
             # contain all relevant information already.
             #Another option would be to return the glszm. Unclear which is the better choice.
-            if(length(sort(unique_vals)) == 1 && length(which(data == sort(unique_vals))) == 1){
+            if(length(sort(unique_vals)) == 1){
               .Object@.Data <- matrix()[-1,-1]
               return(.Object)
             }
