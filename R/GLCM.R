@@ -84,20 +84,10 @@ setMethod("initialize",
               .Object@.Data <- counts
               return(.Object)
             }
-            rownames(counts) <- colnames(counts) <- seq(1, max(data), 1)
-            
-            #Replace proper values in column and row names
-            #Two situations:
-            #1. No zeroes were present, thus nothing was added
-            #2. One was added to all entries because there were zeros in the matrix
-            if(max(as.numeric(rownames(counts))) == max(unique_vals)){ #ie. 1 wasn't added
-              counts <- counts[which(rownames(counts) %in% unique_vals), which(colnames(counts) %in% unique_vals)]
-            } else {
-              counts <- counts[which((as.numeric(rownames(counts)) - 1) %in% unique_vals), which((as.numeric(colnames(counts)) - 1) %in% unique_vals)]
-            }
-            
-            #If there is only a single value in the matrix it becomes a numeric
+
+            #If there is only a single value in the matrix it becomes a numeric, make sure this doesn't happen
             if(length(counts) == 1) counts <- matrix(counts)
+            
             rownames(counts) <- colnames(counts) <- unique_vals
                       
             #GLCMs should be symmetrical, so the transpose is added
