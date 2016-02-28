@@ -85,8 +85,23 @@ setMethod("initialize",
               return(.Object)
             }
 
-            #If there is only a single value in the matrix it becomes a numeric, make sure this doesn't happen
-            if(length(counts) == 1) counts <- matrix(counts)
+            #Replace proper values in column and row names
+            #Two situations:
+            #1. No zeroes were present, thus nothing was added
+            #2. One was added to all entries because there were zeros in the matrix
+            if(is.matrix(counts)){
+              if(dim(counts)[1] == max(unique_vals)){ #ie. 1 wasn't added
+                counts <- counts[unique_vals, unique_vals]
+                #counts <- counts[which(rownames(counts) %in% unique_vals), which(colnames(counts) %in% unique_vals)]
+              } else if (dim(counts)[1] == max(unique_vals)+1) {
+                #counts <- counts[which((as.numeric(rownames(counts)) - 1) %in% unique_vals), which((as.numeric(colnames(counts)) - 1) %in% unique_vals)]
+                counts <- counts[unique_vals + 1, unique_vals + 1]
+              }  
+            } else {
+              #Edge case where only a single grey value present - leads to a numeric, rather than a matrix
+              #Therefore case to 1x1 matrix
+              counts <- matrix(counts)
+            }
             
             rownames(counts) <- colnames(counts) <- unique_vals
                       
