@@ -69,7 +69,7 @@ setMethod("initialize",
             #cast to matrix
             count_data <- reshape2::acast(count_data, greylvl~size, value.var="counts")
             #sort columns, if there is only a single size a vector is returned, hence the if
-            if(length(colnames(count_data)) > 1){
+            if(length(colnames(count_data)) > 1 && nrow(count_data) > 1){
               count_data <- count_data[,order(as.numeric(as.character(colnames(count_data))))]
             }
             count_data[is.na(count_data)] <- 0
