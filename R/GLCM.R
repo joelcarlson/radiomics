@@ -97,7 +97,9 @@ setMethod("initialize",
                 #counts <- counts[which((as.numeric(rownames(counts)) - 1) %in% unique_vals), which((as.numeric(colnames(counts)) - 1) %in% unique_vals)]
                 counts <- counts[unique_vals + 1, unique_vals + 1]
               }  
-            } else {
+            }
+            
+            if(!is.matrix(counts)) {
               #Edge case where only a single grey value present - leads to a numeric, rather than a matrix
               #Therefore case to 1x1 matrix
               counts <- matrix(counts)
@@ -108,7 +110,13 @@ setMethod("initialize",
             #GLCMs should be symmetrical, so the transpose is added
             counts <- counts + t(counts)
             #Normalize
-            if(normalize) counts <- counts/sum(counts)
+            if(normalize){
+              count_sum <- sum(counts)
+              if(count_sum > 0){
+                counts <- counts/count_sum
+              }
+            }
+              
             
             
             .Object@.Data <- counts
