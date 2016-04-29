@@ -60,7 +60,7 @@ Matrices of class \code{mglszm} accept features belonging to the glszm.
 \dontrun{
 calc_features(glcm(hallbey))
 calc_features(glrlm(psf, n_grey=10))
-calc_features(glcm(hallbey, features=c("glcm_mean", "glcm_variance", "pickles")))
+calc_features(glcm(hallbey), features=c("glcm_mean", "glcm_variance", "pickles"))
 }
 
 }
