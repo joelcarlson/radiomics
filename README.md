@@ -5,7 +5,7 @@ Radiomics: Texture Analysis Matrices
 
 The `radiomics` package is a set of tools for computing texture matrices and features from images.
 
-The release version of this package is available from [CRAN](https://cran.r-project.org/package=radiomics) using:
+The release version of this package (April 2016, v0.1.2) is available from [CRAN](https://cran.r-project.org/package=radiomics) using:
 
 ``` r
 install.packages("radiomics")

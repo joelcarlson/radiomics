@@ -9,7 +9,9 @@ Numerous bugfixes, no major changes, but should provide a much more seamless exp
 
 ## R CMD check results
 
-There were no NOTES, ERRORs or WARNINGs.
+There were no ERRORs or WARNINGs.
+
+There was 1 NOTE about a possibly misspelled word in the README which is erroneous
 
 ## Downstream dependencies
 
