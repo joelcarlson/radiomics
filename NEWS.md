@@ -1,3 +1,9 @@
+# radiomics 0.1.2
+
+* Numerous bugfixes/edge cases
+* Better handling of NAs in matrices
+* Minor optimizations
+
 # radiomics 0.1.1
 
 * Added generator functions for classes

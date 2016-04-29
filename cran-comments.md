@@ -1,7 +1,6 @@
 ## Release summary
 
-This release, most importantly, added generator functions for the matrix classes. Without these the user had to use new("glcm", data), which is not ideal.
-Apologies for the fast re-release (~1 week), there were some issues that needed to be addressed due to this being my first CRAN submission.
+Numerous bugfixes, no major changes, but should provide a much more seamless experience!
 
 ## Test environments
 

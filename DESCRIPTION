@@ -1,8 +1,8 @@
 Package: radiomics
 Type: Package
 Title: Radiomic Image Processing Toolbox
-Version: 0.1.1
-Date: 2015-11-22
+Version: 0.1.2
+Date: 2016-04-29
 Author: Joel Carlson
 Maintainer: Joel Carlson <jnkcarlson@gmail.com>
 Description: Functions to extract first and second order statistics from
@@ -39,3 +39,4 @@ Collate:
     'radiomics.R'
     'startupMessage.R'
 LinkingTo: Rcpp
+RoxygenNote: 5.0.1
