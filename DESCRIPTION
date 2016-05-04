@@ -20,7 +20,8 @@ Suggests:
     knitr,
     rmarkdown,
     viridis,
-    devtools
+    devtools,
+    roxygen2
 LazyData: true
 VignetteBuilder: rmarkdown,
     knitr
