@@ -4,15 +4,22 @@ Numerous bugfixes, no major changes, but should provide a much more seamless exp
 
 ## Test environments
 
-* local Ubuntu 14.04 LTS install, R 3.2.2
+* local Mac OSX install, R 3.3.0
 * win-builder 
 
 ## R CMD check results
 
 There were no ERRORs or WARNINGs.
 
-There was 1 NOTE about a possibly misspelled word in the README which is erroneous
+There was 1 NOTE:
 
-## Downstream dependencies
+  checking CRAN incoming feasibility ... NOTE
+  Maintainer: ‘Joel Carlson <jnkcarlson@gmail.com>’
+
+  License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+  File 'LICENSE':
+  YEAR:2016
+  COPYRIGHT HOLDER: Joel Carlson## Downstream dependencies
 
 None to report

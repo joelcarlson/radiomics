@@ -22,7 +22,8 @@ Suggests:
     viridis,
     devtools
 LazyData: true
-VignetteBuilder: rmarkdown
+VignetteBuilder: rmarkdown,
+    knitr
 Collate:
     'GLSZM.R'
     'MGLSZM.R'

@@ -1,14 +1,13 @@
 ---
-title: Texture Analysis
+title: "Texture Analysis"
 author: "Joel Carlson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Texture Analysis}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
-
 
 <style>
 img {
