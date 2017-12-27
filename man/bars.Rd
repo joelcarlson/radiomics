@@ -13,4 +13,3 @@ A Matrix of vertical bars, each column with a different value. Column 1
 contains the value 1, up to column 20 with value 20.
 }
 \keyword{datasets}
-

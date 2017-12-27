@@ -45,4 +45,3 @@ glcm(hallbey, angle="90") #vertical GLCM
 \references{
 \url{http://www.fp.ucalgary.ca/mhallbey/tutorial.htm}
 }
-

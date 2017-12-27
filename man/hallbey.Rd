@@ -12,4 +12,3 @@ hallbey
 A Matrix used as examples in the hallbey explanation of glcms.
 }
 \keyword{datasets}
-

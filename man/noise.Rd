@@ -12,4 +12,3 @@ noise
 A Matrix uniformly distributed (on 1 to 100) noise.
 }
 \keyword{datasets}
-

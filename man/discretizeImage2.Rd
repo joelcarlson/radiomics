@@ -17,4 +17,3 @@ discretizeImage2(image, n_grey = 32)
 \details{
 Not currently used. Different methods of discretizing the image will be explored in the future.
 }
-

@@ -16,4 +16,3 @@ glcm0(x, n_grey, d)
 \description{
 Used internally by glcm()
 }
-

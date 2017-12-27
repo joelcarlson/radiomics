@@ -41,4 +41,3 @@ glszm(psf, n_grey=5, verbose=F)
 \references{
 \url{http://thibault.biz/Research/ThibaultMatrices/GLSZM/GLSZM.html}
 }
-

@@ -14,4 +14,3 @@ GLRLM (grey level run-length matrix), GLSZM (grey level size-zone matrix), and t
 To learn more about radiomics and texture matrices, start with the vignettes:
 \code{browseVignettes(package = "radiomics")}
 }
-
