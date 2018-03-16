@@ -1,7 +1,7 @@
 Package: radiomics
 Type: Package
 Title: 'Radiomic' Image Processing Toolbox
-Version: 0.1.2
+Version: 0.1.3
 Date: 2018-03-15
 Author: Joel Carlson
 Maintainer: Joel Carlson <jnkcarlson@gmail.com>

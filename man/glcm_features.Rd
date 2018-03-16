@@ -89,7 +89,7 @@ GLCM Features
 
 \item \code{glcm_cTendency}: Cluster Tendency
 
-\item \code{glcm_contrast}: Constrast
+\item \code{glcm_contrast}: Contrast
 
 \item \code{glcm_correlation}: Correlation
 

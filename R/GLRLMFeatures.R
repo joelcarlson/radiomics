@@ -53,7 +53,7 @@ glrlm_LGLRE <- function(glrlm){
   sum(dat) / sum(glrlm)
 }
 
-#' @describeIn glrlm_features un length non-uniformity
+#' @describeIn glrlm_features Run length non-uniformity
 #' 
 ##R
 glrlm_RLN <- function(glrlm){

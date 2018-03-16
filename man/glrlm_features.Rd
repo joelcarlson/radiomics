@@ -57,7 +57,7 @@ GLRLM Features
 
 \item \code{glrlm_LGLRE}: Low gray level run emphasis
 
-\item \code{glrlm_RLN}: un length non-uniformity
+\item \code{glrlm_RLN}: Run length non-uniformity
 
 \item \code{glrlm_RP}: Run Percentage
 

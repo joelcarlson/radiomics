@@ -1,3 +1,9 @@
+# radiomics 0.1.3
+
+* Fixes for `R CMD check --as-cran`
+* Fixed the vignette for this version to pass.
+
+
 # radiomics 0.1.2
 
 * Numerous bugfixes/edge cases

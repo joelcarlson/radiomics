@@ -1,25 +1,12 @@
-## Release summary
-
-Numerous bugfixes, no major changes, but should provide a much more seamless experience!
-
 ## Test environments
-
-* local Mac OSX install, R 3.3.0
-* win-builder 
+* local OS X install, R 3.4.3
+* ubuntu 14.04 (on travis-ci), R 3.4.3
+* win-builder (devel and release)
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
+0 errors | 0 warnings | 1 note
 
-There was 1 NOTE:
+* This is a new release.
 
-  checking CRAN incoming feasibility ... NOTE
-  Maintainer: ‘Joel Carlson <jnkcarlson@gmail.com>’
-
-  License components with restrictions and base license permitting such:
-  MIT + file LICENSE
-  File 'LICENSE':
-  YEAR:2016
-  COPYRIGHT HOLDER: Joel Carlson## Downstream dependencies
-
-None to report
+Reintegration into CRAN after archiving.
