@@ -12,7 +12,7 @@
 
 <meta name="author" content="Joel Carlson" />
 
-<meta name="date" content="2017-12-27" />
+<meta name="date" content="2018-03-16" />
 
 <title>Texture Analysis</title>
 
@@ -280,7 +280,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Texture Analysis</h1>
 <h4 class="author"><em>Joel Carlson</em></h4>
-<h4 class="date"><em>2017-12-27</em></h4>
+<h4 class="date"><em>2018-03-16</em></h4>
 
 
 
@@ -304,62 +304,62 @@ img {
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Argument</th>
+<th align="left">Feature</th>
+<th align="left">Argument</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Energy</td>
-<td style="text-align: left;">calc_energy</td>
+<td align="left">Energy</td>
+<td align="left">calc_energy</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Entropy</td>
-<td style="text-align: left;">calc_entropy</td>
+<td align="left">Entropy</td>
+<td align="left">calc_entropy</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Kurtosis</td>
-<td style="text-align: left;">calc_kurtosis</td>
+<td align="left">Kurtosis</td>
+<td align="left">calc_kurtosis</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Mean Deviation</td>
-<td style="text-align: left;">calc_meanDeviation</td>
+<td align="left">Mean Deviation</td>
+<td align="left">calc_meanDeviation</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Skewness</td>
-<td style="text-align: left;">calc_skewness</td>
+<td align="left">Skewness</td>
+<td align="left">calc_skewness</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Uniformity</td>
-<td style="text-align: left;">calc_uniformity</td>
+<td align="left">Uniformity</td>
+<td align="left">calc_uniformity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Mean</td>
-<td style="text-align: left;">calc_mean</td>
+<td align="left">Mean</td>
+<td align="left">calc_mean</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Median</td>
-<td style="text-align: left;">calc_median</td>
+<td align="left">Median</td>
+<td align="left">calc_median</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Maximum</td>
-<td style="text-align: left;">calc_max</td>
+<td align="left">Maximum</td>
+<td align="left">calc_max</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Minimum</td>
-<td style="text-align: left;">calc_min</td>
+<td align="left">Minimum</td>
+<td align="left">calc_min</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Variance</td>
-<td style="text-align: left;">calc_variance</td>
+<td align="left">Variance</td>
+<td align="left">calc_variance</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Root Mean Square</td>
-<td style="text-align: left;">calc_RMS</td>
+<td align="left">Root Mean Square</td>
+<td align="left">calc_RMS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Standard Deviation</td>
-<td style="text-align: left;">calc_sd</td>
+<td align="left">Standard Deviation</td>
+<td align="left">calc_sd</td>
 </tr>
 </tbody>
 </table>
@@ -368,7 +368,7 @@ img {
 <p>##Grey Level Co-occurrence Matrix (GLCM)</p>
 <p>The GLCM is a matrix which considers the spatial relationships between two pixels at a time in the image (the reference and the neighbor pixel). The neighbor pixel can be to the East (0), North-East (45), North (90), or North-West (135) of the reference pixel. The distance between the reference and neighbor pixel can also be chosen.</p>
 <p>The matrix is built such that each row represents a single grey value in the image, and each column also represents a single grey value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it’s transpose to create a symmetrical matrix</p>
-<p>For a more detailed explanation of the GLCM see <a href="http://joelcarlson.me/2015/07/10/radiomics-package/">here</a> or <a href="http://www.fp.ucalgary.ca/mhallbey/tutorial.htm">here</a> and for the seminal 1974 paper, see <a href="http://haralick.org/journals/TexturalFeatures.pdf">here</a> (Warning: PDF download)</p>
+<p>For a more detailed explanation of the GLCM see <a href="http://www.fp.ucalgary.ca/mhallbey/tutorial.htm">here</a> and for the seminal 1974 paper, see <a href="http://haralick.org/journals/TexturalFeatures.pdf">here</a> (Warning: PDF download)</p>
 <p>GLCMs can be created using the <code>glcm</code> function, and can be calculated for different angles and distances using the <code>angle</code> and <code>d</code> arguments:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#Load the dataset from the Hallbey tutorial:</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">data</span>(hallbey)</a>
@@ -389,94 +389,94 @@ img {
 <caption>GLCM features</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Argument</th>
+<th align="left">Feature</th>
+<th align="left">Argument</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Mean</td>
-<td style="text-align: left;">glcm_mean</td>
+<td align="left">Mean</td>
+<td align="left">glcm_mean</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Variance</td>
-<td style="text-align: left;">glcm_variance</td>
+<td align="left">Variance</td>
+<td align="left">glcm_variance</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Auto Correlation</td>
-<td style="text-align: left;">glcm_autoCorrelation</td>
+<td align="left">Auto Correlation</td>
+<td align="left">glcm_autoCorrelation</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Cluster Prominence</td>
-<td style="text-align: left;">glcm_cProminence</td>
+<td align="left">Cluster Prominence</td>
+<td align="left">glcm_cProminence</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Cluster Shade</td>
-<td style="text-align: left;">glcm_cShade</td>
+<td align="left">Cluster Shade</td>
+<td align="left">glcm_cShade</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Cluster Tendency</td>
-<td style="text-align: left;">glcm_cTendency</td>
+<td align="left">Cluster Tendency</td>
+<td align="left">glcm_cTendency</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Contrast</td>
-<td style="text-align: left;">glcm_contrast</td>
+<td align="left">Contrast</td>
+<td align="left">glcm_contrast</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Correlation</td>
-<td style="text-align: left;">glcm_correlation</td>
+<td align="left">Correlation</td>
+<td align="left">glcm_correlation</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Difference Entropy</td>
-<td style="text-align: left;">glcm_differenceEntropy</td>
+<td align="left">Difference Entropy</td>
+<td align="left">glcm_differenceEntropy</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Dissimilarity</td>
-<td style="text-align: left;">glcm_dissimilarity</td>
+<td align="left">Dissimilarity</td>
+<td align="left">glcm_dissimilarity</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Energy</td>
-<td style="text-align: left;">glcm_energy</td>
+<td align="left">Energy</td>
+<td align="left">glcm_energy</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Entropy</td>
-<td style="text-align: left;">glcm_entropy</td>
+<td align="left">Entropy</td>
+<td align="left">glcm_entropy</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Homogeneity1</td>
-<td style="text-align: left;">glcm_homogeneity1</td>
+<td align="left">Homogeneity1</td>
+<td align="left">glcm_homogeneity1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Homogeneity2</td>
-<td style="text-align: left;">glcm_homogeneity2</td>
+<td align="left">Homogeneity2</td>
+<td align="left">glcm_homogeneity2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Inverse Difference Moment (Normalized)</td>
-<td style="text-align: left;">glcm_IDMN</td>
+<td align="left">Inverse Difference Moment (Normalized)</td>
+<td align="left">glcm_IDMN</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Inverse Difference Moment</td>
-<td style="text-align: left;">glcm_IDN</td>
+<td align="left">Inverse Difference Moment</td>
+<td align="left">glcm_IDN</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Inverse Variance</td>
-<td style="text-align: left;">glcm_inverseVariance</td>
+<td align="left">Inverse Variance</td>
+<td align="left">glcm_inverseVariance</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Maximum Probability</td>
-<td style="text-align: left;">glcm_maxProb</td>
+<td align="left">Maximum Probability</td>
+<td align="left">glcm_maxProb</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sum Average</td>
-<td style="text-align: left;">glcm_sumAverage</td>
+<td align="left">Sum Average</td>
+<td align="left">glcm_sumAverage</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Sum Entropy</td>
-<td style="text-align: left;">glcm_sumEntropy</td>
+<td align="left">Sum Entropy</td>
+<td align="left">glcm_sumEntropy</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sum Variance</td>
-<td style="text-align: left;">glcm_sumVariance</td>
+<td align="left">Sum Variance</td>
+<td align="left">glcm_sumVariance</td>
 </tr>
 </tbody>
 </table>
@@ -501,54 +501,54 @@ img {
 <caption>GLRLM features</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Argument</th>
+<th align="left">Feature</th>
+<th align="left">Argument</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Grey Level Non-uniformity</td>
-<td style="text-align: left;">glrlm_GLN</td>
+<td align="left">Grey Level Non-uniformity</td>
+<td align="left">glrlm_GLN</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">High Grey Level Run Emphasis</td>
-<td style="text-align: left;">glrlm_HGLRE</td>
+<td align="left">High Grey Level Run Emphasis</td>
+<td align="left">glrlm_HGLRE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Long Run Emphasis</td>
-<td style="text-align: left;">glrlm_LRE</td>
+<td align="left">Long Run Emphasis</td>
+<td align="left">glrlm_LRE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Long Run High Grey Level Emphasis</td>
-<td style="text-align: left;">glrlm_LRHGLE</td>
+<td align="left">Long Run High Grey Level Emphasis</td>
+<td align="left">glrlm_LRHGLE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Long Run Low Grey Level Emphasis</td>
-<td style="text-align: left;">glrlm_LRLGLE</td>
+<td align="left">Long Run Low Grey Level Emphasis</td>
+<td align="left">glrlm_LRLGLE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Low Grey Level Run Emphasis</td>
-<td style="text-align: left;">glrlm_LGLRE</td>
+<td align="left">Low Grey Level Run Emphasis</td>
+<td align="left">glrlm_LGLRE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Run Length Non-uniformity</td>
-<td style="text-align: left;">glrlm_RLN</td>
+<td align="left">Run Length Non-uniformity</td>
+<td align="left">glrlm_RLN</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Run Percentage</td>
-<td style="text-align: left;">glrlm_RP</td>
+<td align="left">Run Percentage</td>
+<td align="left">glrlm_RP</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Short Run Emphasis</td>
-<td style="text-align: left;">glrlm_SRE</td>
+<td align="left">Short Run Emphasis</td>
+<td align="left">glrlm_SRE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Short Run High Grey Level Emphasis</td>
-<td style="text-align: left;">glrlm_SRHGLE</td>
+<td align="left">Short Run High Grey Level Emphasis</td>
+<td align="left">glrlm_SRHGLE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Short Run Low Grey Level Emphasis</td>
-<td style="text-align: left;">glrlm_SRLGLE</td>
+<td align="left">Short Run Low Grey Level Emphasis</td>
+<td align="left">glrlm_SRLGLE</td>
 </tr>
 </tbody>
 </table>
@@ -571,54 +571,54 @@ img {
 <caption>GLSMZ and MGLSZM features</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Argument</th>
+<th align="left">Feature</th>
+<th align="left">Argument</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Small Area Emphasis</td>
-<td style="text-align: left;">glszm_SAE</td>
+<td align="left">Small Area Emphasis</td>
+<td align="left">glszm_SAE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Large Area Emphasis</td>
-<td style="text-align: left;">glszm_LAE</td>
+<td align="left">Large Area Emphasis</td>
+<td align="left">glszm_LAE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Intensity Variability</td>
-<td style="text-align: left;">glszm_IV</td>
+<td align="left">Intensity Variability</td>
+<td align="left">glszm_IV</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Size Zone Variance</td>
-<td style="text-align: left;">glszm_SZV</td>
+<td align="left">Size Zone Variance</td>
+<td align="left">glszm_SZV</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Zone Percentage</td>
-<td style="text-align: left;">glszm_ZP</td>
+<td align="left">Zone Percentage</td>
+<td align="left">glszm_ZP</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Low Intensity</td>
-<td style="text-align: left;">glszm_LIE</td>
+<td align="left">Low Intensity</td>
+<td align="left">glszm_LIE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">High Intensity Emphasis</td>
-<td style="text-align: left;">glszm_HIE</td>
+<td align="left">High Intensity Emphasis</td>
+<td align="left">glszm_HIE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Low Intensity Small Area Emphasis</td>
-<td style="text-align: left;">glszm_LISAE</td>
+<td align="left">Low Intensity Small Area Emphasis</td>
+<td align="left">glszm_LISAE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">High Intensity Small Area Emphasis</td>
-<td style="text-align: left;">glszm_HISAE</td>
+<td align="left">High Intensity Small Area Emphasis</td>
+<td align="left">glszm_HISAE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Low Intensity Large Area Emphasis</td>
-<td style="text-align: left;">glszm_LILAE</td>
+<td align="left">Low Intensity Large Area Emphasis</td>
+<td align="left">glszm_LILAE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">High Intensity Large Area Emphasis</td>
-<td style="text-align: left;">glszm_HILAE</td>
+<td align="left">High Intensity Large Area Emphasis</td>
+<td align="left">glszm_HILAE</td>
 </tr>
 </tbody>
 </table>

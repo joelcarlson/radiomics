@@ -1,11 +1,18 @@
-Radiomics: Texture Analysis Matrices
-====================================
 
-[![cran version](http://www.r-pkg.org/badges/version/radiomics)](https://cran.r-project.org/package=radiomics) [![Build Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/radiomics)](https://github.com/metacran/cranlogs.app)
+# Radiomics: Texture Analysis Matrices
 
-The `radiomics` package is a set of tools for computing texture matrices and features from images.
+[![cran
+version](http://www.r-pkg.org/badges/version/radiomics)](https://cran.r-project.org/package=radiomics)
+[![Build
+Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics)
+[![rstudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/radiomics)](https://github.com/metacran/cranlogs.app)
 
-The release version of this package (April 2016, v0.1.2) is available from [CRAN](https://cran.r-project.org/package=radiomics) using:
+The `radiomics` package is a set of tools for computing texture matrices
+and features from images.
+
+The release version of this package (April 2016, v0.1.2) is available
+from [CRAN](https://cran.r-project.org/package=radiomics) using:
 
 ``` r
 install.packages("radiomics")
@@ -19,27 +26,29 @@ devtools::install_github("joelcarlson/radiomics")
 library(radiomics)
 ```
 
-Texture Matrices
-================
+# Texture Matrices
 
-In the package are functions for calculating four different types of matrices and associated feature sets used to quantify the texture of an image.
+In the package are functions for calculating four different types of
+matrices and associated feature sets used to quantify the texture of an
+image.
 
 These matrices are the:
 
--   Grey Level Co-occurrence Matrix
--   Grey Level Run Length Matrix
--   Grey Level Size Zone Matrix
--   Multiple Grey Level Size Zone Matrix
+  - Grey Level Co-occurrence Matrix
+  - Grey Level Run Length Matrix
+  - Grey Level Size Zone Matrix
+  - Multiple Grey Level Size Zone Matrix
 
-Detailed descriptions and references for each matrix can be found [here](http://joelcarlson.me/2015/07/10/radiomics-package/). Detailed usage directions for calculating features and matrices can be found in the package vignette (use `browseVignettes(package = "radiomics")`)
+Detailed usage directions for calculating features and matrices can be
+found in the package vignette (use `browseVignettes(package =
+"radiomics")`)
 
-Using the Package
-=================
+# Using the Package
 
-Building Texture Matrices
--------------------------
+## Building Texture Matrices
 
-Texture matrices can be created from 2D images by using the abbreviated and lowercase matrix name as a function call:
+Texture matrices can be created from 2D images by using the abbreviated
+and lowercase matrix name as a function call:
 
 ``` r
 tumor <- radiomics::tumor #2D MRI slice of a brain tumor
@@ -49,7 +58,8 @@ glszm(tumor)
 mglszm(tumor)
 ```
 
-A matrix with the class of the texture matrix type is returned, as shown here using `glcm(tumor, n_grey=4)`
+A matrix with the class of the texture matrix type is returned, as shown
+here using `glcm(tumor, n_grey=4)`
 
     #> An object of class "glcm"
     #>              1          2           3            4
@@ -63,10 +73,10 @@ class(glcm(tumor, n_grey=4))[1]
 #> [1] "glcm"
 ```
 
-Visualizing Texture Matrices
-----------------------------
+## Visualizing Texture Matrices
 
-Each matrix type has an associated `image` function for visualization of the results:
+Each matrix type has an associated `image` function for visualization of
+the results:
 
 ``` r
 image(glcm(tumor))
@@ -75,14 +85,18 @@ image(glszm(tumor))
 image(mglszm(tumor))
 ```
 
-The `image` functions make use of the `viridis` scale, as shown here using `image(glcm(tumor, n_grey=64))`:
+The `image` functions make use of the `viridis` scale, as shown here
+using `image(glcm(tumor, n_grey=64))`:
 
-![Sample image](https://raw.githubusercontent.com/joelcarlson/radiomics/master/figs/README-tumorglcm-1.png)
+![Sample
+image](https://raw.githubusercontent.com/joelcarlson/radiomics/master/figs/README-tumorglcm-1.png)
 
-Calculating Features
---------------------
+## Calculating Features
 
-Each matrix type has an associated `calc_features` function, which returns an object of class `data.frame` with a single observation for each calculated feature. First order features can also be calculated on 2D matrices.
+Each matrix type has an associated `calc_features` function, which
+returns an object of class `data.frame` with a single observation for
+each calculated feature. First order features can also be calculated on
+2D matrices.
 
 ``` r
 calc_features(tumor)

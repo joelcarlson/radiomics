@@ -84,7 +84,7 @@ The GLCM is a matrix which considers the spatial relationships between two pixel
 
 The matrix is built such that each row represents a single grey value in the image, and each column also represents a single grey value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it's transpose to create a symmetrical matrix
 
-For a more detailed explanation of the GLCM see [here](http://joelcarlson.me/2015/07/10/radiomics-package/) or [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm ) and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
+For a more detailed explanation of the GLCM see  [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm ) and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
 
 GLCMs can be created using the `glcm` function, and can be calculated for different angles and distances using the `angle` and `d` arguments:
 
