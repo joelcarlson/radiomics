@@ -44,7 +44,7 @@ calc_RMS(data)
 calc_sd(data)
 }
 \arguments{
-\item{data}{Numeric 2D matridata.}
+\item{data}{Numeric 2D matrix data.}
 
 \item{base}{The base for which the logarithm is calculate}
 
