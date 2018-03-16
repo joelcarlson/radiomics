@@ -12,6 +12,10 @@ knitr::opts_chunk$set(
 
 # Radiomics: Texture Analysis Matrices
 
+### ** Not Currently Maintained ** 
+
+##### This project is not currently being maintained. While I will do my best to help in a timely fashion, you should not expect a prompt response. 
+
 [![cran version](http://www.r-pkg.org/badges/version/radiomics)](https://cran.r-project.org/package=radiomics)
 [![Build Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/radiomics)](https://github.com/metacran/cranlogs.app)
 

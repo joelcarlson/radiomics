@@ -1,6 +1,10 @@
 
 # Radiomics: Texture Analysis Matrices
 
+### \*\* Not Currently Maintained \*\*
+
+##### This project is not currently being maintained. While I will do my best to help in a timely fashion, you should not expect a prompt response.
+
 [![cran
 version](http://www.r-pkg.org/badges/version/radiomics)](https://cran.r-project.org/package=radiomics)
 [![Build
