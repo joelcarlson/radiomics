@@ -136,7 +136,7 @@ glcm_cTendency <- function(glcm){
   return(sum)
 }
 
-#' @describeIn glcm_features Constrast
+#' @describeIn glcm_features Contrast
 #' 
 glcm_contrast <- function(glcm){
   sum <- 0

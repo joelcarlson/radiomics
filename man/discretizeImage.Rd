@@ -38,4 +38,3 @@ image(discretizeImage(psf, n_grey=5, verbose=F))
 image(tumor)
 image(discretizeImage(tumor, n_grey=8, verbose=F))
 }
-

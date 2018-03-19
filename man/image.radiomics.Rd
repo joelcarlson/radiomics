@@ -2,11 +2,11 @@
 % Please edit documentation in R/image.R
 \docType{methods}
 \name{image.radiomics}
+\alias{image.radiomics}
 \alias{image,glcm-method}
 \alias{image,glrlm-method}
 \alias{image,glszm-method}
 \alias{image,mglszm-method}
-\alias{image.radiomics}
 \title{Texture Matrix Visualization}
 \usage{
 \S4method{image}{glcm}(x, xlab = "Grey Level", ylab = "Grey Level",
@@ -47,4 +47,3 @@ image(psf)
 image(glszm(psf))
 }
 }
-

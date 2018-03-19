@@ -1,7 +1,5 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
 ```{r, echo = FALSE}
@@ -12,7 +10,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-#Radiomics: Texture Analysis Matrices
+# Radiomics: Texture Analysis Matrices
+
+### ** Not Currently Maintained ** 
+
+##### This project is not currently being maintained. While I will do my best to help in a timely fashion, you should not expect a prompt response. 
 
 [![cran version](http://www.r-pkg.org/badges/version/radiomics)](https://cran.r-project.org/package=radiomics)
 [![Build Status](https://travis-ci.org/joelcarlson/radiomics.svg?branch=master)](https://travis-ci.org/joelcarlson/radiomics) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/radiomics)](https://github.com/metacran/cranlogs.app)
@@ -36,7 +38,7 @@ devtools::install_github("joelcarlson/radiomics")
 library(radiomics)
 ```
 
-#Texture Matrices
+# Texture Matrices
 
 In the package are functions for calculating four different types of matrices and associated feature sets used to quantify the texture of an image. 
 
@@ -47,12 +49,11 @@ These matrices are the:
   - Grey Level Size Zone Matrix
   - Multiple Grey Level Size Zone Matrix
 
-Detailed descriptions and references for each matrix can be found [here](http://joelcarlson.me/2015/07/10/radiomics-package/). 
 Detailed usage directions for calculating features and matrices can be found in the package vignette (use `browseVignettes(package = "radiomics")`)
 
-#Using the Package
+# Using the Package
 
-##Building Texture Matrices
+## Building Texture Matrices
 
 Texture matrices can be created from 2D images by using the abbreviated and lowercase matrix name as a function call:
 
@@ -74,7 +75,7 @@ class(glcm(tumor, n_grey=4))[1]
 ```
 
 
-##Visualizing Texture Matrices
+## Visualizing Texture Matrices
 
 Each matrix type has an associated `image` function for visualization of the results:
 
@@ -90,7 +91,7 @@ The `image` functions make use of the `viridis` scale, as shown here using `imag
 ![Sample image](https://raw.githubusercontent.com/joelcarlson/radiomics/master/figs/README-tumorglcm-1.png)
 
 
-##Calculating Features
+## Calculating Features
 
 Each matrix type has an associated `calc_features` function, which returns an object of class `data.frame` with a single observation for each calculated feature. First order features can also be calculated on 2D matrices.
 

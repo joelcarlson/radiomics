@@ -13,4 +13,3 @@ A Matrix of a point spread function.
 Values are smallest in the middle, and increase in a radial fashion.
 }
 \keyword{datasets}
-

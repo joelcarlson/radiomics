@@ -18,7 +18,7 @@ img {
 
 
 ```{r,echo=FALSE, message=FALSE}
-devtools::load_all(".")
+# devtools::load_all(".")
 knitr::opts_chunk$set(echo = TRUE, fig.retina=2, fig.width=7, fig.height=5)
 ```
 
@@ -84,14 +84,14 @@ The GLCM is a matrix which considers the spatial relationships between two pixel
 
 The matrix is built such that each row represents a single grey value in the image, and each column also represents a single grey value. The entries of the matrix consist of the number of the times each gray level in a reference position occurs with each other gray level in the neighbor position. The matrix is then added to it's transpose to create a symmetrical matrix
 
-For a more detailed explanation of the GLCM see [here](http://joelcarlson.me/2015/07/10/radiomics-package/) or [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm ) and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
+For a more detailed explanation of the GLCM see  [here](http://www.fp.ucalgary.ca/mhallbey/tutorial.htm ) and for the seminal 1974 paper, see [here](http://haralick.org/journals/TexturalFeatures.pdf) (Warning: PDF download)
 
 GLCMs can be created using the `glcm` function, and can be calculated for different angles and distances using the `angle` and `d` arguments:
 
 ```{r, message=FALSE}
 #Load the dataset from the Hallbey tutorial:
 data(hallbey)
-(hbGLCM <- glcm(hallbey, angle=0, d=1))
+(hbGLCM <- glcm(hallbey, angle=0, d=1, n_grey = 4))
 ```
 
 And as with first order features, glcm features can be calculated by using the `calc_features` function:
@@ -141,7 +141,7 @@ s
 And the GLRLM:
 
 ```{r}
-glrlm(s, angle=0, verbose=F)
+glrlm(s, angle=0, verbose=FALSE)
 ```
 
 With available features:
@@ -176,7 +176,7 @@ image(discTumor, axes=F, col=viridis::viridis(16))
 And the corresponding GLSZM:
 
 ```{r, message=FALSE}
-image(glszm(discTumor))
+image(glszm(discTumor, n_grey = 16))
 ```
 
 The MGLSZM computes a GLSZM for 8 different discretizations of the image (2, 4, 8, 16, 32, 64, 128, and 256 grey levels). It then combines these using a weights based a Gaussian distribution (mean = 0, standard deviation = 1). 

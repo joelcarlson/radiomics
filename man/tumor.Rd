@@ -13,4 +13,3 @@ A Matrix of a single image slice of a tumor taken from an MRI image.
 This slice was extracted from one of the sample data sets of 3DSlicer.
 }
 \keyword{datasets}
-

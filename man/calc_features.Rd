@@ -3,10 +3,10 @@
 \docType{methods}
 \name{calc_features}
 \alias{calc_features}
+\alias{calc_features,matrix-method}
 \alias{calc_features,glcm-method}
 \alias{calc_features,glrlm-method}
 \alias{calc_features,glszm-method}
-\alias{calc_features,matrix-method}
 \alias{calc_features,mglszm-method}
 \title{Calculate texture and first order statistics.}
 \usage{
@@ -56,6 +56,7 @@ Matrices of class \code{mglszm} accept features belonging to the glszm.
 
 \item \code{mglszm}: Calculate texture features of an mglszm matrix
 }}
+
 \examples{
 \dontrun{
 calc_features(glcm(hallbey))
@@ -73,4 +74,3 @@ calc_features(glcm(hallbey), features=c("glcm_mean", "glcm_variance", "pickles")
   \code{\link{glszm}}
   \code{\link{mglszm}}
 }
-

@@ -46,4 +46,3 @@ glrlm(hallbey, angle="90")
 \references{
 \url{http://www.sciencedirect.com/science/article/pii/S0146664X75800086}
 }
-

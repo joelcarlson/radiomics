@@ -44,4 +44,3 @@ mglszm(psf, n_grey=5, verbose=F)
 \references{
 \url{http://thibault.biz/Research/ThibaultMatrices/MGLSZM/MGLSZM.html}
 }
-
